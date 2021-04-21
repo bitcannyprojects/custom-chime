@@ -1,12 +1,22 @@
-import _objectSpread from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectSpread2";
-export function reducer(state, _ref) {
+"use strict";
+
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.reducer = reducer;
+
+var _objectSpread2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectSpread2"));
+
+function reducer(state, _ref) {
   var type = _ref.type,
       payload = _ref.payload;
 
   switch (type) {
     case ContentActionType.STARTING:
       {
-        return _objectSpread(_objectSpread({}, state), {}, {
+        return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, state), {}, {
           isLocalShareLoading: true
         });
       }
@@ -49,7 +59,7 @@ export function reducer(state, _ref) {
           return initialState;
         }
 
-        return _objectSpread(_objectSpread({}, state), {}, {
+        return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, state), {}, {
           isLocalShareLoading: false,
           isLocalUserSharing: false,
           paused: false
@@ -62,7 +72,7 @@ export function reducer(state, _ref) {
           return state;
         }
 
-        return _objectSpread(_objectSpread({}, state), {}, {
+        return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, state), {}, {
           paused: !state.paused
         });
       }
@@ -73,7 +83,7 @@ export function reducer(state, _ref) {
           return state;
         }
 
-        return _objectSpread(_objectSpread({}, state), {}, {
+        return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, state), {}, {
           isLocalShareLoading: false
         });
       }

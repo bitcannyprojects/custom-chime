@@ -1,29 +1,45 @@
-import _regeneratorRuntime from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator";
-import _asyncToGenerator from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator";
-import _slicedToArray from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray";
-import React, { useState, useEffect, useRef, createContext, useMemo, useCallback, useContext } from "react";
-import { useAudioVideo } from "./AudioVideoProvider";
-var Context = createContext(null);
+"use strict";
+
+var _interopRequireWildcard = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useLocalAudioOutput = exports.LocalAudioOutputProvider = void 0;
+
+var _regenerator = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _AudioVideoProvider = require("./AudioVideoProvider");
+
+var Context = /*#__PURE__*/(0, _react.createContext)(null);
 
 var LocalAudioOutputProvider = function LocalAudioOutputProvider(_ref) {
   var children = _ref.children;
-  var audioVideo = useAudioVideo();
+  var audioVideo = (0, _AudioVideoProvider.useAudioVideo)();
 
-  var _useState = useState(true),
-      _useState2 = _slicedToArray(_useState, 2),
+  var _useState = (0, _react.useState)(true),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       isAudioOn = _useState2[0],
       setIsAudioOn = _useState2[1];
 
-  var audioRef = useRef(null);
-  useEffect(function () {
+  var audioRef = (0, _react.useRef)(null);
+  (0, _react.useEffect)(function () {
     if (!audioVideo) {
       return;
     }
 
     if (audioRef.current) {
       (function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(element) {
-          return _regeneratorRuntime.wrap(function _callee$(_context) {
+        var _ref2 = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(element) {
+          return _regenerator.default.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
@@ -59,7 +75,7 @@ var LocalAudioOutputProvider = function LocalAudioOutputProvider(_ref) {
       setIsAudioOn(true);
     };
   }, [audioVideo]);
-  var toggleAudio = useCallback(function () {
+  var toggleAudio = (0, _react.useCallback)(function () {
     if (!audioRef.current) {
       return;
     }
@@ -70,8 +86,8 @@ var LocalAudioOutputProvider = function LocalAudioOutputProvider(_ref) {
       audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.unbindAudioElement();
     } else {
       (function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(element) {
-          return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+        var _ref3 = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(element) {
+          return _regenerator.default.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
@@ -102,15 +118,15 @@ var LocalAudioOutputProvider = function LocalAudioOutputProvider(_ref) {
       })()(audioRef.current);
     }
   }, [audioRef, audioVideo, isAudioOn]);
-  var value = useMemo(function () {
+  var value = (0, _react.useMemo)(function () {
     return {
       isAudioOn: isAudioOn,
       toggleAudio: toggleAudio
     };
   }, [isAudioOn, toggleAudio]);
-  return /*#__PURE__*/React.createElement(Context.Provider, {
+  return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: value
-  }, children, /*#__PURE__*/React.createElement("audio", {
+  }, children, /*#__PURE__*/_react.default.createElement("audio", {
     ref: audioRef,
     style: {
       display: "none"
@@ -118,8 +134,10 @@ var LocalAudioOutputProvider = function LocalAudioOutputProvider(_ref) {
   }));
 };
 
+exports.LocalAudioOutputProvider = LocalAudioOutputProvider;
+
 var useLocalAudioOutput = function useLocalAudioOutput() {
-  var context = useContext(Context);
+  var context = (0, _react.useContext)(Context);
 
   if (!context) {
     throw new Error("useLocalAudioOutput must be used within LocalAudioOutputProvider");
@@ -128,4 +146,4 @@ var useLocalAudioOutput = function useLocalAudioOutput() {
   return context;
 };
 
-export { LocalAudioOutputProvider, useLocalAudioOutput };
+exports.useLocalAudioOutput = useLocalAudioOutput;

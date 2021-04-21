@@ -1,29 +1,47 @@
-import _regeneratorRuntime from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator";
-import _asyncToGenerator from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator";
-import _slicedToArray from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray";
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { PrimaryButton, Flex, Label, useMeetingManager, Modal, ModalBody, ModalHeader } from "amazon-chime-sdk-component-library-react"; // import routes from "../constants/routes";
+"use strict";
 
-import Card from "../Card";
-import { useAppState } from "../providers/AppStateProvider";
+var _interopRequireWildcard = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireWildcard");
 
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-library-react");
+
+var _Card = _interopRequireDefault(require("../Card"));
+
+var _AppStateProvider = require("../providers/AppStateProvider");
+
+// import routes from "../constants/routes";
 var MeetingJoinDetails = function MeetingJoinDetails(_ref) {
   var meetingID = _ref.meetingID;
-  var meetingManager = useMeetingManager();
-  var history = useHistory();
+  var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)();
+  var history = (0, _reactRouterDom.useHistory)();
 
-  var _useState = useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
+  var _useState = (0, _react.useState)(false),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       isLoading = _useState2[0],
       setIsLoading = _useState2[1];
 
-  var _useState3 = useState(""),
-      _useState4 = _slicedToArray(_useState3, 2),
+  var _useState3 = (0, _react.useState)(""),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
       error = _useState4[0],
       setError = _useState4[1];
 
-  var _useAppState = useAppState(),
+  var _useAppState = (0, _AppStateProvider.useAppState)(),
       meetingId = _useAppState.meetingId,
       localUserName = _useAppState.localUserName;
 
@@ -33,8 +51,8 @@ var MeetingJoinDetails = function MeetingJoinDetails(_ref) {
   });
 
   var handleJoinMeeting = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-      return _regeneratorRuntime.wrap(function _callee$(_context) {
+    var _ref2 = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+      return _regenerator.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -71,29 +89,30 @@ var MeetingJoinDetails = function MeetingJoinDetails(_ref) {
     };
   }();
 
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Flex, {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Flex, {
     container: true,
     alignItems: "center",
     flexDirection: "column"
-  }, /*#__PURE__*/React.createElement(PrimaryButton, {
+  }, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PrimaryButton, {
     label: isLoading ? "Loading..." : "Join meeting",
     onClick: handleJoinMeeting
-  }), /*#__PURE__*/React.createElement(Label, {
+  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Label, {
     style: {
       margin: ".75rem 0 0 0"
     }
-  }, "Joining meeting ", /*#__PURE__*/React.createElement("b", null, meetingId), " as ", /*#__PURE__*/React.createElement("b", null, localUserName))), error && /*#__PURE__*/React.createElement(Modal, {
+  }, "Joining meeting ", /*#__PURE__*/_react.default.createElement("b", null, meetingId), " as ", /*#__PURE__*/_react.default.createElement("b", null, localUserName))), error && /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Modal, {
     size: "md",
     onClose: function onClose() {
       return setError("");
     }
-  }, /*#__PURE__*/React.createElement(ModalHeader, {
+  }, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalHeader, {
     title: "Meeting ID: ".concat(meetingId)
-  }), /*#__PURE__*/React.createElement(ModalBody, null, /*#__PURE__*/React.createElement(Card, {
+  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalBody, null, /*#__PURE__*/_react.default.createElement(_Card.default, {
     title: "Unable to join meeting",
     description: "There was an issue in joining this meeting. Check your connectivity and try again.",
     smallText: error
   }))));
 };
 
-export default MeetingJoinDetails;
+var _default = MeetingJoinDetails;
+exports.default = _default;

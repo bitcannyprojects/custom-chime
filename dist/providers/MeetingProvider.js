@@ -1,41 +1,70 @@
-import _slicedToArray from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray";
-import React, { useContext, useState } from "react";
-import MeetingManager from "./MeetingManager";
-import { AudioVideoProvider } from "./AudioVideoProvider";
-import { RosterProvider } from "./RosterProvider";
-import { DevicesProvider } from "./DevicesProvider";
-import { RemoteVideoTileProvider } from "./RemoteVideoTileProvider";
-import { LocalVideoProvider } from "./LocalVideoProvider";
-import { FeaturedVideoTileProvider } from "./FeaturedVideoTileProvider";
-import { LocalAudioOutputProvider } from "./LocalAudioOutputProvider";
-import { ContentShareProvider } from "./ContentShareProvider";
-import { LogLevel } from "amazon-chime-sdk-js";
-export var MeetingContext = React.createContext();
-export var MeetingProvider = function MeetingProvider(_ref) {
+"use strict";
+
+var _interopRequireWildcard = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useMeetingManager = exports.MeetingProvider = exports.MeetingContext = void 0;
+
+var _slicedToArray2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _MeetingManager = _interopRequireDefault(require("./MeetingManager"));
+
+var _AudioVideoProvider = require("./AudioVideoProvider");
+
+var _RosterProvider = require("./RosterProvider");
+
+var _DevicesProvider = require("./DevicesProvider");
+
+var _RemoteVideoTileProvider = require("./RemoteVideoTileProvider");
+
+var _LocalVideoProvider = require("./LocalVideoProvider");
+
+var _FeaturedVideoTileProvider = require("./FeaturedVideoTileProvider");
+
+var _LocalAudioOutputProvider = require("./LocalAudioOutputProvider");
+
+var _ContentShareProvider = require("./ContentShareProvider");
+
+var _amazonChimeSdkJs = require("amazon-chime-sdk-js");
+
+var MeetingContext = /*#__PURE__*/_react.default.createContext();
+
+exports.MeetingContext = MeetingContext;
+
+var MeetingProvider = function MeetingProvider(_ref) {
   var _ref$logLevel = _ref.logLevel,
-      logLevel = _ref$logLevel === void 0 ? LogLevel.WARN : _ref$logLevel,
+      logLevel = _ref$logLevel === void 0 ? _amazonChimeSdkJs.LogLevel.WARN : _ref$logLevel,
       postLogConfig = _ref.postLogConfig,
       _ref$simulcastEnabled = _ref.simulcastEnabled,
       simulcastEnabled = _ref$simulcastEnabled === void 0 ? false : _ref$simulcastEnabled,
       meetingManagerProp = _ref.meetingManager,
       children = _ref.children;
 
-  var _useState = useState(function () {
-    return meetingManagerProp || new MeetingManager({
+  var _useState = (0, _react.useState)(function () {
+    return meetingManagerProp || new _MeetingManager.default({
       logLevel: logLevel,
       postLogConfig: postLogConfig,
       simulcastEnabled: simulcastEnabled
     });
   }),
-      _useState2 = _slicedToArray(_useState, 1),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 1),
       meetingManager = _useState2[0];
 
-  return /*#__PURE__*/React.createElement(MeetingContext.Provider, {
+  return /*#__PURE__*/_react.default.createElement(MeetingContext.Provider, {
     value: meetingManager
-  }, /*#__PURE__*/React.createElement(AudioVideoProvider, null, /*#__PURE__*/React.createElement(DevicesProvider, null, /*#__PURE__*/React.createElement(RosterProvider, null, /*#__PURE__*/React.createElement(RemoteVideoTileProvider, null, /*#__PURE__*/React.createElement(LocalVideoProvider, null, /*#__PURE__*/React.createElement(LocalAudioOutputProvider, null, /*#__PURE__*/React.createElement(ContentShareProvider, null, /*#__PURE__*/React.createElement(FeaturedVideoTileProvider, null, children)))))))));
+  }, /*#__PURE__*/_react.default.createElement(_AudioVideoProvider.AudioVideoProvider, null, /*#__PURE__*/_react.default.createElement(_DevicesProvider.DevicesProvider, null, /*#__PURE__*/_react.default.createElement(_RosterProvider.RosterProvider, null, /*#__PURE__*/_react.default.createElement(_RemoteVideoTileProvider.RemoteVideoTileProvider, null, /*#__PURE__*/_react.default.createElement(_LocalVideoProvider.LocalVideoProvider, null, /*#__PURE__*/_react.default.createElement(_LocalAudioOutputProvider.LocalAudioOutputProvider, null, /*#__PURE__*/_react.default.createElement(_ContentShareProvider.ContentShareProvider, null, /*#__PURE__*/_react.default.createElement(_FeaturedVideoTileProvider.FeaturedVideoTileProvider, null, children)))))))));
 };
-export var useMeetingManager = function useMeetingManager() {
-  var meetingManager = useContext(MeetingContext);
+
+exports.MeetingProvider = MeetingProvider;
+
+var useMeetingManager = function useMeetingManager() {
+  var meetingManager = (0, _react.useContext)(MeetingContext);
 
   if (!meetingManager) {
     throw new Error("useMeetingManager must be used within MeetingProvider");
@@ -43,3 +72,5 @@ export var useMeetingManager = function useMeetingManager() {
 
   return meetingManager;
 };
+
+exports.useMeetingManager = useMeetingManager;

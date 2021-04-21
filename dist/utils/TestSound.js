@@ -1,16 +1,26 @@
-import _regeneratorRuntime from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator";
-import _asyncToGenerator from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator";
-import _classCallCheck from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck";
-import { DefaultAudioMixController, TimeoutScheduler } from "amazon-chime-sdk-js";
+"use strict";
+
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck"));
+
+var _amazonChimeSdkJs = require("amazon-chime-sdk-js");
 
 var TestSound = function TestSound(sinkId) {
   var frequency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 440;
   var durationSec = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var rampSec = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0.1;
   var maxGainValue = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0.1;
-
-  _classCallCheck(this, TestSound);
-
+  (0, _classCallCheck2.default)(this, TestSound);
   // @ts-ignore
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   var gainNode = audioContext.createGain();
@@ -27,11 +37,11 @@ var TestSound = function TestSound(sinkId) {
   gainNode.gain.linearRampToValueAtTime(maxGainValue, startTime + rampSec + durationSec);
   gainNode.gain.linearRampToValueAtTime(0, startTime + rampSec * 2 + durationSec);
   oscillatorNode.start();
-  var audioMixController = new DefaultAudioMixController();
+  var audioMixController = new _amazonChimeSdkJs.DefaultAudioMixController();
 
   var handlingBindingAsynchronous = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-      return _regeneratorRuntime.wrap(function _callee$(_context) {
+    var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+      return _regenerator.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -84,9 +94,10 @@ var TestSound = function TestSound(sinkId) {
 
   handlingBindingAsynchronous();
   audioMixController.bindAudioStream(destinationStream.stream);
-  new TimeoutScheduler((rampSec * 2 + durationSec + 1) * 1000).start(function () {
+  new _amazonChimeSdkJs.TimeoutScheduler((rampSec * 2 + durationSec + 1) * 1000).start(function () {
     audioContext.close();
   });
 };
 
-export default TestSound;
+var _default = TestSound;
+exports.default = _default;

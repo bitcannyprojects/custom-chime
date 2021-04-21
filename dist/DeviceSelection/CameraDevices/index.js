@@ -1,20 +1,32 @@
+"use strict";
+
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-library-react");
+
+var _Styled = require("../Styled");
+
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React from 'react';
-import { Heading, PreviewVideo, QualitySelection, CameraSelection, Label } from 'amazon-chime-sdk-component-library-react';
-import { title, StyledInputGroup } from '../Styled';
-
 var CameraDevices = function CameraDevices() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Heading, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Heading, {
     tag: "h2",
     level: 6,
-    css: title
-  }, "Video"), /*#__PURE__*/React.createElement(StyledInputGroup, null, /*#__PURE__*/React.createElement(CameraSelection, null)), /*#__PURE__*/React.createElement(StyledInputGroup, null, /*#__PURE__*/React.createElement(QualitySelection, null)), /*#__PURE__*/React.createElement(Label, {
+    css: _Styled.title
+  }, "Video"), /*#__PURE__*/_react.default.createElement(_Styled.StyledInputGroup, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.CameraSelection, null)), /*#__PURE__*/_react.default.createElement(_Styled.StyledInputGroup, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.QualitySelection, null)), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Label, {
     style: {
       display: 'block',
       marginBottom: '.5rem'
     }
-  }, "Video preview"), /*#__PURE__*/React.createElement(PreviewVideo, null));
+  }, "Video preview"), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PreviewVideo, null));
 };
 
-export default CameraDevices;
+var _default = CameraDevices;
+exports.default = _default;

@@ -1,27 +1,45 @@
-import _regeneratorRuntime from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator";
-import _asyncToGenerator from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator";
-import _slicedToArray from "/Users/vivekkumar/Documents/vattend-react/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray";
-import React, { useCallback, useMemo, createContext, useContext, useEffect, useReducer, useRef } from "react";
-import { DefaultModality } from "amazon-chime-sdk-js";
-import { reducer, initialState, ContentShareState, ContentActionType } from "./state";
-import { useAudioVideo } from "./AudioVideoProvider";
-var ContentShareContext = createContext(null);
-var ContentShareControlContext = createContext(null);
+"use strict";
+
+var _interopRequireWildcard = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useContentShareControls = exports.useContentShareState = exports.ContentShareProvider = void 0;
+
+var _regenerator = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _amazonChimeSdkJs = require("amazon-chime-sdk-js");
+
+var _state = require("./state");
+
+var _AudioVideoProvider = require("./AudioVideoProvider");
+
+var ContentShareContext = /*#__PURE__*/(0, _react.createContext)(null);
+var ContentShareControlContext = /*#__PURE__*/(0, _react.createContext)(null);
 
 var ContentShareProvider = function ContentShareProvider(_ref) {
   var children = _ref.children;
-  var audioVideo = useAudioVideo();
+  var audioVideo = (0, _AudioVideoProvider.useAudioVideo)();
 
-  var _useReducer = useReducer(reducer, initialState),
-      _useReducer2 = _slicedToArray(_useReducer, 2),
+  var _useReducer = (0, _react.useReducer)(_state.reducer, _state.initialState),
+      _useReducer2 = (0, _slicedToArray2.default)(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
   var paused = state.paused,
       isLocalUserSharing = state.isLocalUserSharing,
       isLocalShareLoading = state.isLocalShareLoading;
-  var localUserTileIdRef = useRef < number | null > null;
-  useEffect(function () {
+  var localUserTileIdRef = _react.useRef < number | null > null;
+  (0, _react.useEffect)(function () {
     if (!audioVideo) {
       return;
     }
@@ -33,7 +51,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
         }
 
         var boundAttendeeId = tileState.boundAttendeeId;
-        var baseAttendeeId = new DefaultModality(boundAttendeeId).base();
+        var baseAttendeeId = new _amazonChimeSdkJs.DefaultModality(boundAttendeeId).base();
         var localAttendeeId = audioVideo.audioVideoController.realtimeController.state.localAttendeeId;
         var isLocalUser = baseAttendeeId === localAttendeeId;
 
@@ -47,7 +65,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
         }
 
         dispatch({
-          type: ContentActionType.UPDATE,
+          type: _state.ContentActionType.UPDATE,
           payload: {
             tileState: tileState,
             isLocalUser: isLocalUser
@@ -60,7 +78,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
         }
 
         dispatch({
-          type: ContentActionType.REMOVE,
+          type: _state.ContentActionType.REMOVE,
           payload: tileId
         });
       }
@@ -68,7 +86,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
     var contentShareObserver = {
       contentShareDidStop: function contentShareDidStop() {
         dispatch({
-          type: ContentActionType.DID_STOP
+          type: _state.ContentActionType.DID_STOP
         });
       }
     };
@@ -78,11 +96,11 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
       audioVideo.removeObserver(videoObserver);
       audioVideo.removeContentShareObserver(contentShareObserver);
       dispatch({
-        type: ContentActionType.RESET
+        type: _state.ContentActionType.RESET
       });
     };
   }, [audioVideo]);
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     if (!audioVideo) {
       return;
     }
@@ -90,7 +108,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
     var cb = function cb(event) {
       if (event.reason.name === "NotAllowedError") {
         dispatch({
-          type: ContentActionType.DENIED
+          type: _state.ContentActionType.DENIED
         });
       }
     };
@@ -100,8 +118,8 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
       return window.removeEventListener("unhandledrejection", cb);
     };
   }, [isLocalShareLoading]);
-  var toggleContentShare = useCallback( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-    return _regeneratorRuntime.wrap(function _callee$(_context) {
+  var toggleContentShare = (0, _react.useCallback)( /*#__PURE__*/(0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+    return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -118,7 +136,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
             } else {
               audioVideo.startContentShareFromScreenCapture();
               dispatch({
-                type: ContentActionType.STARTING
+                type: _state.ContentActionType.STARTING
               });
             }
 
@@ -129,7 +147,7 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
       }
     }, _callee);
   })), [audioVideo, isLocalUserSharing, isLocalShareLoading]);
-  var togglePauseContentShare = useCallback(function () {
+  var togglePauseContentShare = (0, _react.useCallback)(function () {
     if (!audioVideo || !isLocalUserSharing) {
       return;
     }
@@ -141,10 +159,10 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
     }
 
     dispatch({
-      type: ContentActionType.TOGGLE_PAUSE
+      type: _state.ContentActionType.TOGGLE_PAUSE
     });
   }, [audioVideo, paused, isLocalUserSharing]);
-  var controlsValue = useMemo(function () {
+  var controlsValue = (0, _react.useMemo)(function () {
     return {
       paused: paused,
       isLocalUserSharing: isLocalUserSharing,
@@ -153,15 +171,17 @@ var ContentShareProvider = function ContentShareProvider(_ref) {
       togglePauseContentShare: togglePauseContentShare
     };
   }, [paused, toggleContentShare, togglePauseContentShare, isLocalUserSharing, isLocalShareLoading]);
-  return /*#__PURE__*/React.createElement(ContentShareContext.Provider, {
+  return /*#__PURE__*/_react.default.createElement(ContentShareContext.Provider, {
     value: state
-  }, /*#__PURE__*/React.createElement(ContentShareControlContext.Provider, {
+  }, /*#__PURE__*/_react.default.createElement(ContentShareControlContext.Provider, {
     value: controlsValue
   }, children));
 };
 
+exports.ContentShareProvider = ContentShareProvider;
+
 var useContentShareState = function useContentShareState() {
-  var contentShareState = useContext(ContentShareContext);
+  var contentShareState = (0, _react.useContext)(ContentShareContext);
 
   if (!contentShareState) {
     throw new Error("useContentShareState must be used within a ContentShareProvider");
@@ -170,8 +190,10 @@ var useContentShareState = function useContentShareState() {
   return contentShareState;
 };
 
+exports.useContentShareState = useContentShareState;
+
 var useContentShareControls = function useContentShareControls() {
-  var context = useContext(ContentShareControlContext);
+  var context = (0, _react.useContext)(ContentShareControlContext);
 
   if (!context) {
     throw new Error("useContentShareControlContext must be used within ContentShareControlProvider");
@@ -180,4 +202,4 @@ var useContentShareControls = function useContentShareControls() {
   return context;
 };
 
-export { ContentShareProvider, useContentShareState, useContentShareControls };
+exports.useContentShareControls = useContentShareControls;
