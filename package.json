@@ -2,7 +2,16 @@
   "name": "custom-chime",
   "version": "0.1.0",
   "private": false,
-  "dependencies": {},
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.1",
+    "@babel/cli": "^7.13.16"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "rm -rf dist && BABEL_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
@@ -27,14 +36,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^12.8.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.1",
-    "@babel/cli": "^7.13.16"
-  }
+  "devDependencies": {}
 }
