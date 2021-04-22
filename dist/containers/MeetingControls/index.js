@@ -1,7 +1,5 @@
 "use strict";
 
-var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -16,6 +14,8 @@ var _EndMeetingControl = _interopRequireDefault(require("../EndMeetingControl"))
 var _NavigationProvider = require("../../providers/NavigationProvider");
 
 var _Styled = require("./Styled.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MeetingControls = function MeetingControls() {
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),

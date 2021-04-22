@@ -1,7 +1,5 @@
 "use strict";
 
-var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -14,6 +12,8 @@ var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-l
 var _NavigationProvider = require("../../providers/NavigationProvider");
 
 var _AppStateProvider = require("../../providers/AppStateProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Navigation = function Navigation() {
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),

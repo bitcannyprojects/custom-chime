@@ -1,26 +1,26 @@
 "use strict";
 
-var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _regenerator = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/regenerator"));
-
-var _asyncToGenerator2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator"));
-
-var _classCallCheck2 = _interopRequireDefault(require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck"));
-
 var _amazonChimeSdkJs = require("amazon-chime-sdk-js");
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TestSound = function TestSound(sinkId) {
   var frequency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 440;
   var durationSec = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var rampSec = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0.1;
   var maxGainValue = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0.1;
-  (0, _classCallCheck2.default)(this, TestSound);
+
+  _classCallCheck(this, TestSound);
+
   // @ts-ignore
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   var gainNode = audioContext.createGain();
@@ -40,8 +40,8 @@ var TestSound = function TestSound(sinkId) {
   var audioMixController = new _amazonChimeSdkJs.DefaultAudioMixController();
 
   var handlingBindingAsynchronous = /*#__PURE__*/function () {
-    var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-      return _regenerator.default.wrap(function _callee$(_context) {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:

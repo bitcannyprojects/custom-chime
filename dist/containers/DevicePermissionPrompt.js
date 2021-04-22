@@ -1,7 +1,5 @@
 "use strict";
 
-var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -12,6 +10,8 @@ var _react = _interopRequireDefault(require("react"));
 var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-library-react");
 
 var _Card = _interopRequireDefault(require("../Card"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Show permission prompt when the user is granting the browser permissions
 // Show nothing if permission is already granted or component loads on initial render

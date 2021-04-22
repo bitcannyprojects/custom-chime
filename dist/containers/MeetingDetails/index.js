@@ -1,7 +1,5 @@
 "use strict";
 
-var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -14,6 +12,8 @@ var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-l
 var _AppStateProvider = require("../../providers/AppStateProvider");
 
 var _Styled = require("./Styled");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MeetingDetails = function MeetingDetails() {
   var _useAppState = (0, _AppStateProvider.useAppState)(),

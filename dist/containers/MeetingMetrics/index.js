@@ -1,7 +1,5 @@
 "use strict";
 
-var _interopRequireDefault = require("/Users/vivekkumar/Documents/custom-chime/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -14,6 +12,8 @@ var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-l
 var _Styled = require("./Styled");
 
 var _NavigationProvider = require("../../providers/NavigationProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function formatMetric(metric) {
   return metric ? "".concat(metric, " Kbps") : null;
