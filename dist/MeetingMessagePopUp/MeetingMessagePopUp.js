@@ -11,7 +11,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _moment = _interopRequireDefault(require("moment"));
 
-require("./MeetingMessagePopUp.scss");
+require("./MeetingMessagePopUp.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

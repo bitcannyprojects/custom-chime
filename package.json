@@ -1,8 +1,7 @@
 {
   "name": "custom-chime-app",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
-  "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "rm -rf dist && BABEL_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
@@ -28,13 +27,10 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^12.8.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
+    "@babel/cli": "^7.13.16",
     "web-vitals": "^1.1.1",
-    "@babel/cli": "^7.13.16"
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13"
   }
 }

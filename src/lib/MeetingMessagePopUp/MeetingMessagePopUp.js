@@ -1,12 +1,6 @@
 import React, { useEffect, useRef } from "react";
-// import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-// import axios from "axios";
-// import keys from "../config/keys";
-// import { UPDATE_MESSAGE_STATE } from "../redux/types";
-// import { readMessageAction } from "../redux/actions";
-import "./MeetingMessagePopUp.scss";
-// import ScrollToBottom from "react-scroll-to-bottom";
+import "./MeetingMessagePopUp.css";
 export default function MeetingMessagePopUp({
   sessionId,
   sendMessage,
