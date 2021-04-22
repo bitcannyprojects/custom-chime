@@ -17,7 +17,7 @@ var _MeetingJoinDetails = _interopRequireDefault(require("../containers/MeetingJ
 
 var _Styled = require("./Styled");
 
-var _DeviceSelection = _interopRequireDefault(require("custom-chime/dist/DeviceSelection"));
+var _DeviceSelection = _interopRequireDefault(require("../DeviceSelection"));
 
 var _AppStateProvider = require("../providers/AppStateProvider");
 

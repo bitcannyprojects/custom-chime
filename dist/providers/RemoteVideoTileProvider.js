@@ -47,7 +47,7 @@ var RemoteVideoTileProvider = function RemoteVideoTileProvider(_ref) {
 
     var observer = {
       videoTileDidUpdate: function videoTileDidUpdate(tileState) {
-        if ((tileState === null || tileState === void 0 ? void 0 : tileState.boundAttendeeId) && (tileState === null || tileState === void 0 ? void 0 : tileState.tileId) && !tileState.isContent && !tileState.localTile) {
+        if (tileState !== null && tileState !== void 0 && tileState.boundAttendeeId && tileState !== null && tileState !== void 0 && tileState.tileId && !tileState.isContent && !tileState.localTile) {
           var tileId = tileState.tileId,
               boundAttendeeId = tileState.boundAttendeeId;
           dispatch({

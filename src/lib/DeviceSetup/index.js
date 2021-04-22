@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Heading } from "amazon-chime-sdk-component-library-react";
-import {
-  useMeetingManager,
-} from "amazon-chime-sdk-component-library-react";
+import { useMeetingManager } from "amazon-chime-sdk-component-library-react";
 import { useSelector } from "react-redux";
 import JoinMeetingDetails from "../containers/MeetingJoinDetails";
 import { StyledLayout } from "./Styled";
-import DeviceSelection from "custom-chime/dist/DeviceSelection";
+import DeviceSelection from "../DeviceSelection";
 import { useAppState } from "../providers/AppStateProvider";
 
 const DeviceSetup = ({ match, getData, getAttendee }) => {
