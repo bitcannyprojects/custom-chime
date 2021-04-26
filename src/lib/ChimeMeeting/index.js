@@ -14,7 +14,13 @@ import MeetingMetrics from "../containers/MeetingMetrics";
 import { useAppState } from "../providers/AppStateProvider";
 import classnames from "classnames";
 
-const MeetingView = ({ history, match, MeetingMessagePopUp }) => {
+const MeetingView = ({
+  history,
+  match,
+  MeetingMessagePopUp,
+  session,
+  polls,
+}) => {
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
   const sessionId = match?.params.id;
@@ -52,25 +58,131 @@ const MeetingView = ({ history, match, MeetingMessagePopUp }) => {
             >
               Chat
             </div>
-            <div
-              className={classnames("session-tab-item p-2", {
-                active: activeTab === "polls",
-              })}
-              onClick={() => setActiveTab("polls")}
-            >
-              Polls
-            </div>
-            <div
-              className={classnames("session-tab-item p-2", {
-                active: activeTab === "qna",
-              })}
-              onClick={() => setActiveTab("qna")}
-            >
-              Q & A
-            </div>
+            {polls?.length > 0 && (
+              <div
+                className={classnames("session-tab-item p-2", {
+                  active: activeTab === "polls",
+                })}
+                onClick={() => setActiveTab("polls")}
+              >
+                Polls
+              </div>
+            )}
+            {session?.type !== "breakout" && (
+              <div
+                className={classnames("session-tab-item p-2", {
+                  active: activeTab === "qna",
+                })}
+                onClick={() => setActiveTab("qna")}
+              >
+                Q & A
+              </div>
+            )}
           </div>
-          {activeTab === "chat" && (
+          {activeTab === "chat" && session && (
             <MeetingMessagePopUp sessionId={sessionId} />
+          )}
+          {activeTab === "polls" && (
+            <div className="chime-poll-cont">
+              {polls.map((poll) => {
+                return (
+                  <div className="single-chime-poll">
+                    {Object.values(poll)[0].questions?.map(
+                      (
+                        {
+                          _id: questionId,
+                          isSingleChoice,
+                          questionText,
+                          options,
+                        },
+                        index
+                      ) => (
+                        <div className="form-group">
+                          <label>
+                            {index + 1}. {questionText}
+                          </label>
+                          {options.map(({ _id: optionId, optionText }) => {
+                            if (isSingleChoice) {
+                              return (
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    // checked={responses[questionId]?.includes(
+                                    //   optionId
+                                    // )}
+                                    onChange={() => {
+                                      // this.setState({
+                                      //   responses: {
+                                      //     ...responses,
+                                      //     [questionId]: [optionId],
+                                      //   },
+                                      // });
+                                    }}
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="exampleRadios1"
+                                  >
+                                    {optionText}
+                                  </label>
+                                </div>
+                              );
+                            }
+                            return (
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  // checked={responses[questionId]?.includes(
+                                  //   optionId
+                                  // )}
+                                  onChange={() => {
+                                    const isIncluded = responses[
+                                      questionId
+                                    ]?.includes(optionId);
+                                    if (isIncluded) {
+                                      return;
+                                      // this.setState({
+                                      //   responses: {
+                                      //     ...responses,
+                                      //     [questionId]: responses[
+                                      //       questionId
+                                      //     ].filter((id) => id !== optionId),
+                                      //   },
+                                      // });
+                                    } else {
+                                      // this.setState({
+                                      //   responses: {
+                                      //     ...responses,
+                                      //     [questionId]: [
+                                      //       ...(responses[questionId] || []),
+                                      //       optionId,
+                                      //     ],
+                                      //   },
+                                      // });
+                                    }
+                                  }}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="exampleRadios1"
+                                >
+                                  {optionText}
+                                </label>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )
+                    )}
+                    <button className="btn btn-primary mx-auto my-2">
+                      Submit
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
       </div>

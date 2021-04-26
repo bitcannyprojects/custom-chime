@@ -46,17 +46,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var DeviceSetup = function DeviceSetup(_ref) {
   var match = _ref.match,
       getData = _ref.getData,
-      getAttendee = _ref.getAttendee;
+      getAttendee = _ref.getAttendee,
+      setSession = _ref.setSession;
 
   var _useState = (0, _react.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       loading = _useState2[0],
-      setLoading = _useState2[1];
+      setLoading = _useState2[1]; // const [session, setSession] = useState({});
 
-  var _useState3 = (0, _react.useState)({}),
-      _useState4 = _slicedToArray(_useState3, 2),
-      session = _useState4[0],
-      setSession = _useState4[1];
 
   var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)();
   var user = (0, _reactRedux.useSelector)(function (state) {
@@ -92,15 +89,16 @@ var DeviceSetup = function DeviceSetup(_ref) {
                 meetingInfo: resData.meeting,
                 attendeeInfo: resData.attendee
               };
-              _context.next = 7;
+              setSession(resData.session);
+              _context.next = 8;
               return meetingManager.join(joinData);
 
-            case 7:
+            case 8:
               meetingManager.getAttendee = getAttendee((_resData$meeting = resData.meeting) === null || _resData$meeting === void 0 ? void 0 : (_resData$meeting$Meet = _resData$meeting.Meeting) === null || _resData$meeting$Meet === void 0 ? void 0 : _resData$meeting$Meet.MeetingId);
               setAppMeetingInfo((_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId, (user === null || user === void 0 ? void 0 : user.first_name) + " " + (user === null || user === void 0 ? void 0 : user.last_name));
               setLoading(false);
 
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -118,7 +116,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
     tag: "h1",
     level: 3,
     css: "align-self: flex-start"
-  }, "Device setting"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
+  }, "Device settings"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
     meetingID: meetingID
   }));
 };

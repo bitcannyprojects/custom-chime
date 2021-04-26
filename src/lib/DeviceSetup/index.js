@@ -7,9 +7,9 @@ import { StyledLayout } from "./Styled";
 import DeviceSelection from "../DeviceSelection";
 import { useAppState } from "../providers/AppStateProvider";
 
-const DeviceSetup = ({ match, getData, getAttendee }) => {
+const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState({});
+  // const [session, setSession] = useState({});
   const meetingManager = useMeetingManager();
   const user = useSelector((state) => state.userReducer.user);
   const { meetingId, localUserName, setAppMeetingInfo } = useAppState();
@@ -21,11 +21,12 @@ const DeviceSetup = ({ match, getData, getAttendee }) => {
   const getBreakoutRoomData = async (id) => {
     let resData = await getData(id);
     resData = resData.data;
+
     const joinData = {
       meetingInfo: resData.meeting,
       attendeeInfo: resData.attendee,
     };
-
+    setSession(resData.session);
     await meetingManager.join(joinData);
     meetingManager.getAttendee = getAttendee(
       resData.meeting?.Meeting?.MeetingId

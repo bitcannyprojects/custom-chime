@@ -48,7 +48,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var MeetingView = function MeetingView(_ref) {
   var history = _ref.history,
       match = _ref.match,
-      MeetingMessagePopUp = _ref.MeetingMessagePopUp;
+      MeetingMessagePopUp = _ref.MeetingMessagePopUp,
+      session = _ref.session,
+      polls = _ref.polls;
 
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
       showNavbar = _useNavigation.showNavbar,
@@ -93,23 +95,104 @@ var MeetingView = function MeetingView(_ref) {
     onClick: function onClick() {
       return setActiveTab("chat");
     }
-  }, "Chat"), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Chat"), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)("session-tab-item p-2", {
       active: activeTab === "polls"
     }),
     onClick: function onClick() {
       return setActiveTab("polls");
     }
-  }, "Polls"), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Polls"), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)("session-tab-item p-2", {
       active: activeTab === "qna"
     }),
     onClick: function onClick() {
       return setActiveTab("qna");
     }
-  }, "Q & A")), activeTab === "chat" && /*#__PURE__*/_react.default.createElement(MeetingMessagePopUp, {
+  }, "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(MeetingMessagePopUp, {
     sessionId: sessionId
-  }))));
+  }), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
+    className: "chime-poll-cont"
+  }, polls.map(function (poll) {
+    var _Object$values$0$ques;
+
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "single-chime-poll"
+    }, (_Object$values$0$ques = Object.values(poll)[0].questions) === null || _Object$values$0$ques === void 0 ? void 0 : _Object$values$0$ques.map(function (_ref2, index) {
+      var questionId = _ref2._id,
+          isSingleChoice = _ref2.isSingleChoice,
+          questionText = _ref2.questionText,
+          options = _ref2.options;
+      return /*#__PURE__*/_react.default.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/_react.default.createElement("label", null, index + 1, ". ", questionText), options.map(function (_ref3) {
+        var optionId = _ref3._id,
+            optionText = _ref3.optionText;
+
+        if (isSingleChoice) {
+          return /*#__PURE__*/_react.default.createElement("div", {
+            className: "form-check"
+          }, /*#__PURE__*/_react.default.createElement("input", {
+            className: "form-check-input",
+            type: "radio" // checked={responses[questionId]?.includes(
+            //   optionId
+            // )}
+            ,
+            onChange: function onChange() {// this.setState({
+              //   responses: {
+              //     ...responses,
+              //     [questionId]: [optionId],
+              //   },
+              // });
+            }
+          }), /*#__PURE__*/_react.default.createElement("label", {
+            className: "form-check-label",
+            htmlFor: "exampleRadios1"
+          }, optionText));
+        }
+
+        return /*#__PURE__*/_react.default.createElement("div", {
+          className: "form-check"
+        }, /*#__PURE__*/_react.default.createElement("input", {
+          className: "form-check-input",
+          type: "checkbox" // checked={responses[questionId]?.includes(
+          //   optionId
+          // )}
+          ,
+          onChange: function onChange() {
+            var _responses$questionId;
+
+            var isIncluded = (_responses$questionId = responses[questionId]) === null || _responses$questionId === void 0 ? void 0 : _responses$questionId.includes(optionId);
+
+            if (isIncluded) {
+              return; // this.setState({
+              //   responses: {
+              //     ...responses,
+              //     [questionId]: responses[
+              //       questionId
+              //     ].filter((id) => id !== optionId),
+              //   },
+              // });
+            } else {// this.setState({
+                //   responses: {
+                //     ...responses,
+                //     [questionId]: [
+                //       ...(responses[questionId] || []),
+                //       optionId,
+                //     ],
+                //   },
+                // });
+              }
+          }
+        }), /*#__PURE__*/_react.default.createElement("label", {
+          className: "form-check-label",
+          htmlFor: "exampleRadios1"
+        }, optionText));
+      }));
+    }), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-primary mx-auto my-2"
+    }, "Submit"));
+  })))));
 };
 
 var _default = MeetingView;
