@@ -112,12 +112,7 @@ export default function MeetingMessagePopUp({
       <header className="messagebox-popup__header">
         <aside style={{ flex: 2 }}>
           <div className="messagebox-popup__avatar">
-            <img
-              src={currentMeeting?.dpUrl || "/gravatar.png"}
-              style={{
-                width: "50px",
-              }}
-            />
+            <img src={currentMeeting?.dpUrl || "/gravatar.png"} />
           </div>
         </aside>
         <aside style={{ flex: 9 }}>

@@ -27,6 +27,8 @@ var _AppStateProvider = require("../providers/AppStateProvider");
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+require("./style.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -75,6 +77,8 @@ var MeetingView = function MeetingView(_ref) {
     }
   }, [meetingId]);
   return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.UserActivityProvider, null, /*#__PURE__*/_react.default.createElement("div", {
+    className: "vidcon-root"
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "row"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "col-md-8"
@@ -89,27 +93,33 @@ var MeetingView = function MeetingView(_ref) {
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "session-util-tab p-2 d-flex align-items-center"
   }, /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)("session-tab-item p-2", {
+    className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "chat"
     }),
     onClick: function onClick() {
       return setActiveTab("chat");
     }
-  }, "Chat"), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)("session-tab-item p-2", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: "/material-chat.svg"
+  }), "Chat"), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
+    className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "polls"
     }),
     onClick: function onClick() {
       return setActiveTab("polls");
     }
-  }, "Polls"), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)("session-tab-item p-2", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: "/awesome-poll.svg"
+  }), "Polls"), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
+    className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "qna"
     }),
     onClick: function onClick() {
       return setActiveTab("qna");
     }
-  }, "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(MeetingMessagePopUp, {
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: "/awesome-question-circle.svg"
+  }), "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(MeetingMessagePopUp, {
     sessionId: sessionId
   }), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
     className: "chime-poll-cont"
@@ -192,7 +202,7 @@ var MeetingView = function MeetingView(_ref) {
     }), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn btn-primary mx-auto my-2"
     }, "Submit"));
-  })))));
+  }))))));
 };
 
 var _default = MeetingView;

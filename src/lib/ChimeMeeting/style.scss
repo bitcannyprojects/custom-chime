@@ -1,0 +1,30 @@
+.vidcon-root {
+  background: url(./update-bg.png) no-repeat;
+  background-size: cover;
+  padding: 10px 10px 20px 120px;
+  overflow-x: hidden;
+  min-height: 100vh;
+  @media (max-width: 992px) {
+    padding: 10px 10px 20px;
+  }
+  .session-util-tab {
+    justify-content: space-around;
+    text-align: center;
+    margin: 0 0 20px;
+    .session-tab-item.active {
+      color: #fff;
+    }
+
+    .session-tab-item {
+      color: #6f6f6f;
+      text-transform: uppercase;
+      padding: 0.5rem;
+      cursor: pointer;
+      img {
+        display: block;
+        height: 45px;
+        margin: 0 0 8px;
+      }
+    }
+  }
+}

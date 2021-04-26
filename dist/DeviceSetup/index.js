@@ -116,7 +116,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
     tag: "h1",
     level: 3,
     css: "align-self: flex-start"
-  }, "Device settings"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
+  }, "adsadsfasdf dfadf"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
     meetingID: meetingID
   }));
 };

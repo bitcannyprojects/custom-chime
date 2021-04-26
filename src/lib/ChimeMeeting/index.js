@@ -13,6 +13,7 @@ import MeetingControls from "../containers/MeetingControls";
 import MeetingMetrics from "../containers/MeetingMetrics";
 import { useAppState } from "../providers/AppStateProvider";
 import classnames from "classnames";
+import "./style.scss";
 
 const MeetingView = ({
   history,
@@ -34,90 +35,137 @@ const MeetingView = ({
 
   return (
     <UserActivityProvider>
-      <div className="row">
-        <div className="col-md-8">
-          <StyledLayout showNav={showNavbar} showRoster={showRoster}>
-            <StyledContent>
-              <MeetingMetrics />
-              <VideoTileGrid
-                className="videos"
-                noRemoteVideoView={<MeetingDetails />}
-              />
-              <MeetingControls />
-            </StyledContent>
-            <NavigationControl />
-          </StyledLayout>
-        </div>
-        <div className="col-md-4">
-          <div className="session-util-tab p-2 d-flex align-items-center">
-            <div
-              className={classnames("session-tab-item p-2", {
-                active: activeTab === "chat",
-              })}
-              onClick={() => setActiveTab("chat")}
-            >
-              Chat
-            </div>
-            {polls?.length > 0 && (
-              <div
-                className={classnames("session-tab-item p-2", {
-                  active: activeTab === "polls",
-                })}
-                onClick={() => setActiveTab("polls")}
-              >
-                Polls
-              </div>
-            )}
-            {session?.type !== "breakout" && (
-              <div
-                className={classnames("session-tab-item p-2", {
-                  active: activeTab === "qna",
-                })}
-                onClick={() => setActiveTab("qna")}
-              >
-                Q & A
-              </div>
-            )}
+      <div className="vidcon-root">
+        <div className="row">
+          <div className="col-md-8">
+            <StyledLayout showNav={showNavbar} showRoster={showRoster}>
+              <StyledContent>
+                <MeetingMetrics />
+                <VideoTileGrid
+                  className="videos"
+                  noRemoteVideoView={<MeetingDetails />}
+                />
+                <MeetingControls />
+              </StyledContent>
+              <NavigationControl />
+            </StyledLayout>
           </div>
-          {activeTab === "chat" && session && (
-            <MeetingMessagePopUp sessionId={sessionId} />
-          )}
-          {activeTab === "polls" && (
-            <div className="chime-poll-cont">
-              {polls.map((poll) => {
-                return (
-                  <div className="single-chime-poll">
-                    {Object.values(poll)[0].questions?.map(
-                      (
-                        {
-                          _id: questionId,
-                          isSingleChoice,
-                          questionText,
-                          options,
-                        },
-                        index
-                      ) => (
-                        <div className="form-group">
-                          <label>
-                            {index + 1}. {questionText}
-                          </label>
-                          {options.map(({ _id: optionId, optionText }) => {
-                            if (isSingleChoice) {
+          <div className="col-md-4">
+            <div className="session-util-tab p-2 d-flex align-items-center">
+              <div
+                className={classnames("session-tab-item ", {
+                  active: activeTab === "chat",
+                })}
+                onClick={() => setActiveTab("chat")}
+              >
+                <img src="/material-chat.svg" />
+                Chat
+              </div>
+              {polls?.length > 0 && (
+                <div
+                  className={classnames("session-tab-item ", {
+                    active: activeTab === "polls",
+                  })}
+                  onClick={() => setActiveTab("polls")}
+                >
+                  <img src="/awesome-poll.svg" />
+                  Polls
+                </div>
+              )}
+              {session?.type !== "breakout" && (
+                <div
+                  className={classnames("session-tab-item ", {
+                    active: activeTab === "qna",
+                  })}
+                  onClick={() => setActiveTab("qna")}
+                >
+                  <img src="/awesome-question-circle.svg" />Q & A
+                </div>
+              )}
+            </div>
+            {activeTab === "chat" && session && (
+              <MeetingMessagePopUp sessionId={sessionId} />
+            )}
+            {activeTab === "polls" && (
+              <div className="chime-poll-cont">
+                {polls.map((poll) => {
+                  return (
+                    <div className="single-chime-poll">
+                      {Object.values(poll)[0].questions?.map(
+                        (
+                          {
+                            _id: questionId,
+                            isSingleChoice,
+                            questionText,
+                            options,
+                          },
+                          index
+                        ) => (
+                          <div className="form-group">
+                            <label>
+                              {index + 1}. {questionText}
+                            </label>
+                            {options.map(({ _id: optionId, optionText }) => {
+                              if (isSingleChoice) {
+                                return (
+                                  <div className="form-check">
+                                    <input
+                                      className="form-check-input"
+                                      type="radio"
+                                      // checked={responses[questionId]?.includes(
+                                      //   optionId
+                                      // )}
+                                      onChange={() => {
+                                        // this.setState({
+                                        //   responses: {
+                                        //     ...responses,
+                                        //     [questionId]: [optionId],
+                                        //   },
+                                        // });
+                                      }}
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor="exampleRadios1"
+                                    >
+                                      {optionText}
+                                    </label>
+                                  </div>
+                                );
+                              }
                               return (
                                 <div className="form-check">
                                   <input
                                     className="form-check-input"
-                                    type="radio"
+                                    type="checkbox"
                                     // checked={responses[questionId]?.includes(
                                     //   optionId
                                     // )}
                                     onChange={() => {
-                                      // this.setState({
-                                      //   responses: {
-                                      //     ...responses,
-                                      //     [questionId]: [optionId],
-                                      //   },
-                                      // });
+                                      const isIncluded = responses[
+                                        questionId
+                                      ]?.includes(optionId);
+                                      if (isIncluded) {
+                                        return;
+                                        // this.setState({
+                                        //   responses: {
+                                        //     ...responses,
+                                        //     [questionId]: responses[
+                                        //       questionId
+                                        //     ].filter((id) => id !== optionId),
+                                        //   },
+                                        // });
+                                      } else {
+                                        // this.setState({
+                                        //   responses: {
+                                        //     ...responses,
+                                        //     [questionId]: [
+                                        //       ...(responses[questionId] || []),
+                                        //       optionId,
+                                        //     ],
+                                        //   },
+                                        // });
+                                      }
                                     }}
                                   />
                                   <label
@@ -128,62 +176,19 @@ const MeetingView = ({
                                   </label>
                                 </div>
                               );
-                            }
-                            return (
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  // checked={responses[questionId]?.includes(
-                                  //   optionId
-                                  // )}
-                                  onChange={() => {
-                                    const isIncluded = responses[
-                                      questionId
-                                    ]?.includes(optionId);
-                                    if (isIncluded) {
-                                      return;
-                                      // this.setState({
-                                      //   responses: {
-                                      //     ...responses,
-                                      //     [questionId]: responses[
-                                      //       questionId
-                                      //     ].filter((id) => id !== optionId),
-                                      //   },
-                                      // });
-                                    } else {
-                                      // this.setState({
-                                      //   responses: {
-                                      //     ...responses,
-                                      //     [questionId]: [
-                                      //       ...(responses[questionId] || []),
-                                      //       optionId,
-                                      //     ],
-                                      //   },
-                                      // });
-                                    }
-                                  }}
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="exampleRadios1"
-                                >
-                                  {optionText}
-                                </label>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )
-                    )}
-                    <button className="btn btn-primary mx-auto my-2">
-                      Submit
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                            })}
+                          </div>
+                        )
+                      )}
+                      <button className="btn btn-primary mx-auto my-2">
+                        Submit
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </UserActivityProvider>

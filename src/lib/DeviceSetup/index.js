@@ -41,7 +41,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
   return (
     <StyledLayout>
       <Heading tag="h1" level={3} css="align-self: flex-start">
-        Device settings
+        adsadsfasdf dfadf
       </Heading>
       <DeviceSelection />
       <JoinMeetingDetails meetingID={meetingID} />
