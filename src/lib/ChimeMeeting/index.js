@@ -4,7 +4,6 @@ import {
   UserActivityProvider,
   useMeetingStatus,
 } from "amazon-chime-sdk-component-library-react";
-
 import { StyledLayout, StyledContent } from "./Styled";
 import NavigationControl from "../containers/Navigation/NavigationControl";
 import { useNavigation } from "../providers/NavigationProvider";
@@ -13,13 +12,21 @@ import MeetingControls from "../containers/MeetingControls";
 import MeetingMetrics from "../containers/MeetingMetrics";
 import { useAppState } from "../providers/AppStateProvider";
 import classnames from "classnames";
+import MeetingMessagePopUp from "../MeetingMessagePopUp/MeetingMessagePopUp";
 
 const MeetingView = ({
   history,
   match,
-  MeetingMessagePopUp,
+  // MeetingMessagePopUp,
   session,
   polls,
+  sendMessage,
+  getSelectedMeetingMessages,
+  text,
+  setText,
+  messageReducer,
+  user,
+  event,
 }) => {
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
@@ -80,7 +87,16 @@ const MeetingView = ({
             )}
           </div>
           {activeTab === "chat" && session && (
-            <MeetingMessagePopUp sessionId={sessionId} />
+            <MeetingMessagePopUp
+              sessionId={sessionId}
+              sendMessage={sendMessage}
+              getSelectedMeetingMessages={getSelectedMeetingMessages}
+              text={text}
+              setText={setText}
+              messageReducer={messageReducer}
+              user={user}
+              event={event}
+            />
           )}
           {activeTab === "polls" && (
             <div className="chime-poll-cont">

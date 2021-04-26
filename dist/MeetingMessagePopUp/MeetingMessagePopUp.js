@@ -140,11 +140,11 @@ function MeetingMessagePopUp(_ref) {
   }, messageReducer.meetingMessages[sessionId] && /*#__PURE__*/_react.default.createElement("div", {
     className: "chatbox"
   }, messageReducer.meetingMessages[sessionId].map(function (message, index) {
-    var _message$from, _message$from2, _message$from3;
+    var _message$from, _message$from2, _message$from3, _message$fromUser, _message$fromUser2;
 
     return /*#__PURE__*/_react.default.createElement("div", {
       key: index,
-      className: message.from._id === (user === null || user === void 0 ? void 0 : user._id) ? "my-pop-msg" : "your-pop-chat"
+      className: "your-pop-chat"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "my-chat-pop"
     }, /*#__PURE__*/_react.default.createElement("img", {
@@ -155,15 +155,11 @@ function MeetingMessagePopUp(_ref) {
       className: "ms-pop"
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "msg-pop-nm"
-    }, (_message$from2 = message.from) === null || _message$from2 === void 0 ? void 0 : _message$from2.first_name, " ", (_message$from3 = message.from) === null || _message$from3 === void 0 ? void 0 : _message$from3.last_name), /*#__PURE__*/_react.default.createElement("p", {
+    }, (_message$from2 = message.from) === null || _message$from2 === void 0 ? void 0 : _message$from2.first_name, " ", (_message$from3 = message.from) === null || _message$from3 === void 0 ? void 0 : _message$from3.last_name, (_message$fromUser = message.fromUser) === null || _message$fromUser === void 0 ? void 0 : _message$fromUser.first_name, " ", (_message$fromUser2 = message.fromUser) === null || _message$fromUser2 === void 0 ? void 0 : _message$fromUser2.last_name), /*#__PURE__*/_react.default.createElement("p", {
       className: "msg-pop-txt"
     }, message.text), /*#__PURE__*/_react.default.createElement("span", {
       className: "msg-seen-txt"
-    }, message.isRead && message.from._id === user._id && /*#__PURE__*/_react.default.createElement("span", {
-      className: "read-rcpt"
-    }, /*#__PURE__*/_react.default.createElement("i", {
-      className: "las la-check-double"
-    })), (0, _moment.default)(message.createdAt).calendar()))));
+    }, (0, _moment.default)(message.createdAt).format("lll")))));
   }), /*#__PURE__*/_react.default.createElement("div", {
     ref: messagesEndRef
   }))), /*#__PURE__*/_react.default.createElement("form", {

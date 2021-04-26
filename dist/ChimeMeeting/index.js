@@ -27,6 +27,8 @@ var _AppStateProvider = require("../providers/AppStateProvider");
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _MeetingMessagePopUp = _interopRequireDefault(require("../MeetingMessagePopUp/MeetingMessagePopUp"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -48,9 +50,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var MeetingView = function MeetingView(_ref) {
   var history = _ref.history,
       match = _ref.match,
-      MeetingMessagePopUp = _ref.MeetingMessagePopUp,
       session = _ref.session,
-      polls = _ref.polls;
+      polls = _ref.polls,
+      sendMessage = _ref.sendMessage,
+      getSelectedMeetingMessages = _ref.getSelectedMeetingMessages,
+      text = _ref.text,
+      setText = _ref.setText,
+      messageReducer = _ref.messageReducer,
+      user = _ref.user,
+      event = _ref.event;
 
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
       showNavbar = _useNavigation.showNavbar,
@@ -109,8 +117,15 @@ var MeetingView = function MeetingView(_ref) {
     onClick: function onClick() {
       return setActiveTab("qna");
     }
-  }, "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(MeetingMessagePopUp, {
-    sessionId: sessionId
+  }, "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(_MeetingMessagePopUp.default, {
+    sessionId: sessionId,
+    sendMessage: sendMessage,
+    getSelectedMeetingMessages: getSelectedMeetingMessages,
+    text: text,
+    setText: setText,
+    messageReducer: messageReducer,
+    user: user,
+    event: event
   }), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
     className: "chime-poll-cont"
   }, polls.map(function (poll) {
