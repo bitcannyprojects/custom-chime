@@ -92,7 +92,16 @@ const MeetingView = ({
               )}
             </div>
             {activeTab === "chat" && session && (
-              <MeetingMessagePopUp sessionId={sessionId} />
+              <MeetingMessagePopUp
+                sessionId={sessionId}
+                sendMessage={sendMessage}
+                getSelectedMeetingMessages={getSelectedMeetingMessages}
+                text={text}
+                setText={setText}
+                messageReducer={messageReducer}
+                user={user}
+                event={event}
+              />
             )}
             {activeTab === "polls" && (
               <div className="chime-poll-cont">

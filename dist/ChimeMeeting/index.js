@@ -129,7 +129,14 @@ var MeetingView = function MeetingView(_ref) {
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: "/awesome-question-circle.svg"
   }), "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(_MeetingMessagePopUp.default, {
-    sessionId: sessionId
+    sessionId: sessionId,
+    sendMessage: sendMessage,
+    getSelectedMeetingMessages: getSelectedMeetingMessages,
+    text: text,
+    setText: setText,
+    messageReducer: messageReducer,
+    user: user,
+    event: event
   }), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
     className: "chime-poll-cont"
   }, polls.map(function (poll) {
