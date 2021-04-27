@@ -31,6 +31,12 @@ require("./style.scss");
 
 var _MeetingMessagePopUp = _interopRequireDefault(require("../MeetingMessagePopUp/MeetingMessagePopUp"));
 
+var _materialChat = _interopRequireDefault(require("./material-chat.svg"));
+
+var _awesomePoll = _interopRequireDefault(require("./awesome-poll.svg"));
+
+var _awesomeQuestionCircle = _interopRequireDefault(require("./awesome-question-circle.svg"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -90,15 +96,16 @@ var MeetingView = function MeetingView(_ref) {
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "row"
   }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "col-md-8"
+    className: "col-lg-8 col-md-6"
   }, /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, {
+    className: "metsec",
     showNav: showNavbar,
     showRoster: showRoster
   }, /*#__PURE__*/_react.default.createElement(_Styled.StyledContent, null, /*#__PURE__*/_react.default.createElement(_MeetingMetrics.default, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoTileGrid, {
     className: "videos",
     noRemoteVideoView: /*#__PURE__*/_react.default.createElement(_MeetingDetails.default, null)
   }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, null)), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "col-md-4"
+    className: "col-lg-4 col-md-6"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "session-util-tab p-2 d-flex align-items-center"
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -109,7 +116,7 @@ var MeetingView = function MeetingView(_ref) {
       return setActiveTab("chat");
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
-    src: "/material-chat.svg"
+    src: _materialChat.default
   }), "Chat"), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "polls"
@@ -118,7 +125,7 @@ var MeetingView = function MeetingView(_ref) {
       return setActiveTab("polls");
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
-    src: "/awesome-poll.svg"
+    src: _awesomePoll.default
   }), "Polls"), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "qna"
@@ -127,7 +134,7 @@ var MeetingView = function MeetingView(_ref) {
       return setActiveTab("qna");
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
-    src: "/awesome-question-circle.svg"
+    src: _awesomeQuestionCircle.default
   }), "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(_MeetingMessagePopUp.default, {
     sessionId: sessionId,
     sendMessage: sendMessage,

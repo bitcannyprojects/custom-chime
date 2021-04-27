@@ -146,21 +146,23 @@ export default function MeetingMessagePopUp({
               return (
                 <div key={index} className={"your-pop-chat"}>
                   <div className="my-chat-pop">
-                    <img
-                      alt="img"
-                      src={
-                        message.from?.dpUrl ||
-                        "https://avatars.githubusercontent.com/u/63655456?s=60&v=4"
-                      }
-                      className="rounded-circle"
-                    />
-                    <div className="ms-pop">
+                    <div className="inline-av">
+                      <img
+                        alt="img"
+                        src={
+                          message.from?.dpUrl ||
+                          "https://avatars.githubusercontent.com/u/63655456?s=60&v=4"
+                        }
+                        className="rounded-circle"
+                      />
                       <span className="msg-pop-nm">
                         {message.from?.first_name} {message.from?.last_name}
                         {message.fromUser?.first_name}{" "}
                         {message.fromUser?.last_name}
                       </span>
+                    </div>
 
+                    <div className="ms-pop">
                       <p className="msg-pop-txt">{message.text}</p>
 
                       <span className="msg-seen-txt">

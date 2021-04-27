@@ -15,6 +15,10 @@ import classnames from "classnames";
 import "./style.scss";
 import MeetingMessagePopUp from "../MeetingMessagePopUp/MeetingMessagePopUp";
 
+import ChatIcon from "./material-chat.svg";
+import PollIcon from "./awesome-poll.svg";
+import qstIcon from "./awesome-question-circle.svg";
+
 const MeetingView = ({
   history,
   match,
@@ -45,8 +49,12 @@ const MeetingView = ({
     <UserActivityProvider>
       <div className="vidcon-root">
         <div className="row">
-          <div className="col-md-8">
-            <StyledLayout showNav={showNavbar} showRoster={showRoster}>
+          <div className="col-lg-8 col-md-6">
+            <StyledLayout
+              className="metsec"
+              showNav={showNavbar}
+              showRoster={showRoster}
+            >
               <StyledContent>
                 <MeetingMetrics />
                 <VideoTileGrid
@@ -58,7 +66,7 @@ const MeetingView = ({
               <NavigationControl />
             </StyledLayout>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-6">
             <div className="session-util-tab p-2 d-flex align-items-center">
               <div
                 className={classnames("session-tab-item ", {
@@ -66,7 +74,7 @@ const MeetingView = ({
                 })}
                 onClick={() => setActiveTab("chat")}
               >
-                <img src="/material-chat.svg" />
+                <img src={ChatIcon} />
                 Chat
               </div>
               {polls?.length > 0 && (
@@ -76,7 +84,7 @@ const MeetingView = ({
                   })}
                   onClick={() => setActiveTab("polls")}
                 >
-                  <img src="/awesome-poll.svg" />
+                  <img src={PollIcon} />
                   Polls
                 </div>
               )}
@@ -87,7 +95,7 @@ const MeetingView = ({
                   })}
                   onClick={() => setActiveTab("qna")}
                 >
-                  <img src="/awesome-question-circle.svg" />Q & A
+                  <img src={qstIcon} />Q & A
                 </div>
               )}
             </div>

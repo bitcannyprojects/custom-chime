@@ -145,15 +145,17 @@ function MeetingMessagePopUp(_ref) {
       className: "your-pop-chat"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "my-chat-pop"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "inline-av"
     }, /*#__PURE__*/_react.default.createElement("img", {
       alt: "img",
       src: ((_message$from = message.from) === null || _message$from === void 0 ? void 0 : _message$from.dpUrl) || "https://avatars.githubusercontent.com/u/63655456?s=60&v=4",
       className: "rounded-circle"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "ms-pop"
-    }, /*#__PURE__*/_react.default.createElement("span", {
+    }), /*#__PURE__*/_react.default.createElement("span", {
       className: "msg-pop-nm"
-    }, (_message$from2 = message.from) === null || _message$from2 === void 0 ? void 0 : _message$from2.first_name, " ", (_message$from3 = message.from) === null || _message$from3 === void 0 ? void 0 : _message$from3.last_name, (_message$fromUser = message.fromUser) === null || _message$fromUser === void 0 ? void 0 : _message$fromUser.first_name, " ", (_message$fromUser2 = message.fromUser) === null || _message$fromUser2 === void 0 ? void 0 : _message$fromUser2.last_name), /*#__PURE__*/_react.default.createElement("p", {
+    }, (_message$from2 = message.from) === null || _message$from2 === void 0 ? void 0 : _message$from2.first_name, " ", (_message$from3 = message.from) === null || _message$from3 === void 0 ? void 0 : _message$from3.last_name, (_message$fromUser = message.fromUser) === null || _message$fromUser === void 0 ? void 0 : _message$fromUser.first_name, " ", (_message$fromUser2 = message.fromUser) === null || _message$fromUser2 === void 0 ? void 0 : _message$fromUser2.last_name)), /*#__PURE__*/_react.default.createElement("div", {
+      className: "ms-pop"
+    }, /*#__PURE__*/_react.default.createElement("p", {
       className: "msg-pop-txt"
     }, message.text), /*#__PURE__*/_react.default.createElement("span", {
       className: "msg-seen-txt"

@@ -2,9 +2,9 @@
   display: flex;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   flex-direction: column;
-  right: 16px;
-  width: 104%;
-  height: 85vh;
+  right: 0;
+  width: 100%;
+  height: 77vh;
   background-color: #fff;
   border-radius: 8px;
   position: inherit;
@@ -56,58 +56,74 @@
   overflow-x: hidden;
 }
 .messagebox-popup .my-chat-pop {
-  display: flex;
+  display: block;
   margin: 0 0 20px;
-  background: #caffff8f;
-  border: 1px solid #10baba;
+  background: #7eff658f;
+  border: 1px solid #008600;
   border-radius: 10px;
   flex-direction: inherit;
   padding: 10px;
 }
+.messagebox-popup .my-pop-chat .my-chat-pop {
+  background: #caffff8f;
+  border-color: #10baba;
+}
+.inline-av {
+  display: flex;
+  align-items: center;
+}
 .messagebox-popup .my-chat-pop .rounded-circle {
   width: 25px;
   height: 25px;
+  margin: 0 8px 0 0;
 }
 .messagebox-popup .my-chat-pop .ms-pop {
   position: relative;
-  min-height: 32px;
+  min-height: auto;
   word-break: break-word;
   box-sizing: border-box;
   border-style: solid;
   border-width: 0px;
-  border-color: #cbd6e2;
-  background-color: #eaf0f6;
-  border-radius: 0px 8px 8px;
-  color: #425b76;
+  border-radius: 0;
+  color: #000;
   width: 100%;
-  margin: 0;
-  padding: 6px 12px;
+  margin: 10px 0 0;
+  padding: 0;
+  background-color: transparent;
 }
 .messagebox-popup .my-chat-pop .msg-pop-nm {
   display: block;
   width: 100%;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0 0 5px;
   font-size: 14px;
+  color: #000;
 }
 .messagebox-popup .my-chat-pop .msg-pop-txt {
   color: #000;
   width: 100%;
-  margin: 0 0 5px;
-  font-weight: 400;
+  margin: 0 0 10px;
   font-size: 14px;
   line-height: 16px;
+  font-weight: 600;
 }
 .messagebox-popup .my-chat-pop .msg-seen-txt {
   font-size: 11px;
-  color: #979797;
+  color: #777;
   width: 100%;
   display: block;
   margin: 8px 0 0 0;
+  text-align: right;
 }
 .messagebox-popup .my-chat-pop .read-rcpt {
   float: right;
 }
 .messagebox-popup .my-chat-pop .read-rcpt i {
   font-size: 14px;
+}
+.msg-snd textarea.form-control {
+  border-radius: 0 0 0 10px !important;
+}
+.msg-snd button {
+  border-radius: 0 0 10px 0 !important;
 }
