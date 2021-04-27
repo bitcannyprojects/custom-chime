@@ -28,6 +28,7 @@ function MeetingMessagePopUp(_ref) {
       messageReducer = _ref.messageReducer,
       user = _ref.user,
       event = _ref.event;
+  console.log("messageReducer1", messageReducer);
   var messagesEndRef = (0, _react.useRef)(null); // const [text, setText] = useState("");
   // const messageReducer = useSelector((state) => state.messageReducer);
 

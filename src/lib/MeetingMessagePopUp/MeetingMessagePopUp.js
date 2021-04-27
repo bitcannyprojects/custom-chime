@@ -11,6 +11,7 @@ export default function MeetingMessagePopUp({
   user,
   event,
 }) {
+  console.log("messageReducer1", messageReducer);
   const messagesEndRef = useRef(null);
   // const [text, setText] = useState("");
   // const messageReducer = useSelector((state) => state.messageReducer);

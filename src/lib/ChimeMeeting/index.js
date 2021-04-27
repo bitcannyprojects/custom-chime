@@ -29,6 +29,7 @@ const MeetingView = ({
   user,
   event,
 }) => {
+  console.log("messageReducer2", messageReducer);
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
   const sessionId = match?.params.id;
