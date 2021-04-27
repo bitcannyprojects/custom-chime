@@ -59,6 +59,7 @@ var MeetingView = function MeetingView(_ref) {
       messageReducer = _ref.messageReducer,
       user = _ref.user,
       event = _ref.event;
+  console.log("messageReducer2", messageReducer);
 
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
       showNavbar = _useNavigation.showNavbar,
