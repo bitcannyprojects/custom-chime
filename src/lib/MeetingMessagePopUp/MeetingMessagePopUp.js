@@ -143,14 +143,7 @@ export default function MeetingMessagePopUp({
           <div className="chatbox">
             {messageReducer.meetingMessages[sessionId].map((message, index) => {
               return (
-                <div
-                  key={index}
-                  className={
-                    message.from._id === user?._id
-                      ? "my-pop-msg"
-                      : "your-pop-chat"
-                  }
-                >
+                <div key={index} className={"your-pop-chat"}>
                   <div className="my-chat-pop">
                     <img
                       alt="img"
@@ -163,18 +156,15 @@ export default function MeetingMessagePopUp({
                     <div className="ms-pop">
                       <span className="msg-pop-nm">
                         {message.from?.first_name} {message.from?.last_name}
+                        {message.fromUser?.first_name}{" "}
+                        {message.fromUser?.last_name}
                       </span>
 
                       <p className="msg-pop-txt">{message.text}</p>
 
                       <span className="msg-seen-txt">
-                        {message.isRead && message.from._id === user._id && (
-                          <span className="read-rcpt">
-                            <i className="las la-check-double"></i>
-                          </span>
-                        )}
-                        {/* {moment(message.createdAt).format("HH:MM A")} */}
-                        {moment(message.createdAt).calendar()}
+                        {moment(message.createdAt).format("lll")}
+                        {/* {moment(message.createdAt).calendar()} */}
                       </span>
                     </div>
                   </div>

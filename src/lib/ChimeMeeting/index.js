@@ -4,7 +4,6 @@ import {
   UserActivityProvider,
   useMeetingStatus,
 } from "amazon-chime-sdk-component-library-react";
-
 import { StyledLayout, StyledContent } from "./Styled";
 import NavigationControl from "../containers/Navigation/NavigationControl";
 import { useNavigation } from "../providers/NavigationProvider";
@@ -14,13 +13,21 @@ import MeetingMetrics from "../containers/MeetingMetrics";
 import { useAppState } from "../providers/AppStateProvider";
 import classnames from "classnames";
 import "./style.scss";
+import MeetingMessagePopUp from "../MeetingMessagePopUp/MeetingMessagePopUp";
 
 const MeetingView = ({
   history,
   match,
-  MeetingMessagePopUp,
+  // MeetingMessagePopUp,
   session,
   polls,
+  sendMessage,
+  getSelectedMeetingMessages,
+  text,
+  setText,
+  messageReducer,
+  user,
+  event,
 }) => {
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
