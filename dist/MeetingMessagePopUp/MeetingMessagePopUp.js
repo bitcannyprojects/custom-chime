@@ -138,22 +138,22 @@ function MeetingMessagePopUp(_ref) {
   }, messageReducer.meetingMessages[sessionId] && /*#__PURE__*/_react.default.createElement("div", {
     className: "chatbox"
   }, messageReducer.meetingMessages[sessionId].map(function (message, index) {
-    var _message$from, _message$from2, _message$from3, _message$fromUser, _message$fromUser2;
+    var _message$from, _message$fromUser, _message$from2, _message$from3, _message$from4, _message$fromUser2, _message$fromUser3;
 
     return /*#__PURE__*/_react.default.createElement("div", {
       key: index,
-      className: "your-pop-chat"
+      className: (((_message$from = message.from) === null || _message$from === void 0 ? void 0 : _message$from._id) || ((_message$fromUser = message.fromUser) === null || _message$fromUser === void 0 ? void 0 : _message$fromUser._id)) === (user === null || user === void 0 ? void 0 : user._id) ? "my-pop-msg" : "your-pop-chat"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "my-chat-pop"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "inline-av"
     }, /*#__PURE__*/_react.default.createElement("img", {
       alt: "img",
-      src: ((_message$from = message.from) === null || _message$from === void 0 ? void 0 : _message$from.dpUrl) || "https://avatars.githubusercontent.com/u/63655456?s=60&v=4",
+      src: ((_message$from2 = message.from) === null || _message$from2 === void 0 ? void 0 : _message$from2.dpUrl) || "https://avatars.githubusercontent.com/u/63655456?s=60&v=4",
       className: "rounded-circle"
     }), /*#__PURE__*/_react.default.createElement("span", {
       className: "msg-pop-nm"
-    }, (_message$from2 = message.from) === null || _message$from2 === void 0 ? void 0 : _message$from2.first_name, " ", (_message$from3 = message.from) === null || _message$from3 === void 0 ? void 0 : _message$from3.last_name, (_message$fromUser = message.fromUser) === null || _message$fromUser === void 0 ? void 0 : _message$fromUser.first_name, " ", (_message$fromUser2 = message.fromUser) === null || _message$fromUser2 === void 0 ? void 0 : _message$fromUser2.last_name)), /*#__PURE__*/_react.default.createElement("div", {
+    }, (_message$from3 = message.from) === null || _message$from3 === void 0 ? void 0 : _message$from3.first_name, " ", (_message$from4 = message.from) === null || _message$from4 === void 0 ? void 0 : _message$from4.last_name, (_message$fromUser2 = message.fromUser) === null || _message$fromUser2 === void 0 ? void 0 : _message$fromUser2.first_name, " ", (_message$fromUser3 = message.fromUser) === null || _message$fromUser3 === void 0 ? void 0 : _message$fromUser3.last_name)), /*#__PURE__*/_react.default.createElement("div", {
       className: "ms-pop"
     }, /*#__PURE__*/_react.default.createElement("p", {
       className: "msg-pop-txt"

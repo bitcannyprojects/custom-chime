@@ -24,7 +24,14 @@ const EndMeetingControl = () => {
   const history = useHistory();
 
   const leaveMeeting = async () => {
-    history.push("/");
+    try {
+      console.log("leaving...");
+      await meetingManager.leave();
+      // history.push("/");
+      window.close();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const endMeetingForAll = async () => {
@@ -46,19 +53,10 @@ const EndMeetingControl = () => {
         <Modal size="md" onClose={toggleModal} rootId="modal-root">
           <ModalHeader title="End Meeting" />
           <ModalBody>
-            <StyledP>
-              Leave meeting or you can end the meeting for all. The meeting
-              cannot be used once it ends.
-            </StyledP>
+            <StyledP>Are you sure you want to leave meeting?</StyledP>
           </ModalBody>
           <ModalButtonGroup
             primaryButtons={[
-              <ModalButton
-                onClick={endMeetingForAll}
-                variant="primary"
-                label="End meeting for all"
-                closesModal
-              />,
               <ModalButton
                 onClick={leaveMeeting}
                 variant="primary"

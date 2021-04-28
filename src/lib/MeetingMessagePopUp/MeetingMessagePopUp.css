@@ -64,7 +64,7 @@
   flex-direction: inherit;
   padding: 10px;
 }
-.messagebox-popup .my-pop-chat .my-chat-pop {
+.messagebox-popup .my-pop-msg .my-chat-pop {
   background: #caffff8f;
   border-color: #10baba;
 }
@@ -89,7 +89,7 @@
   width: 100%;
   margin: 10px 0 0;
   padding: 0;
-  background-color: transparent;
+  background-color: transparent !important;
 }
 .messagebox-popup .my-chat-pop .msg-pop-nm {
   display: block;
@@ -100,7 +100,7 @@
   color: #000;
 }
 .messagebox-popup .my-chat-pop .msg-pop-txt {
-  color: #000;
+  color: #000 !important;
   width: 100%;
   margin: 0 0 10px;
   font-size: 14px;
@@ -109,7 +109,7 @@
 }
 .messagebox-popup .my-chat-pop .msg-seen-txt {
   font-size: 11px;
-  color: #777;
+  color: #777 !important;
   width: 100%;
   display: block;
   margin: 8px 0 0 0;
