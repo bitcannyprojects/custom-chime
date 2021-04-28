@@ -144,7 +144,14 @@ export default function MeetingMessagePopUp({
           <div className="chatbox">
             {messageReducer.meetingMessages[sessionId].map((message, index) => {
               return (
-                <div key={index} className={"your-pop-chat"}>
+                <div
+                  key={index}
+                  className={
+                    (message.from?._id || message.fromUser?._id) === user?._id
+                      ? "my-pop-msg"
+                      : "your-pop-chat"
+                  }
+                >
                   <div className="my-chat-pop">
                     <div className="inline-av">
                       <img

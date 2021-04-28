@@ -61,14 +61,28 @@ var EndMeetingControl = function EndMeetingControl() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              history.push("/");
+              _context.prev = 0;
+              console.log("leaving...");
+              _context.next = 4;
+              return meetingManager.leave();
 
-            case 1:
+            case 4:
+              // history.push("/");
+              window.close();
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.log(_context.t0);
+
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 7]]);
     }));
 
     return function leaveMeeting() {
@@ -127,13 +141,8 @@ var EndMeetingControl = function EndMeetingControl() {
     rootId: "modal-root"
   }, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalHeader, {
     title: "End Meeting"
-  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalBody, null, /*#__PURE__*/_react.default.createElement(_Styled.StyledP, null, "Leave meeting or you can end the meeting for all. The meeting cannot be used once it ends.")), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalButtonGroup, {
+  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalBody, null, /*#__PURE__*/_react.default.createElement(_Styled.StyledP, null, "Are you sure you want to leave meeting?")), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalButtonGroup, {
     primaryButtons: [/*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalButton, {
-      onClick: endMeetingForAll,
-      variant: "primary",
-      label: "End meeting for all",
-      closesModal: true
-    }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ModalButton, {
       onClick: leaveMeeting,
       variant: "primary",
       label: "Leave Meeting",

@@ -7,11 +7,11 @@ import { StyledLayout } from "./Styled";
 import DeviceSelection from "../DeviceSelection";
 import { useAppState } from "../providers/AppStateProvider";
 
-const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
+const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
   const [loading, setLoading] = useState(true);
   // const [session, setSession] = useState({});
   const meetingManager = useMeetingManager();
-  const user = useSelector((state) => state.userReducer.user);
+  // const user = useSelector((state) => state.userReducer.user);
   const { meetingId, localUserName, setAppMeetingInfo } = useAppState();
   const meetingID = match?.params.id;
   useEffect(() => {
@@ -33,7 +33,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
     );
     setAppMeetingInfo(
       resData.meeting?.Meeting?.MeetingId,
-      user?.first_name + " " + user?.last_name
+      user?.first_name + " " + (user?.last_name || "")
     );
     setLoading(false);
   };
@@ -41,7 +41,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
   return (
     <StyledLayout>
       <Heading tag="h1" level={3} css="align-self: flex-start">
-        adsadsfasdf dfadf
+        Device Settings
       </Heading>
       <DeviceSelection />
       <JoinMeetingDetails meetingID={meetingID} />

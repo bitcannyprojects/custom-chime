@@ -47,7 +47,8 @@ var DeviceSetup = function DeviceSetup(_ref) {
   var match = _ref.match,
       getData = _ref.getData,
       getAttendee = _ref.getAttendee,
-      setSession = _ref.setSession;
+      setSession = _ref.setSession,
+      user = _ref.user;
 
   var _useState = (0, _react.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
@@ -55,10 +56,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
       setLoading = _useState2[1]; // const [session, setSession] = useState({});
 
 
-  var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)();
-  var user = (0, _reactRedux.useSelector)(function (state) {
-    return state.userReducer.user;
-  });
+  var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)(); // const user = useSelector((state) => state.userReducer.user);
 
   var _useAppState = (0, _AppStateProvider.useAppState)(),
       meetingId = _useAppState.meetingId,
@@ -95,7 +93,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
 
             case 8:
               meetingManager.getAttendee = getAttendee((_resData$meeting = resData.meeting) === null || _resData$meeting === void 0 ? void 0 : (_resData$meeting$Meet = _resData$meeting.Meeting) === null || _resData$meeting$Meet === void 0 ? void 0 : _resData$meeting$Meet.MeetingId);
-              setAppMeetingInfo((_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId, (user === null || user === void 0 ? void 0 : user.first_name) + " " + (user === null || user === void 0 ? void 0 : user.last_name));
+              setAppMeetingInfo((_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId, (user === null || user === void 0 ? void 0 : user.first_name) + " " + ((user === null || user === void 0 ? void 0 : user.last_name) || ""));
               setLoading(false);
 
             case 11:
@@ -116,7 +114,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
     tag: "h1",
     level: 3,
     css: "align-self: flex-start"
-  }, "adsadsfasdf dfadf"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
+  }, "Device Settings"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
     meetingID: meetingID
   }));
 };
