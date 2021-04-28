@@ -6,6 +6,7 @@ import JoinMeetingDetails from "../containers/MeetingJoinDetails";
 import { StyledLayout } from "./Styled";
 import DeviceSelection from "../DeviceSelection";
 import { useAppState } from "../providers/AppStateProvider";
+import "./style.scss";
 
 const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
   const [loading, setLoading] = useState(true);
@@ -39,13 +40,15 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession }) => {
   };
   if (loading) return <div>Loading</div>;
   return (
-    <StyledLayout>
-      <Heading tag="h1" level={3} css="align-self: flex-start">
-        adsadsfasdf dfadf
-      </Heading>
-      <DeviceSelection />
-      <JoinMeetingDetails meetingID={meetingID} />
-    </StyledLayout>
+    <div className="meeting-root">
+      <StyledLayout>
+        <Heading tag="h1" level={3} css="align-self: flex-start">
+          Join Live Video Session
+        </Heading>
+        <JoinMeetingDetails meetingID={meetingID} />
+        <DeviceSelection />
+      </StyledLayout>
+    </div>
   );
 };
 

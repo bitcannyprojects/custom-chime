@@ -21,6 +21,8 @@ var _DeviceSelection = _interopRequireDefault(require("../DeviceSelection"));
 
 var _AppStateProvider = require("../providers/AppStateProvider");
 
+require("./style.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -112,13 +114,15 @@ var DeviceSetup = function DeviceSetup(_ref) {
   }();
 
   if (loading) return /*#__PURE__*/_react.default.createElement("div", null, "Loading");
-  return /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Heading, {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "meeting-root"
+  }, /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Heading, {
     tag: "h1",
     level: 3,
     css: "align-self: flex-start"
-  }, "adsadsfasdf dfadf"), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
+  }, "Join Live Video Session"), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
     meetingID: meetingID
-  }));
+  }), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null)));
 };
 
 var _default = DeviceSetup;

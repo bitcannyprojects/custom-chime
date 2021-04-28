@@ -1,12 +1,12 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const title = `
   text-transform: uppercase;
   font-size: 1rem !important;
-  margin-bottom: 1.75rem;
+  margin-bottom: 0;
 `;
 
 export const StyledPreviewGroup = styled.div`
@@ -18,7 +18,7 @@ export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 65rem;
+  max-width: none;
   height: auto;
   padding: 1rem 0 3rem 0;
 
@@ -42,7 +42,7 @@ export const StyledWrapper = styled.div`
 
 export const StyledAudioGroup = styled.div`
   padding: 0 3rem 0 0;
-  border-right: 0.125rem solid #e6e6e6;
+  border-right: 1px solid #5e5e5e;
 
   @media (max-width: 900px) {
     padding: 2rem 0 2rem 0;

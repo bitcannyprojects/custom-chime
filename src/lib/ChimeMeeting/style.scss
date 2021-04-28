@@ -16,6 +16,9 @@
     }
     .session-tab-item.active {
       color: #fff;
+      img {
+        opacity: 1;
+      }
     }
 
     .session-tab-item {
@@ -30,6 +33,7 @@
         display: block;
         height: 30px;
         margin: 0 0 8px;
+        opacity: 0.5;
       }
     }
   }
@@ -39,7 +43,9 @@
       height: auto;
     }
     .nav {
-      position: absolute;
+      @media (max-width: 767px) {
+        position: absolute;
+      }
     }
     .controls {
       bottom: 0;
