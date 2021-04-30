@@ -127,8 +127,8 @@ function MeetingMessagePopUp(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "messagebox-popup__avatar"
-  }, /*#__PURE__*/_react.default.createElement("img", {
-    src: (currentMeeting === null || currentMeeting === void 0 ? void 0 : currentMeeting.dpUrl) || "/gravatar.png"
+  }, (currentMeeting === null || currentMeeting === void 0 ? void 0 : currentMeeting.bannerUrl) && /*#__PURE__*/_react.default.createElement("img", {
+    src: (currentMeeting === null || currentMeeting === void 0 ? void 0 : currentMeeting.bannerUrl) || "/gravatar.png"
   }))), /*#__PURE__*/_react.default.createElement("aside", {
     style: {
       flex: 9
