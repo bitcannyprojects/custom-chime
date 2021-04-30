@@ -11,6 +11,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-library-react");
 
+var _reactBootstrap = require("react-bootstrap");
+
 var _Styled = require("./Styled");
 
 var _NavigationControl = _interopRequireDefault(require("../containers/Navigation/NavigationControl"));
@@ -43,6 +45,20 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -60,6 +76,7 @@ var MeetingView = function MeetingView(_ref) {
       match = _ref.match,
       session = _ref.session,
       polls = _ref.polls,
+      onPollSubmit = _ref.onPollSubmit,
       sendMessage = _ref.sendMessage,
       getSelectedMeetingMessages = _ref.getSelectedMeetingMessages,
       text = _ref.text,
@@ -86,11 +103,31 @@ var MeetingView = function MeetingView(_ref) {
       activeTab = _useState2[0],
       setActiveTab = _useState2[1];
 
+  var _useState3 = (0, _react.useState)({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      responses = _useState4[0],
+      setPollResponses = _useState4[1];
+
   (0, _react.useEffect)(function () {
     if (!Boolean(meetingId)) {
       history.push("".concat(history.location.pathname, "/devices"));
     }
   }, [meetingId]);
+
+  var pollSubmit = function pollSubmit(pollId) {
+    var filteredPolResponses = Object.keys(responses).filter(function (elem) {
+      return elem.split("-")[0] === pollId;
+    });
+    var reqData = filteredPolResponses.map(function (modQuesId) {
+      return {
+        questionId: modQuesId.split('-')[1],
+        optionIds: responses[modQuesId]
+      };
+    });
+    onPollSubmit(pollId, reqData);
+  };
+
+  console.log("pollssss", polls, responses);
   return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.UserActivityProvider, null, /*#__PURE__*/_react.default.createElement("div", {
     className: "vidcon-root"
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -126,16 +163,7 @@ var MeetingView = function MeetingView(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: _awesomePoll.default
-  }), "Polls"), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)("session-tab-item ", {
-      active: activeTab === "qna"
-    }),
-    onClick: function onClick() {
-      return setActiveTab("qna");
-    }
-  }, /*#__PURE__*/_react.default.createElement("img", {
-    src: _awesomeQuestionCircle.default
-  }), "Q & A")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(_MeetingMessagePopUp.default, {
+  }), "Polls")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(_MeetingMessagePopUp.default, {
     sessionId: sessionId,
     sendMessage: sendMessage,
     getSelectedMeetingMessages: getSelectedMeetingMessages,
@@ -147,36 +175,40 @@ var MeetingView = function MeetingView(_ref) {
   }), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
     className: "chime-poll-cont"
   }, polls.map(function (poll) {
-    var _Object$values$0$ques;
+    var _poll$questions, _poll$report;
 
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "single-chime-poll"
-    }, (_Object$values$0$ques = Object.values(poll)[0].questions) === null || _Object$values$0$ques === void 0 ? void 0 : _Object$values$0$ques.map(function (_ref2, index) {
+    }, /*#__PURE__*/_react.default.createElement("h2", {
+      className: "mb-2 mx-auto text-center",
+      style: {
+        fontSize: "22px"
+      }
+    }, poll.title), poll === null || poll === void 0 ? void 0 : (_poll$questions = poll.questions) === null || _poll$questions === void 0 ? void 0 : _poll$questions.map(function (_ref2, index) {
       var questionId = _ref2._id,
           isSingleChoice = _ref2.isSingleChoice,
           questionText = _ref2.questionText,
           options = _ref2.options;
       return /*#__PURE__*/_react.default.createElement("div", {
-        className: "form-group"
+        className: "form-group mb-2"
       }, /*#__PURE__*/_react.default.createElement("label", null, index + 1, ". ", questionText), options.map(function (_ref3) {
+        var _responses2;
+
         var optionId = _ref3._id,
             optionText = _ref3.optionText;
 
         if (isSingleChoice) {
+          var _responses;
+
           return /*#__PURE__*/_react.default.createElement("div", {
             className: "form-check"
           }, /*#__PURE__*/_react.default.createElement("input", {
             className: "form-check-input",
-            type: "radio" // checked={responses[questionId]?.includes(
-            //   optionId
-            // )}
-            ,
-            onChange: function onChange() {// this.setState({
-              //   responses: {
-              //     ...responses,
-              //     [questionId]: [optionId],
-              //   },
-              // });
+            type: "radio",
+            checked: (_responses = responses[poll._id + "-" + questionId]) === null || _responses === void 0 ? void 0 : _responses.includes(optionId),
+            onChange: function onChange() {
+              var modQuesId = poll._id + "-" + questionId;
+              setPollResponses(_objectSpread(_objectSpread({}, responses), {}, _defineProperty({}, modQuesId, [optionId])));
             }
           }), /*#__PURE__*/_react.default.createElement("label", {
             className: "form-check-label",
@@ -188,42 +220,52 @@ var MeetingView = function MeetingView(_ref) {
           className: "form-check"
         }, /*#__PURE__*/_react.default.createElement("input", {
           className: "form-check-input",
-          type: "checkbox" // checked={responses[questionId]?.includes(
-          //   optionId
-          // )}
-          ,
+          type: "checkbox",
+          checked: (_responses2 = responses[poll._id + "-" + questionId]) === null || _responses2 === void 0 ? void 0 : _responses2.includes(optionId),
           onChange: function onChange() {
-            var _responses$questionId;
+            var _responses$modQuesId;
 
-            var isIncluded = (_responses$questionId = responses[questionId]) === null || _responses$questionId === void 0 ? void 0 : _responses$questionId.includes(optionId);
+            var modQuesId = poll._id + "-" + questionId;
+            var isIncluded = (_responses$modQuesId = responses[modQuesId]) === null || _responses$modQuesId === void 0 ? void 0 : _responses$modQuesId.includes(optionId);
 
             if (isIncluded) {
-              return; // this.setState({
-              //   responses: {
-              //     ...responses,
-              //     [questionId]: responses[
-              //       questionId
-              //     ].filter((id) => id !== optionId),
-              //   },
-              // });
-            } else {// this.setState({
-                //   responses: {
-                //     ...responses,
-                //     [questionId]: [
-                //       ...(responses[questionId] || []),
-                //       optionId,
-                //     ],
-                //   },
-                // });
-              }
+              setPollResponses(_objectSpread(_objectSpread({}, responses), {}, _defineProperty({}, modQuesId, responses[modQuesId].filter(function (id) {
+                return id !== optionId;
+              }))));
+            } else {
+              setPollResponses(_objectSpread(_objectSpread({}, responses), {}, _defineProperty({}, modQuesId, [].concat(_toConsumableArray(responses[modQuesId] || []), [optionId]))));
+            }
           }
         }), /*#__PURE__*/_react.default.createElement("label", {
           className: "form-check-label",
           htmlFor: "exampleRadios1"
         }, optionText));
       }));
-    }), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn btn-primary mx-auto my-2"
+    }), poll === null || poll === void 0 ? void 0 : (_poll$report = poll.report) === null || _poll$report === void 0 ? void 0 : _poll$report.map(function (_ref4, index) {
+      var questionId = _ref4._id,
+          isSingleChoice = _ref4.isSingleChoice,
+          questionText = _ref4.questionText,
+          options = _ref4.options;
+      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
+        className: "d-block"
+      }, index + 1, ". ", questionText), options.map(function (_ref5) {
+        var optionId = _ref5._id,
+            option = _ref5.option,
+            percent = _ref5.percent;
+        return /*#__PURE__*/_react.default.createElement("label", {
+          className: "d-block w-100"
+        }, /*#__PURE__*/_react.default.createElement("span", {
+          className: "d-inline-block mb-1"
+        }, option.optionText), /*#__PURE__*/_react.default.createElement(_reactBootstrap.ProgressBar, {
+          now: percent,
+          label: "".concat(percent, "%")
+        }));
+      }));
+    }), !poll.report && /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-primary mx-auto my-2",
+      onClick: function onClick() {
+        return pollSubmit(poll._id);
+      }
     }, "Submit"));
   }))))));
 };

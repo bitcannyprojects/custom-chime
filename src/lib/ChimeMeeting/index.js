@@ -4,6 +4,7 @@ import {
   UserActivityProvider,
   useMeetingStatus,
 } from "amazon-chime-sdk-component-library-react";
+import { ProgressBar } from 'react-bootstrap';
 import { StyledLayout, StyledContent } from "./Styled";
 import NavigationControl from "../containers/Navigation/NavigationControl";
 import { useNavigation } from "../providers/NavigationProvider";
@@ -25,6 +26,7 @@ const MeetingView = ({
   // MeetingMessagePopUp,
   session,
   polls,
+  onPollSubmit,
   sendMessage,
   getSelectedMeetingMessages,
   text,
@@ -39,12 +41,24 @@ const MeetingView = ({
   const sessionId = match?.params.id;
   const { meetingId, localUserName, setAppMeetingInfo } = useAppState();
   const [activeTab, setActiveTab] = useState("chat");
+  const [responses, setPollResponses] = useState({});
   useEffect(() => {
     if (!Boolean(meetingId)) {
       history.push(`${history.location.pathname}/devices`);
     }
   }, [meetingId]);
 
+  const pollSubmit = (pollId) => {
+    const filteredPolResponses = Object.keys(responses).filter((elem) => elem.split("-")[0] === pollId);
+    const reqData = filteredPolResponses.map((modQuesId) => ({
+        questionId: modQuesId.split('-')[1],
+        optionIds: responses[modQuesId],
+    }));
+
+    onPollSubmit(pollId, reqData)
+  }
+
+  console.log("pollssss", polls, responses);
   return (
     <UserActivityProvider>
       <div className="vidcon-root">
@@ -88,7 +102,7 @@ const MeetingView = ({
                   Polls
                 </div>
               )}
-              {session?.type !== "breakout" && (
+              {/* {session?.type !== "breakout" && (
                 <div
                   className={classnames("session-tab-item ", {
                     active: activeTab === "qna",
@@ -97,7 +111,7 @@ const MeetingView = ({
                 >
                   <img src={qstIcon} />Q & A
                 </div>
-              )}
+              )} */}
             </div>
             {activeTab === "chat" && session && (
               <MeetingMessagePopUp
@@ -116,7 +130,8 @@ const MeetingView = ({
                 {polls.map((poll) => {
                   return (
                     <div className="single-chime-poll">
-                      {Object.values(poll)[0].questions?.map(
+                      <h2 className="mb-2 mx-auto text-center" style={{fontSize: "22px"}}>{poll.title}</h2>
+                      {poll?.questions?.map(
                         (
                           {
                             _id: questionId,
@@ -126,7 +141,7 @@ const MeetingView = ({
                           },
                           index
                         ) => (
-                          <div className="form-group">
+                          <div className="form-group mb-2">
                             <label>
                               {index + 1}. {questionText}
                             </label>
@@ -137,16 +152,15 @@ const MeetingView = ({
                                     <input
                                       className="form-check-input"
                                       type="radio"
-                                      // checked={responses[questionId]?.includes(
-                                      //   optionId
-                                      // )}
+                                      checked={responses[poll._id + "-" + questionId]?.includes(
+                                        optionId
+                                      )}
                                       onChange={() => {
-                                        // this.setState({
-                                        //   responses: {
-                                        //     ...responses,
-                                        //     [questionId]: [optionId],
-                                        //   },
-                                        // });
+                                        const modQuesId = poll._id + "-" + questionId;
+                                        setPollResponses({
+                                          ...responses,
+                                          [modQuesId]: [optionId],
+                                        });
                                       }}
                                     />
                                     <label
@@ -163,33 +177,27 @@ const MeetingView = ({
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    // checked={responses[questionId]?.includes(
-                                    //   optionId
-                                    // )}
+                                    checked={responses[poll._id + "-" + questionId]?.includes(
+                                      optionId
+                                    )}
                                     onChange={() => {
-                                      const isIncluded = responses[
-                                        questionId
-                                      ]?.includes(optionId);
+                                      const modQuesId = poll._id + "-" + questionId;
+                                      const isIncluded = responses[modQuesId]?.includes(optionId);
                                       if (isIncluded) {
-                                        return;
-                                        // this.setState({
-                                        //   responses: {
-                                        //     ...responses,
-                                        //     [questionId]: responses[
-                                        //       questionId
-                                        //     ].filter((id) => id !== optionId),
-                                        //   },
-                                        // });
+                                        setPollResponses({
+                                          ...responses,
+                                          [modQuesId]: responses[
+                                            modQuesId
+                                          ].filter((id) => id !== optionId),
+                                        });
                                       } else {
-                                        // this.setState({
-                                        //   responses: {
-                                        //     ...responses,
-                                        //     [questionId]: [
-                                        //       ...(responses[questionId] || []),
-                                        //       optionId,
-                                        //     ],
-                                        //   },
-                                        // });
+                                        setPollResponses({
+                                          ...responses,
+                                          [modQuesId]: [
+                                            ...(responses[modQuesId] || []),
+                                            optionId,
+                                          ],
+                                        });
                                       }
                                     }}
                                   />
@@ -205,9 +213,38 @@ const MeetingView = ({
                           </div>
                         )
                       )}
-                      <button className="btn btn-primary mx-auto my-2">
+                      {poll?.report?.map(
+                        (
+                          {
+                            _id: questionId,
+                            isSingleChoice,
+                            questionText,
+                            options,
+                          },
+                          index
+                        ) => (
+                          <div>
+                            <label className="d-block">
+                              {index + 1}. {questionText}
+                            </label>
+                            {options.map(({ _id: optionId, option, percent }) => {
+                              return (
+                                <label className="d-block w-100">
+                                  <span className="d-inline-block mb-1">{option.optionText}</span>
+                                  <ProgressBar now={percent} label={`${percent}%`} />
+                                </label>
+                              );
+                            })}
+                          </div>
+                        )
+                      )}
+                      {!poll.report && 
+                      <button 
+                        className="btn btn-primary mx-auto my-2"
+                        onClick={() => pollSubmit(poll._id)}
+                      >
                         Submit
-                      </button>
+                      </button>}
                     </div>
                   );
                 })}
