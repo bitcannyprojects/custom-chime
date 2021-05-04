@@ -11,7 +11,7 @@ export default function MeetingMessagePopUp({
   user,
   event,
 }) {
-  console.log("messageReducer1", messageReducer);
+  // console.log("messageReducer1", messageReducer);
   const messagesEndRef = useRef(null);
   // const [text, setText] = useState("");
   // const messageReducer = useSelector((state) => state.messageReducer);
@@ -194,6 +194,12 @@ export default function MeetingMessagePopUp({
           placeholder="Please enter a message..."
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && e.shiftKey == false) {
+              e.preventDefault();
+              sendMessage();
+            }
+          }}
         ></textarea>
         <div>
           <button>

@@ -45,6 +45,7 @@ var MeetingRoster = function MeetingRoster() {
     roster: roster
   });
   var attendees = Object.values(roster);
+  console.log("roasterattendee", attendees);
 
   if (filter) {
     attendees = attendees.filter(function (attendee) {
@@ -56,14 +57,34 @@ var MeetingRoster = function MeetingRoster() {
     setFilter(e.target.value);
   };
 
+  var Menu = function Menu() {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      style: {
+        padding: ".5rem 1rem",
+        cursor: "pointer"
+      }
+    }, "Message user"), /*#__PURE__*/_react.default.createElement("div", {
+      style: {
+        padding: ".5rem 1rem",
+        cursor: "pointer"
+      }
+    }, "Kick user"));
+  };
+
   var attendeeItems = attendees.map(function (attendee) {
     var _ref = attendee || {},
-        chimeAttendeeId = _ref.chimeAttendeeId;
+        chimeAttendeeId = _ref.chimeAttendeeId,
+        name = _ref.name;
 
-    return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.RosterAttendee, {
-      key: chimeAttendeeId,
-      attendeeId: chimeAttendeeId
-    });
+    return (
+      /*#__PURE__*/
+      // <RosterCell key={chimeAttendeeId} name={name} />
+      _react.default.createElement(_amazonChimeSdkComponentLibraryReact.RosterAttendee, {
+        key: chimeAttendeeId,
+        attendeeId: chimeAttendeeId,
+        menu: /*#__PURE__*/_react.default.createElement(Menu, null)
+      })
+    );
   });
   return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Roster, {
     className: "roster"

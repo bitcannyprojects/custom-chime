@@ -5,6 +5,7 @@ import {
   RosterGroup,
   useRosterState,
   RosterAttendee,
+  RosterCell,
 } from "amazon-chime-sdk-component-library-react";
 
 import { useNavigation } from "../providers/NavigationProvider";
@@ -16,6 +17,7 @@ const MeetingRoster = () => {
 
   console.log({ roster });
   let attendees = Object.values(roster);
+  console.log("roasterattendee", attendees);
 
   if (filter) {
     attendees = attendees.filter((attendee) =>
@@ -26,11 +28,24 @@ const MeetingRoster = () => {
   const handleSearch = (e) => {
     setFilter(e.target.value);
   };
+  const Menu = () => (
+    <>
+      <div style={{ padding: ".5rem 1rem", cursor: "pointer" }}>
+        Message user
+      </div>
+      <div style={{ padding: ".5rem 1rem", cursor: "pointer" }}>Kick user</div>
+    </>
+  );
 
   const attendeeItems = attendees.map((attendee) => {
-    const { chimeAttendeeId } = attendee || {};
+    const { chimeAttendeeId, name } = attendee || {};
     return (
-      <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />
+      // <RosterCell key={chimeAttendeeId} name={name} />
+      <RosterAttendee
+        key={chimeAttendeeId}
+        attendeeId={chimeAttendeeId}
+        menu={<Menu />}
+      />
     );
   });
 
