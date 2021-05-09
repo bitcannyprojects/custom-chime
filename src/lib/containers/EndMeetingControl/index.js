@@ -34,17 +34,17 @@ const EndMeetingControl = () => {
     }
   };
 
-  const endMeetingForAll = async () => {
-    try {
-      if (meetingId) {
-        // await endMeeting(meetingId);
-        await meetingManager.leave();
-        history.push("/");
-      }
-    } catch (e) {
-      console.log("Could not end meeting", e);
-    }
-  };
+  // const endMeetingForAll = async () => {
+  //   try {
+  //     if (meetingId) {
+  //       // await endMeeting(meetingId);
+  //       await meetingManager.leave();
+  //       history.push("/");
+  //     }
+  //   } catch (e) {
+  //     console.log("Could not end meeting", e);
+  //   }
+  // };
 
   return (
     <>

@@ -41,6 +41,10 @@ var MeetingRoster = function MeetingRoster() {
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
       closeRoster = _useNavigation.closeRoster;
 
+  var _useToggleLocalMute = (0, _amazonChimeSdkComponentLibraryReact.useToggleLocalMute)(),
+      muted1 = _useToggleLocalMute.muted,
+      toggleMute = _useToggleLocalMute.toggleMute;
+
   console.log({
     roster: roster
   });
@@ -57,24 +61,69 @@ var MeetingRoster = function MeetingRoster() {
     setFilter(e.target.value);
   };
 
-  var Menu = function Menu() {
+  var Menu = function Menu(_ref) {
+    var chimeAttendeeId = _ref.chimeAttendeeId;
+
+    var _useAttendeeAudioStat = (0, _amazonChimeSdkComponentLibraryReact.useAttendeeAudioStatus)(chimeAttendeeId),
+        muted = _useAttendeeAudioStat.muted,
+        signalStrength = _useAttendeeAudioStat.signalStrength;
+
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       style: {
         padding: ".5rem 1rem",
         cursor: "pointer"
+      },
+      onClick: function onClick() {
+        try {
+          // console.log("mute", muted1);
+          // toggleMute();
+          // return;
+          console.log("mute1");
+
+          if (window.socket) {
+            console.log("mute2");
+            window.socket.send(JSON.stringify({
+              action: "chat",
+              message: {
+                chimeAttendeeId: chimeAttendeeId,
+                action: muted ? "unmute" : "mute"
+              }
+            }));
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }, "Message user"), /*#__PURE__*/_react.default.createElement("div", {
+    }, muted ? "Unmute user" : "Mute user"), /*#__PURE__*/_react.default.createElement("div", {
       style: {
         padding: ".5rem 1rem",
         cursor: "pointer"
+      },
+      onClick: function onClick() {
+        try {
+          console.log("kick1");
+
+          if (window.socket) {
+            console.log("kick2");
+            window.socket.send(JSON.stringify({
+              action: "chat",
+              message: {
+                chimeAttendeeId: chimeAttendeeId,
+                action: "kick"
+              }
+            }));
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     }, "Kick user"));
   };
 
   var attendeeItems = attendees.map(function (attendee) {
-    var _ref = attendee || {},
-        chimeAttendeeId = _ref.chimeAttendeeId,
-        name = _ref.name;
+    var _ref2 = attendee || {},
+        chimeAttendeeId = _ref2.chimeAttendeeId,
+        name = _ref2.name;
 
     return (
       /*#__PURE__*/
@@ -82,7 +131,9 @@ var MeetingRoster = function MeetingRoster() {
       _react.default.createElement(_amazonChimeSdkComponentLibraryReact.RosterAttendee, {
         key: chimeAttendeeId,
         attendeeId: chimeAttendeeId,
-        menu: /*#__PURE__*/_react.default.createElement(Menu, null)
+        menu: /*#__PURE__*/_react.default.createElement(Menu, {
+          chimeAttendeeId: chimeAttendeeId
+        })
       })
     );
   });

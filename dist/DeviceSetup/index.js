@@ -72,7 +72,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
 
   var getBreakoutRoomData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
-      var _resData$meeting, _resData$meeting$Meet, _resData$meeting2, _resData$meeting2$Mee;
+      var _resData$meeting, _resData$meeting$Meet, _resData$meeting2, _resData$meeting2$Mee, _resData$userSession, _resData$userSession2;
 
       var resData, joinData;
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -85,20 +85,28 @@ var DeviceSetup = function DeviceSetup(_ref) {
             case 2:
               resData = _context.sent;
               resData = resData.data;
+              console.log({
+                resData: resData
+              });
               joinData = {
                 meetingInfo: resData.meeting,
                 attendeeInfo: resData.attendee
               };
               setSession(resData.session);
-              _context.next = 8;
+              _context.next = 9;
               return meetingManager.join(joinData);
 
-            case 8:
+            case 9:
               meetingManager.getAttendee = getAttendee((_resData$meeting = resData.meeting) === null || _resData$meeting === void 0 ? void 0 : (_resData$meeting$Meet = _resData$meeting.Meeting) === null || _resData$meeting$Meet === void 0 ? void 0 : _resData$meeting$Meet.MeetingId);
-              setAppMeetingInfo((_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId, (user === null || user === void 0 ? void 0 : user.first_name) + " " + ((user === null || user === void 0 ? void 0 : user.last_name) || ""));
+              setAppMeetingInfo({
+                meetingId: (_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId,
+                name: (user === null || user === void 0 ? void 0 : user.first_name) + " " + ((user === null || user === void 0 ? void 0 : user.last_name) || ""),
+                role: (_resData$userSession = resData.userSession) === null || _resData$userSession === void 0 ? void 0 : _resData$userSession.role,
+                chimeAttendeeId: (_resData$userSession2 = resData.userSession) === null || _resData$userSession2 === void 0 ? void 0 : _resData$userSession2.chimeAttendeeId
+              });
               setLoading(false);
 
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }

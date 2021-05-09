@@ -28,7 +28,7 @@ function MeetingMessagePopUp(_ref) {
       messageReducer = _ref.messageReducer,
       user = _ref.user,
       event = _ref.event;
-  console.log("messageReducer1", messageReducer);
+  // console.log("messageReducer1", messageReducer);
   var messagesEndRef = (0, _react.useRef)(null); // const [text, setText] = useState("");
   // const messageReducer = useSelector((state) => state.messageReducer);
 
@@ -171,6 +171,12 @@ function MeetingMessagePopUp(_ref) {
     value: text,
     onChange: function onChange(e) {
       return setText(e.target.value);
+    },
+    onKeyPress: function onKeyPress(e) {
+      if (e.key === "Enter" && e.shiftKey == false) {
+        e.preventDefault();
+        sendMessage();
+      }
     }
   }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", null, /*#__PURE__*/_react.default.createElement("i", {
     className: "fa fa-paper-plane",

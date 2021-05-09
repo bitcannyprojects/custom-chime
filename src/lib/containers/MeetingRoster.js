@@ -6,6 +6,8 @@ import {
   useRosterState,
   RosterAttendee,
   RosterCell,
+  useAttendeeAudioStatus,
+  useToggleLocalMute,
 } from "amazon-chime-sdk-component-library-react";
 
 import { useNavigation } from "../providers/NavigationProvider";
@@ -14,7 +16,7 @@ const MeetingRoster = () => {
   const { roster } = useRosterState();
   const [filter, setFilter] = useState("");
   const { closeRoster } = useNavigation();
-
+  const { muted: muted1, toggleMute } = useToggleLocalMute();
   console.log({ roster });
   let attendees = Object.values(roster);
   console.log("roasterattendee", attendees);
@@ -28,14 +30,62 @@ const MeetingRoster = () => {
   const handleSearch = (e) => {
     setFilter(e.target.value);
   };
-  const Menu = () => (
-    <>
-      <div style={{ padding: ".5rem 1rem", cursor: "pointer" }}>
-        Message user
-      </div>
-      <div style={{ padding: ".5rem 1rem", cursor: "pointer" }}>Kick user</div>
-    </>
-  );
+  const Menu = ({ chimeAttendeeId }) => {
+    const { muted, signalStrength } = useAttendeeAudioStatus(chimeAttendeeId);
+
+    return (
+      <>
+        <div
+          style={{ padding: ".5rem 1rem", cursor: "pointer" }}
+          onClick={() => {
+            try {
+              // console.log("mute", muted1);
+              // toggleMute();
+              // return;
+              console.log("mute1");
+              if (window.socket) {
+                console.log("mute2");
+                window.socket.send(
+                  JSON.stringify({
+                    action: "chat",
+                    message: {
+                      chimeAttendeeId,
+                      action: muted ? "unmute" : "mute",
+                    },
+                  })
+                );
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          {muted ? "Unmute user" : "Mute user"}
+        </div>
+        <div
+          style={{ padding: ".5rem 1rem", cursor: "pointer" }}
+          onClick={() => {
+            try {
+              console.log("kick1");
+              if (window.socket) {
+                console.log("kick2");
+                window.socket.send(
+                  JSON.stringify({
+                    action: "chat",
+                    message: { chimeAttendeeId, action: "kick" },
+                  })
+                );
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          Kick user
+        </div>
+      </>
+    );
+  };
 
   const attendeeItems = attendees.map((attendee) => {
     const { chimeAttendeeId, name } = attendee || {};
@@ -44,7 +94,7 @@ const MeetingRoster = () => {
       <RosterAttendee
         key={chimeAttendeeId}
         attendeeId={chimeAttendeeId}
-        menu={<Menu />}
+        menu={<Menu chimeAttendeeId={chimeAttendeeId} />}
       />
     );
   });

@@ -22,7 +22,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
   const getBreakoutRoomData = async (id) => {
     let resData = await getData(id);
     resData = resData.data;
-
+    console.log({ resData });
     const joinData = {
       meetingInfo: resData.meeting,
       attendeeInfo: resData.attendee,
@@ -32,10 +32,12 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
     meetingManager.getAttendee = getAttendee(
       resData.meeting?.Meeting?.MeetingId
     );
-    setAppMeetingInfo(
-      resData.meeting?.Meeting?.MeetingId,
-      user?.first_name + " " + (user?.last_name || "")
-    );
+    setAppMeetingInfo({
+      meetingId: resData.meeting?.Meeting?.MeetingId,
+      name: user?.first_name + " " + (user?.last_name || ""),
+      role: resData.userSession?.role,
+      chimeAttendeeId: resData.userSession?.chimeAttendeeId,
+    });
     setLoading(false);
   };
   if (loading) return <div>Loading</div>;

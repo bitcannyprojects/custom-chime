@@ -58,13 +58,23 @@ function AppStateProvider(_ref) {
       localUserName = _useState6[0],
       setLocalName = _useState6[1];
 
-  var _useState7 = (0, _react.useState)(function () {
+  var _useState7 = (0, _react.useState)(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      chimeAttendeeId = _useState8[0],
+      setChimeAttendeeId = _useState8[1];
+
+  var _useState9 = (0, _react.useState)(null),
+      _useState10 = _slicedToArray(_useState9, 2),
+      userRole = _useState10[0],
+      setUserRole = _useState10[1];
+
+  var _useState11 = (0, _react.useState)(function () {
     var storedTheme = localStorage.getItem("theme");
     return storedTheme || "light";
   }),
-      _useState8 = _slicedToArray(_useState7, 2),
-      theme = _useState8[0],
-      setTheme = _useState8[1];
+      _useState12 = _slicedToArray(_useState11, 2),
+      theme = _useState12[0],
+      setTheme = _useState12[1];
 
   var toggleTheme = function toggleTheme() {
     if (theme === "light") {
@@ -76,15 +86,27 @@ function AppStateProvider(_ref) {
     }
   };
 
-  var setAppMeetingInfo = function setAppMeetingInfo(meetingId, name, region) {
+  var setAppMeetingInfo = function setAppMeetingInfo(_ref2) {
+    var meetingId = _ref2.meetingId,
+        name = _ref2.name,
+        region = _ref2.region,
+        userRole = _ref2.userRole,
+        chimeAttendeeId = _ref2.chimeAttendeeId;
+    console.log({
+      chimeAttendeeId: chimeAttendeeId
+    });
     if (region) setRegion(region);
     if (meetingId) setMeeting(meetingId);
     if (name) setLocalName(name);
+    if (chimeAttendeeId) setChimeAttendeeId(chimeAttendeeId);
+    if (userRole) setUserRole(userRole);
   };
 
   var providerValue = {
     meetingId: meetingId,
     localUserName: localUserName,
+    userRole: userRole,
+    chimeAttendeeId: chimeAttendeeId,
     theme: theme,
     region: region,
     toggleTheme: toggleTheme,

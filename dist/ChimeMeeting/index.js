@@ -111,7 +111,14 @@ var MeetingView = function MeetingView(_ref) {
   (0, _react.useEffect)(function () {
     if (!Boolean(meetingId)) {
       history.push("".concat(history.location.pathname, "/devices"));
-    }
+    } //  else {
+    //   if (window.socket) {
+    //     window.socket.onmessage = (event) => {
+    //       console.log("socketData 1", { event });
+    //     };
+    //   }
+    // }
+
   }, [meetingId]);
 
   var pollSubmit = function pollSubmit(pollId) {
@@ -120,7 +127,7 @@ var MeetingView = function MeetingView(_ref) {
     });
     var reqData = filteredPolResponses.map(function (modQuesId) {
       return {
-        questionId: modQuesId.split('-')[1],
+        questionId: modQuesId.split("-")[1],
         optionIds: responses[modQuesId]
       };
     });

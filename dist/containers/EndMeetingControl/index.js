@@ -88,48 +88,18 @@ var EndMeetingControl = function EndMeetingControl() {
     return function leaveMeeting() {
       return _ref.apply(this, arguments);
     };
-  }();
+  }(); // const endMeetingForAll = async () => {
+  //   try {
+  //     if (meetingId) {
+  //       // await endMeeting(meetingId);
+  //       await meetingManager.leave();
+  //       history.push("/");
+  //     }
+  //   } catch (e) {
+  //     console.log("Could not end meeting", e);
+  //   }
+  // };
 
-  var endMeetingForAll = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-
-              if (!meetingId) {
-                _context2.next = 5;
-                break;
-              }
-
-              _context2.next = 4;
-              return meetingManager.leave();
-
-            case 4:
-              history.push("/");
-
-            case 5:
-              _context2.next = 10;
-              break;
-
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](0);
-              console.log("Could not end meeting", _context2.t0);
-
-            case 10:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 7]]);
-    }));
-
-    return function endMeetingForAll() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ControlBarButton, {
     icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Phone, null),

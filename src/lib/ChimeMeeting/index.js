@@ -4,7 +4,7 @@ import {
   UserActivityProvider,
   useMeetingStatus,
 } from "amazon-chime-sdk-component-library-react";
-import { ProgressBar } from 'react-bootstrap';
+import { ProgressBar } from "react-bootstrap";
 import { StyledLayout, StyledContent } from "./Styled";
 import NavigationControl from "../containers/Navigation/NavigationControl";
 import { useNavigation } from "../providers/NavigationProvider";
@@ -46,17 +46,26 @@ const MeetingView = ({
     if (!Boolean(meetingId)) {
       history.push(`${history.location.pathname}/devices`);
     }
+    //  else {
+    //   if (window.socket) {
+    //     window.socket.onmessage = (event) => {
+    //       console.log("socketData 1", { event });
+    //     };
+    //   }
+    // }
   }, [meetingId]);
 
   const pollSubmit = (pollId) => {
-    const filteredPolResponses = Object.keys(responses).filter((elem) => elem.split("-")[0] === pollId);
+    const filteredPolResponses = Object.keys(responses).filter(
+      (elem) => elem.split("-")[0] === pollId
+    );
     const reqData = filteredPolResponses.map((modQuesId) => ({
-        questionId: modQuesId.split('-')[1],
-        optionIds: responses[modQuesId],
+      questionId: modQuesId.split("-")[1],
+      optionIds: responses[modQuesId],
     }));
 
-    onPollSubmit(pollId, reqData)
-  }
+    onPollSubmit(pollId, reqData);
+  };
 
   console.log("pollssss", polls, responses);
   return (
@@ -130,7 +139,12 @@ const MeetingView = ({
                 {polls.map((poll) => {
                   return (
                     <div className="single-chime-poll">
-                      <h2 className="mb-2 mx-auto text-center" style={{fontSize: "22px"}}>{poll.title}</h2>
+                      <h2
+                        className="mb-2 mx-auto text-center"
+                        style={{ fontSize: "22px" }}
+                      >
+                        {poll.title}
+                      </h2>
                       {poll?.questions?.map(
                         (
                           {
@@ -152,11 +166,12 @@ const MeetingView = ({
                                     <input
                                       className="form-check-input"
                                       type="radio"
-                                      checked={responses[poll._id + "-" + questionId]?.includes(
-                                        optionId
-                                      )}
+                                      checked={responses[
+                                        poll._id + "-" + questionId
+                                      ]?.includes(optionId)}
                                       onChange={() => {
-                                        const modQuesId = poll._id + "-" + questionId;
+                                        const modQuesId =
+                                          poll._id + "-" + questionId;
                                         setPollResponses({
                                           ...responses,
                                           [modQuesId]: [optionId],
@@ -177,12 +192,15 @@ const MeetingView = ({
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    checked={responses[poll._id + "-" + questionId]?.includes(
-                                      optionId
-                                    )}
+                                    checked={responses[
+                                      poll._id + "-" + questionId
+                                    ]?.includes(optionId)}
                                     onChange={() => {
-                                      const modQuesId = poll._id + "-" + questionId;
-                                      const isIncluded = responses[modQuesId]?.includes(optionId);
+                                      const modQuesId =
+                                        poll._id + "-" + questionId;
+                                      const isIncluded = responses[
+                                        modQuesId
+                                      ]?.includes(optionId);
                                       if (isIncluded) {
                                         setPollResponses({
                                           ...responses,
@@ -227,24 +245,32 @@ const MeetingView = ({
                             <label className="d-block">
                               {index + 1}. {questionText}
                             </label>
-                            {options.map(({ _id: optionId, option, percent }) => {
-                              return (
-                                <label className="d-block w-100">
-                                  <span className="d-inline-block mb-1">{option.optionText}</span>
-                                  <ProgressBar now={percent} label={`${percent}%`} />
-                                </label>
-                              );
-                            })}
+                            {options.map(
+                              ({ _id: optionId, option, percent }) => {
+                                return (
+                                  <label className="d-block w-100">
+                                    <span className="d-inline-block mb-1">
+                                      {option.optionText}
+                                    </span>
+                                    <ProgressBar
+                                      now={percent}
+                                      label={`${percent}%`}
+                                    />
+                                  </label>
+                                );
+                              }
+                            )}
                           </div>
                         )
                       )}
-                      {!poll.report && 
-                      <button 
-                        className="btn btn-primary mx-auto my-2"
-                        onClick={() => pollSubmit(poll._id)}
-                      >
-                        Submit
-                      </button>}
+                      {!poll.report && (
+                        <button
+                          className="btn btn-primary mx-auto my-2"
+                          onClick={() => pollSubmit(poll._id)}
+                        >
+                          Submit
+                        </button>
+                      )}
                     </div>
                   );
                 })}

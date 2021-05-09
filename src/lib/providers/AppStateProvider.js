@@ -18,6 +18,10 @@ export function AppStateProvider({ children }) {
   const [meetingId, setMeeting] = useState(query.get("meetingId") || "");
   const [region, setRegion] = useState(query.get("region") || "");
   const [localUserName, setLocalName] = useState("");
+  const [chimeAttendeeId, setChimeAttendeeId] = useState(null);
+
+  const [userRole, setUserRole] = useState(null);
+
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme || "light";
@@ -33,15 +37,26 @@ export function AppStateProvider({ children }) {
     }
   };
 
-  const setAppMeetingInfo = (meetingId, name, region) => {
+  const setAppMeetingInfo = ({
+    meetingId,
+    name,
+    region,
+    userRole,
+    chimeAttendeeId,
+  }) => {
+    console.log({ chimeAttendeeId });
     if (region) setRegion(region);
     if (meetingId) setMeeting(meetingId);
     if (name) setLocalName(name);
+    if (chimeAttendeeId) setChimeAttendeeId(chimeAttendeeId);
+    if (userRole) setUserRole(userRole);
   };
 
   const providerValue = {
     meetingId,
     localUserName,
+    userRole,
+    chimeAttendeeId,
     theme,
     region,
     toggleTheme,
