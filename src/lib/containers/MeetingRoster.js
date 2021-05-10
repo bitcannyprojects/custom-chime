@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Roster,
   RosterHeader,
@@ -8,18 +8,63 @@ import {
   RosterCell,
   useAttendeeAudioStatus,
   useToggleLocalMute,
+  useAudioVideo,
+  useMeetingManager,
 } from "amazon-chime-sdk-component-library-react";
-
+import { useAppState } from "../providers/AppStateProvider";
 import { useNavigation } from "../providers/NavigationProvider";
 
 const MeetingRoster = () => {
+  const meetingManager = useMeetingManager();
   const { roster } = useRosterState();
   const [filter, setFilter] = useState("");
   const { closeRoster } = useNavigation();
   const { muted: muted1, toggleMute } = useToggleLocalMute();
+  const audioVideo = useAudioVideo();
+  const { localUserName, chimeAttendeeId } = useAppState();
   console.log({ roster });
   let attendees = Object.values(roster);
   console.log("roasterattendee", attendees);
+
+  const receiveActionData = async (mess) => {
+    try {
+      const data = JSON.parse(mess.text());
+      console.log(data);
+
+      if (data.action === "kick") {
+        const attendeeId = data.chimeAttendeeId;
+        if (chimeAttendeeId === attendeeId) {
+          await meetingManager.leave();
+          // props.history.push("/");
+          window.location.href = "/";
+        }
+      } else if (data.action === "mute") {
+        const attendeeId = data.chimeAttendeeId;
+        if (chimeAttendeeId === attendeeId) {
+          !muted1 && toggleMute();
+        }
+      } else if (data.action === "unmute") {
+        const attendeeId = data.chimeAttendeeId;
+        if (chimeAttendeeId === attendeeId) {
+          muted1 && toggleMute();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("ACTION! open");
+    audioVideo?.realtimeSubscribeToReceiveDataMessage(
+      "ACTION",
+      receiveActionData
+    );
+    return () => {
+      console.log("ACTION! end");
+      audioVideo?.realtimeUnsubscribeFromReceiveDataMessage("ACTION");
+    };
+  }, [muted1]);
 
   if (filter) {
     attendees = attendees.filter((attendee) =>
@@ -30,6 +75,7 @@ const MeetingRoster = () => {
   const handleSearch = (e) => {
     setFilter(e.target.value);
   };
+
   const Menu = ({ chimeAttendeeId }) => {
     const { muted, signalStrength } = useAttendeeAudioStatus(chimeAttendeeId);
 
@@ -43,18 +89,25 @@ const MeetingRoster = () => {
               // toggleMute();
               // return;
               console.log("mute1");
-              if (window.socket) {
-                console.log("mute2");
-                window.socket.send(
-                  JSON.stringify({
-                    action: "chat",
-                    message: {
-                      chimeAttendeeId,
-                      action: muted ? "unmute" : "mute",
-                    },
-                  })
-                );
-              }
+              // if (window.socket) {
+              //   console.log("mute2");
+              audioVideo?.realtimeSendDataMessage(
+                "ACTION",
+                JSON.stringify({
+                  chimeAttendeeId,
+                  action: muted ? "unmute" : "mute",
+                })
+              );
+              // window.socket.send(
+              //   JSON.stringify({
+              //     action: "chat",
+              // message: {
+              //   chimeAttendeeId,
+              //   action: muted ? "unmute" : "mute",
+              // },
+              //   })
+              // );
+              // }
             } catch (error) {
               console.log(error);
             }
@@ -67,15 +120,22 @@ const MeetingRoster = () => {
           onClick={() => {
             try {
               console.log("kick1");
-              if (window.socket) {
-                console.log("kick2");
-                window.socket.send(
-                  JSON.stringify({
-                    action: "chat",
-                    message: { chimeAttendeeId, action: "kick" },
-                  })
-                );
-              }
+              // if (window.socket) {
+              console.log("kick2");
+              audioVideo?.realtimeSendDataMessage(
+                "ACTION",
+                JSON.stringify({
+                  chimeAttendeeId,
+                  action: "kick",
+                })
+              );
+              // window.socket.send(
+              //   JSON.stringify({
+              //     action: "chat",
+              //     message: { chimeAttendeeId, action: "kick" },
+              //   })
+              // );
+              // }
             } catch (error) {
               console.log(error);
             }

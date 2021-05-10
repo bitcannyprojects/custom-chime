@@ -33,11 +33,15 @@ require("./style.scss");
 
 var _MeetingMessagePopUp = _interopRequireDefault(require("../MeetingMessagePopUp/MeetingMessagePopUp"));
 
+var _reactFullScreen = require("react-full-screen");
+
 var _materialChat = _interopRequireDefault(require("./material-chat.svg"));
 
 var _awesomePoll = _interopRequireDefault(require("./awesome-poll.svg"));
 
 var _awesomeQuestionCircle = _interopRequireDefault(require("./awesome-question-circle.svg"));
+
+var _RealtimeSubscribeProvider = require("../providers/RealtimeSubscribeProvider");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -108,6 +112,7 @@ var MeetingView = function MeetingView(_ref) {
       responses = _useState4[0],
       setPollResponses = _useState4[1];
 
+  var handle = (0, _reactFullScreen.useFullScreenHandle)();
   (0, _react.useEffect)(function () {
     if (!Boolean(meetingId)) {
       history.push("".concat(history.location.pathname, "/devices"));
@@ -145,10 +150,14 @@ var MeetingView = function MeetingView(_ref) {
     className: "metsec",
     showNav: showNavbar,
     showRoster: showRoster
-  }, /*#__PURE__*/_react.default.createElement(_Styled.StyledContent, null, /*#__PURE__*/_react.default.createElement(_MeetingMetrics.default, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoTileGrid, {
+  }, /*#__PURE__*/_react.default.createElement(_RealtimeSubscribeProvider.RealitimeSubscribeStateProvider, null, /*#__PURE__*/_react.default.createElement(_Styled.StyledContent, null, /*#__PURE__*/_react.default.createElement(_MeetingMetrics.default, null), /*#__PURE__*/_react.default.createElement(_reactFullScreen.FullScreen, {
+    handle: handle
+  }, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoTileGrid, {
     className: "videos",
     noRemoteVideoView: /*#__PURE__*/_react.default.createElement(_MeetingDetails.default, null)
-  }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, null)), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null))), /*#__PURE__*/_react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, null)), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: handle.enter
+  }, "Enter fullscreen")), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), /*#__PURE__*/_react.default.createElement("div", {
     className: "col-lg-4 col-md-6"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "session-util-tab p-2 d-flex align-items-center"
@@ -161,7 +170,9 @@ var MeetingView = function MeetingView(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: _materialChat.default
-  }), "Chat"), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
+  }), "Chat", /*#__PURE__*/_react.default.createElement("button", {
+    onClick: handle.enter
+  }, "Enter fullscreen")), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "polls"
     }),

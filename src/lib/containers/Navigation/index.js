@@ -6,6 +6,7 @@ import {
   NavbarItem,
   Attendees,
   Eye,
+  Chat,
   Information,
 } from "amazon-chime-sdk-component-library-react";
 
@@ -13,7 +14,13 @@ import { useNavigation } from "../../providers/NavigationProvider";
 import { useAppState } from "../../providers/AppStateProvider";
 
 const Navigation = () => {
-  const { toggleRoster, toggleMetrics, closeNavbar } = useNavigation();
+  const {
+    toggleRoster,
+    toggleMetrics,
+    closeNavbar,
+    toggleChat,
+    showChat,
+  } = useNavigation();
   const { theme, toggleTheme } = useAppState();
 
   return (
@@ -24,6 +31,7 @@ const Navigation = () => {
         onClick={toggleRoster}
         label="Attendees"
       />
+      <NavbarItem icon={<Chat />} onClick={toggleChat} label={"Chat"} />
       <NavbarItem
         icon={<Eye />}
         onClick={toggleTheme}

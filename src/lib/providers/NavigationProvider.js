@@ -10,6 +10,7 @@ const NavigationProvider = ({ children }) => {
   const [showNavbar, setShowNavbar] = useState(() => isDesktop());
   const [showRoster, setShowRoster] = useState(() => isDesktop());
   const [showMetrics, setShowMetrics] = useState(false);
+  const [showChat, setShowChat] = useState(false);
   const isDesktopView = useRef(isDesktop());
 
   const location = useLocation();
@@ -35,6 +36,7 @@ const NavigationProvider = ({ children }) => {
       if (!isResizeDesktop) {
         setShowNavbar(false);
         setShowRoster(false);
+        setShowChat(false);
       } else {
         setShowNavbar(true);
       }
@@ -50,6 +52,10 @@ const NavigationProvider = ({ children }) => {
 
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
+  };
+  const toggleChat = () => {
+    console.log("toggle");
+    setShowChat(!showChat);
   };
 
   const toggleMetrics = () => {
@@ -72,15 +78,27 @@ const NavigationProvider = ({ children }) => {
     setShowRoster(false);
   };
 
+  const openChat = () => {
+    setShowChat(true);
+  };
+
+  const closeChat = () => {
+    setShowChat(false);
+  };
+
   const providerValue = {
     showNavbar,
     showRoster,
     showMetrics,
+    showChat,
     toggleRoster,
     toggleNavbar,
     toggleMetrics,
+    toggleChat,
     openRoster,
     closeRoster,
+    openChat,
+    closeChat,
     openNavbar,
     closeNavbar,
   };

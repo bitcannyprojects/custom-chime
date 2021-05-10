@@ -57,6 +57,11 @@ var NavigationProvider = function NavigationProvider(_ref) {
       showMetrics = _useState6[0],
       setShowMetrics = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      showChat = _useState8[0],
+      setShowChat = _useState8[1];
+
   var isDesktopView = (0, _react.useRef)(isDesktop());
   var location = (0, _reactRouterDom.useLocation)();
   var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)();
@@ -80,6 +85,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
       if (!isResizeDesktop) {
         setShowNavbar(false);
         setShowRoster(false);
+        setShowChat(false);
       } else {
         setShowNavbar(true);
       }
@@ -97,6 +103,11 @@ var NavigationProvider = function NavigationProvider(_ref) {
 
   var toggleNavbar = function toggleNavbar() {
     setShowNavbar(!showNavbar);
+  };
+
+  var toggleChat = function toggleChat() {
+    console.log("toggle");
+    setShowChat(!showChat);
   };
 
   var toggleMetrics = function toggleMetrics() {
@@ -121,15 +132,27 @@ var NavigationProvider = function NavigationProvider(_ref) {
     setShowRoster(false);
   };
 
+  var openChat = function openChat() {
+    setShowChat(true);
+  };
+
+  var closeChat = function closeChat() {
+    setShowChat(false);
+  };
+
   var providerValue = {
     showNavbar: showNavbar,
     showRoster: showRoster,
     showMetrics: showMetrics,
+    showChat: showChat,
     toggleRoster: toggleRoster,
     toggleNavbar: toggleNavbar,
     toggleMetrics: toggleMetrics,
+    toggleChat: toggleChat,
     openRoster: openRoster,
     closeRoster: closeRoster,
+    openChat: openChat,
+    closeChat: closeChat,
     openNavbar: openNavbar,
     closeNavbar: closeNavbar
   };

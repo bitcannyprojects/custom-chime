@@ -19,7 +19,9 @@ var Navigation = function Navigation() {
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
       toggleRoster = _useNavigation.toggleRoster,
       toggleMetrics = _useNavigation.toggleMetrics,
-      closeNavbar = _useNavigation.closeNavbar;
+      closeNavbar = _useNavigation.closeNavbar,
+      toggleChat = _useNavigation.toggleChat,
+      showChat = _useNavigation.showChat;
 
   var _useAppState = (0, _AppStateProvider.useAppState)(),
       theme = _useAppState.theme,
@@ -36,6 +38,10 @@ var Navigation = function Navigation() {
     icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Attendees, null),
     onClick: toggleRoster,
     label: "Attendees"
+  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.NavbarItem, {
+    icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Chat, null),
+    onClick: toggleChat,
+    label: "Chat"
   }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.NavbarItem, {
     icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Eye, null),
     onClick: toggleTheme,

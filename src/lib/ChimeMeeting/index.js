@@ -15,10 +15,12 @@ import { useAppState } from "../providers/AppStateProvider";
 import classnames from "classnames";
 import "./style.scss";
 import MeetingMessagePopUp from "../MeetingMessagePopUp/MeetingMessagePopUp";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 import ChatIcon from "./material-chat.svg";
 import PollIcon from "./awesome-poll.svg";
 import qstIcon from "./awesome-question-circle.svg";
+import { RealitimeSubscribeStateProvider } from "../providers/RealtimeSubscribeProvider";
 
 const MeetingView = ({
   history,
@@ -42,6 +44,8 @@ const MeetingView = ({
   const { meetingId, localUserName, setAppMeetingInfo } = useAppState();
   const [activeTab, setActiveTab] = useState("chat");
   const [responses, setPollResponses] = useState({});
+  const handle = useFullScreenHandle();
+
   useEffect(() => {
     if (!Boolean(meetingId)) {
       history.push(`${history.location.pathname}/devices`);
@@ -78,15 +82,20 @@ const MeetingView = ({
               showNav={showNavbar}
               showRoster={showRoster}
             >
-              <StyledContent>
-                <MeetingMetrics />
-                <VideoTileGrid
-                  className="videos"
-                  noRemoteVideoView={<MeetingDetails />}
-                />
-                <MeetingControls />
-              </StyledContent>
-              <NavigationControl />
+              <RealitimeSubscribeStateProvider>
+                <StyledContent>
+                  <MeetingMetrics />
+                  <FullScreen handle={handle}>
+                    <VideoTileGrid
+                      className="videos"
+                      noRemoteVideoView={<MeetingDetails />}
+                    />
+                    <MeetingControls />
+                  </FullScreen>
+                  <button onClick={handle.enter}>Enter fullscreen</button>
+                </StyledContent>
+                <NavigationControl />
+              </RealitimeSubscribeStateProvider>
             </StyledLayout>
           </div>
           <div className="col-lg-4 col-md-6">
@@ -99,6 +108,7 @@ const MeetingView = ({
               >
                 <img src={ChatIcon} />
                 Chat
+                <button onClick={handle.enter}>Enter fullscreen</button>
               </div>
               {polls?.length > 0 && (
                 <div

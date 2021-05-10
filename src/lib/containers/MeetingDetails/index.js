@@ -25,10 +25,10 @@ const MeetingDetails = () => {
             <dt>Meeting ID</dt>
             <dd>{meetingId}</dd>
           </div>
-          <div>
+          {/* <div>
             <dt>Hosted region</dt>
             <dd>{manager.meetingRegion}</dd>
-          </div>
+          </div> */}
         </StyledList>
         <PrimaryButton
           mt={4}
