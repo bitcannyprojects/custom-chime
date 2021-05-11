@@ -16,12 +16,12 @@ import classnames from "classnames";
 import "./style.scss";
 import MeetingMessagePopUp from "../MeetingMessagePopUp/MeetingMessagePopUp";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-
+import { DefaultDeviceController } from "amazon-chime-sdk-js";
 import ChatIcon from "./material-chat.svg";
 import PollIcon from "./awesome-poll.svg";
 import qstIcon from "./awesome-question-circle.svg";
 import { RealitimeSubscribeStateProvider } from "../providers/RealtimeSubscribeProvider";
-
+import { Recorder } from "../utils/Recorder";
 const MeetingView = ({
   history,
   match,
@@ -72,10 +72,15 @@ const MeetingView = ({
   };
 
   console.log("pollssss", polls, responses);
+  const recorder = new Recorder();
   return (
     <UserActivityProvider>
       <div className="vidcon-root">
         <div className="row">
+          <div>
+            <audio id="for-speaker" style={{ display: "none" }} />
+          </div>
+
           <div className="col-lg-8 col-md-6">
             <StyledLayout
               className="metsec"
@@ -93,6 +98,57 @@ const MeetingView = ({
                     <MeetingControls />
                   </FullScreen>
                   <button onClick={handle.enter}>Enter fullscreen</button>
+                  {/* <button
+                    className="btn btn-primary"
+                    onClick={async () => {
+                      const stream = new MediaStream();
+                      const audioElem = document.getElementById("for-speaker");
+
+                      const audioStream = audioElem.captureStream();
+                      let localAudioStream =
+                        audioInputDeviceSetting?.audioInputForRecord;
+                      if (typeof localAudioStream === "string") {
+                        localAudioStream = await navigator.mediaDevices.getUserMedia(
+                          { audio: { deviceId: localAudioStream } }
+                        );
+                      }
+
+                      const audioContext = DefaultDeviceController.getAudioContext();
+                      const outputNode = audioContext.createMediaStreamDestination();
+                      const sourceNode1 = audioContext.createMediaStreamSource(
+                        audioStream
+                      );
+                      sourceNode1.connect(outputNode);
+                      if (localAudioStream) {
+                        const sourceNode2 = audioContext.createMediaStreamSource(
+                          localAudioStream
+                        );
+                        sourceNode2.connect(outputNode);
+                      }
+
+                      const videoStream = recorderCanvas
+                        .captureStream()
+
+                        [(outputNode.stream, videoStream)].forEach((s) => {
+                          s?.getTracks().forEach((t) => {
+                            console.log("added tracks:", t);
+                            stream.addTrack(t);
+                          });
+                        });
+                      recorder.startRecording(stream);
+                    }}
+                  >
+                    Record
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={async () => {
+                      recorder?.stopRecording();
+                      await recorder?.toMp4();
+                    }}
+                  >
+                    Stop Record
+                  </button> */}
                 </StyledContent>
                 <NavigationControl />
               </RealitimeSubscribeStateProvider>
