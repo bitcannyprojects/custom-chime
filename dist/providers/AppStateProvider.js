@@ -10,6 +10,8 @@ exports.AppStateProvider = AppStateProvider;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _Recorder = require("./helper/Recorder");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -65,16 +67,21 @@ function AppStateProvider(_ref) {
 
   var _useState9 = (0, _react.useState)(null),
       _useState10 = _slicedToArray(_useState9, 2),
-      userRole = _useState10[0],
-      setUserRole = _useState10[1];
+      session = _useState10[0],
+      setSession = _useState10[1];
 
-  var _useState11 = (0, _react.useState)(function () {
+  var _useState11 = (0, _react.useState)(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      userRole = _useState12[0],
+      setUserRole = _useState12[1];
+
+  var _useState13 = (0, _react.useState)(function () {
     var storedTheme = localStorage.getItem("theme");
     return storedTheme || "light";
   }),
-      _useState12 = _slicedToArray(_useState11, 2),
-      theme = _useState12[0],
-      setTheme = _useState12[1];
+      _useState14 = _slicedToArray(_useState13, 2),
+      theme = _useState14[0],
+      setTheme = _useState14[1];
 
   var toggleTheme = function toggleTheme() {
     if (theme === "light") {
@@ -91,7 +98,8 @@ function AppStateProvider(_ref) {
         name = _ref2.name,
         region = _ref2.region,
         userRole = _ref2.userRole,
-        chimeAttendeeId = _ref2.chimeAttendeeId;
+        chimeAttendeeId = _ref2.chimeAttendeeId,
+        session = _ref2.session;
     console.log({
       chimeAttendeeId: chimeAttendeeId
     });
@@ -100,6 +108,7 @@ function AppStateProvider(_ref) {
     if (name) setLocalName(name);
     if (chimeAttendeeId) setChimeAttendeeId(chimeAttendeeId);
     if (userRole) setUserRole(userRole);
+    if (session) setSession(session);
   };
 
   var providerValue = {
@@ -110,7 +119,8 @@ function AppStateProvider(_ref) {
     theme: theme,
     region: region,
     toggleTheme: toggleTheme,
-    setAppMeetingInfo: setAppMeetingInfo
+    setAppMeetingInfo: setAppMeetingInfo,
+    session: session
   };
   return /*#__PURE__*/_react.default.createElement(AppStateContext.Provider, {
     value: providerValue

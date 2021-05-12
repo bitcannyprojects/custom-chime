@@ -11,13 +11,13 @@ import {
 } from "amazon-chime-sdk-component-library-react";
 
 import EndMeetingControl from "../EndMeetingControl";
-import { useNavigation } from "../../providers/NavigationProvider";
+import { useNavigation, useAppState } from "../../providers/NavigationProvider";
 import { StyledControls } from "./Styled.js";
 
 const MeetingControls = () => {
   const { toggleNavbar, closeRoster, showRoster } = useNavigation();
   const { isUserActive } = useUserActivityState();
-
+  const { userRole, session } = useAppState();
   const handleToggle = () => {
     if (showRoster) {
       closeRoster();
@@ -40,8 +40,14 @@ const MeetingControls = () => {
           label="Menu"
         />
         <AudioInputControl />
-        <VideoInputControl />
-        <ContentShareControl />
+        {(session?.type === "breakout" ||
+          !(userRole?.length === 1 && userRole.includes("attendee"))) && (
+          <VideoInputControl />
+        )}
+        {(session?.type === "breakout" ||
+          !(userRole?.length === 1 && userRole.includes("attendee"))) && (
+          <ContentShareControl />
+        )}
         <AudioOutputControl />
         <EndMeetingControl />
       </ControlBar>

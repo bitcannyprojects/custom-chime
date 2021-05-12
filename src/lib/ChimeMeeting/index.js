@@ -41,7 +41,12 @@ const MeetingView = ({
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
   const sessionId = match?.params.id;
-  const { meetingId, localUserName, setAppMeetingInfo } = useAppState();
+  const {
+    meetingId,
+    localUserName,
+    setAppMeetingInfo,
+    userRole,
+  } = useAppState();
   const [activeTab, setActiveTab] = useState("chat");
   const [responses, setPollResponses] = useState({});
   const handle = useFullScreenHandle();

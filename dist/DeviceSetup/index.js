@@ -102,7 +102,8 @@ var DeviceSetup = function DeviceSetup(_ref) {
                 meetingId: (_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId,
                 name: (user === null || user === void 0 ? void 0 : user.first_name) + " " + ((user === null || user === void 0 ? void 0 : user.last_name) || ""),
                 role: (_resData$userSession = resData.userSession) === null || _resData$userSession === void 0 ? void 0 : _resData$userSession.role,
-                chimeAttendeeId: (_resData$userSession2 = resData.userSession) === null || _resData$userSession2 === void 0 ? void 0 : _resData$userSession2.chimeAttendeeId
+                chimeAttendeeId: (_resData$userSession2 = resData.userSession) === null || _resData$userSession2 === void 0 ? void 0 : _resData$userSession2.chimeAttendeeId,
+                session: resData.session
               });
               setLoading(false);
 

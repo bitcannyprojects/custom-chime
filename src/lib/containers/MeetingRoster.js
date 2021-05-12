@@ -21,10 +21,12 @@ const MeetingRoster = () => {
   const { closeRoster } = useNavigation();
   const { muted: muted1, toggleMute } = useToggleLocalMute();
   const audioVideo = useAudioVideo();
-  const { localUserName, chimeAttendeeId } = useAppState();
+  const { localUserName, chimeAttendeeId, userRole, session } = useAppState();
   console.log({ roster });
+
+  // const isAttendee
   let attendees = Object.values(roster);
-  console.log("roasterattendee", attendees);
+  // console.log("roasterattendee", attendees);
 
   const receiveActionData = async (mess) => {
     try {
@@ -55,13 +57,13 @@ const MeetingRoster = () => {
   };
 
   useEffect(() => {
-    console.log("ACTION! open");
+    // console.log("ACTION! open");
     audioVideo?.realtimeSubscribeToReceiveDataMessage(
       "ACTION",
       receiveActionData
     );
     return () => {
-      console.log("ACTION! end");
+      // console.log("ACTION! end");
       audioVideo?.realtimeUnsubscribeFromReceiveDataMessage("ACTION");
     };
   }, [muted1]);
@@ -85,12 +87,6 @@ const MeetingRoster = () => {
           style={{ padding: ".5rem 1rem", cursor: "pointer" }}
           onClick={() => {
             try {
-              // console.log("mute", muted1);
-              // toggleMute();
-              // return;
-              console.log("mute1");
-              // if (window.socket) {
-              //   console.log("mute2");
               audioVideo?.realtimeSendDataMessage(
                 "ACTION",
                 JSON.stringify({
@@ -98,16 +94,6 @@ const MeetingRoster = () => {
                   action: muted ? "unmute" : "mute",
                 })
               );
-              // window.socket.send(
-              //   JSON.stringify({
-              //     action: "chat",
-              // message: {
-              //   chimeAttendeeId,
-              //   action: muted ? "unmute" : "mute",
-              // },
-              //   })
-              // );
-              // }
             } catch (error) {
               console.log(error);
             }
@@ -119,9 +105,6 @@ const MeetingRoster = () => {
           style={{ padding: ".5rem 1rem", cursor: "pointer" }}
           onClick={() => {
             try {
-              console.log("kick1");
-              // if (window.socket) {
-              console.log("kick2");
               audioVideo?.realtimeSendDataMessage(
                 "ACTION",
                 JSON.stringify({
@@ -129,13 +112,6 @@ const MeetingRoster = () => {
                   action: "kick",
                 })
               );
-              // window.socket.send(
-              //   JSON.stringify({
-              //     action: "chat",
-              //     message: { chimeAttendeeId, action: "kick" },
-              //   })
-              // );
-              // }
             } catch (error) {
               console.log(error);
             }
@@ -149,6 +125,14 @@ const MeetingRoster = () => {
 
   const attendeeItems = attendees.map((attendee) => {
     const { chimeAttendeeId, name } = attendee || {};
+    if (
+      session?.type === "breakout" ||
+      !(userRole?.length === 1 && userRole.includes("attendee"))
+    ) {
+      return (
+        <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />
+      );
+    }
     return (
       // <RosterCell key={chimeAttendeeId} name={name} />
       <RosterAttendee

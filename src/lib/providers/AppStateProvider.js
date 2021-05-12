@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-
+import { Recorder } from "./helper/Recorder";
 const AppStateContext = React.createContext();
 
 export function useAppState() {
@@ -19,7 +19,7 @@ export function AppStateProvider({ children }) {
   const [region, setRegion] = useState(query.get("region") || "");
   const [localUserName, setLocalName] = useState("");
   const [chimeAttendeeId, setChimeAttendeeId] = useState(null);
-
+  const [session, setSession] = useState(null);
   const [userRole, setUserRole] = useState(null);
 
   const [theme, setTheme] = useState(() => {
@@ -43,6 +43,7 @@ export function AppStateProvider({ children }) {
     region,
     userRole,
     chimeAttendeeId,
+    session,
   }) => {
     console.log({ chimeAttendeeId });
     if (region) setRegion(region);
@@ -50,6 +51,7 @@ export function AppStateProvider({ children }) {
     if (name) setLocalName(name);
     if (chimeAttendeeId) setChimeAttendeeId(chimeAttendeeId);
     if (userRole) setUserRole(userRole);
+    if (session) setSession(session);
   };
 
   const providerValue = {
@@ -61,6 +63,7 @@ export function AppStateProvider({ children }) {
     region,
     toggleTheme,
     setAppMeetingInfo,
+    session,
   };
 
   return (

@@ -35,6 +35,8 @@ var _MeetingMessagePopUp = _interopRequireDefault(require("../MeetingMessagePopU
 
 var _reactFullScreen = require("react-full-screen");
 
+var _amazonChimeSdkJs = require("amazon-chime-sdk-js");
+
 var _materialChat = _interopRequireDefault(require("./material-chat.svg"));
 
 var _awesomePoll = _interopRequireDefault(require("./awesome-poll.svg"));
@@ -64,10 +66,6 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -106,7 +104,8 @@ var MeetingView = function MeetingView(_ref) {
   var _useAppState = (0, _AppStateProvider.useAppState)(),
       meetingId = _useAppState.meetingId,
       localUserName = _useAppState.localUserName,
-      setAppMeetingInfo = _useAppState.setAppMeetingInfo;
+      setAppMeetingInfo = _useAppState.setAppMeetingInfo,
+      userRole = _useAppState.userRole;
 
   var _useState = (0, _react.useState)("chat"),
       _useState2 = _slicedToArray(_useState, 2),
@@ -169,31 +168,7 @@ var MeetingView = function MeetingView(_ref) {
     noRemoteVideoView: /*#__PURE__*/_react.default.createElement(_MeetingDetails.default, null)
   }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, null)), /*#__PURE__*/_react.default.createElement("button", {
     onClick: handle.enter
-  }, "Enter fullscreen"), /*#__PURE__*/_react.default.createElement("button", {
-    className: "btn btn-primary",
-    onClick: function onClick() {
-      var stream = new MediaStream();
-      recorder.startRecording(stream);
-    }
-  }, "Record"), /*#__PURE__*/_react.default.createElement("button", {
-    className: "btn btn-primary",
-    onClick: /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              recorder === null || recorder === void 0 ? void 0 : recorder.stopRecording();
-              _context.next = 3;
-              return recorder === null || recorder === void 0 ? void 0 : recorder.toMp4();
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))
-  }, "Stop Record")), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Enter fullscreen")), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), /*#__PURE__*/_react.default.createElement("div", {
     className: "col-lg-4 col-md-6"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "session-util-tab p-2 d-flex align-items-center"
@@ -238,18 +213,18 @@ var MeetingView = function MeetingView(_ref) {
       style: {
         fontSize: "22px"
       }
-    }, poll.title), poll === null || poll === void 0 ? void 0 : (_poll$questions = poll.questions) === null || _poll$questions === void 0 ? void 0 : _poll$questions.map(function (_ref3, index) {
-      var questionId = _ref3._id,
-          isSingleChoice = _ref3.isSingleChoice,
-          questionText = _ref3.questionText,
-          options = _ref3.options;
+    }, poll.title), poll === null || poll === void 0 ? void 0 : (_poll$questions = poll.questions) === null || _poll$questions === void 0 ? void 0 : _poll$questions.map(function (_ref2, index) {
+      var questionId = _ref2._id,
+          isSingleChoice = _ref2.isSingleChoice,
+          questionText = _ref2.questionText,
+          options = _ref2.options;
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "form-group mb-2"
-      }, /*#__PURE__*/_react.default.createElement("label", null, index + 1, ". ", questionText), options.map(function (_ref4) {
+      }, /*#__PURE__*/_react.default.createElement("label", null, index + 1, ". ", questionText), options.map(function (_ref3) {
         var _responses2;
 
-        var optionId = _ref4._id,
-            optionText = _ref4.optionText;
+        var optionId = _ref3._id,
+            optionText = _ref3.optionText;
 
         if (isSingleChoice) {
           var _responses;
@@ -295,17 +270,17 @@ var MeetingView = function MeetingView(_ref) {
           htmlFor: "exampleRadios1"
         }, optionText));
       }));
-    }), poll === null || poll === void 0 ? void 0 : (_poll$report = poll.report) === null || _poll$report === void 0 ? void 0 : _poll$report.map(function (_ref5, index) {
-      var questionId = _ref5._id,
-          isSingleChoice = _ref5.isSingleChoice,
-          questionText = _ref5.questionText,
-          options = _ref5.options;
+    }), poll === null || poll === void 0 ? void 0 : (_poll$report = poll.report) === null || _poll$report === void 0 ? void 0 : _poll$report.map(function (_ref4, index) {
+      var questionId = _ref4._id,
+          isSingleChoice = _ref4.isSingleChoice,
+          questionText = _ref4.questionText,
+          options = _ref4.options;
       return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
         className: "d-block"
-      }, index + 1, ". ", questionText), options.map(function (_ref6) {
-        var optionId = _ref6._id,
-            option = _ref6.option,
-            percent = _ref6.percent;
+      }, index + 1, ". ", questionText), options.map(function (_ref5) {
+        var optionId = _ref5._id,
+            option = _ref5.option,
+            percent = _ref5.percent;
         return /*#__PURE__*/_react.default.createElement("label", {
           className: "d-block w-100"
         }, /*#__PURE__*/_react.default.createElement("span", {

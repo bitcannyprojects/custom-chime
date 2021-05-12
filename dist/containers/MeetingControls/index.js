@@ -26,6 +26,10 @@ var MeetingControls = function MeetingControls() {
   var _useUserActivityState = (0, _amazonChimeSdkComponentLibraryReact.useUserActivityState)(),
       isUserActive = _useUserActivityState.isUserActive;
 
+  var _useAppState = (0, _NavigationProvider.useAppState)(),
+      userRole = _useAppState.userRole,
+      session = _useAppState.session;
+
   var handleToggle = function handleToggle() {
     if (showRoster) {
       closeRoster();
@@ -46,7 +50,7 @@ var MeetingControls = function MeetingControls() {
     icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Dots, null),
     onClick: handleToggle,
     label: "Menu"
-  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.AudioInputControl, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoInputControl, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ContentShareControl, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.AudioOutputControl, null), /*#__PURE__*/_react.default.createElement(_EndMeetingControl.default, null)));
+  }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.AudioInputControl, null), ((session === null || session === void 0 ? void 0 : session.type) === "breakout" || !((userRole === null || userRole === void 0 ? void 0 : userRole.length) === 1 && userRole.includes("attendee"))) && /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoInputControl, null), ((session === null || session === void 0 ? void 0 : session.type) === "breakout" || !((userRole === null || userRole === void 0 ? void 0 : userRole.length) === 1 && userRole.includes("attendee"))) && /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ContentShareControl, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.AudioOutputControl, null), /*#__PURE__*/_react.default.createElement(_EndMeetingControl.default, null)));
 };
 
 var _default = MeetingControls;

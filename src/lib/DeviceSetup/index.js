@@ -37,6 +37,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
       name: user?.first_name + " " + (user?.last_name || ""),
       role: resData.userSession?.role,
       chimeAttendeeId: resData.userSession?.chimeAttendeeId,
+      session: resData.session,
     });
     setLoading(false);
   };
