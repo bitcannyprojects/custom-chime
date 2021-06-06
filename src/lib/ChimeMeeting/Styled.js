@@ -9,6 +9,9 @@ export const StyledLayout = styled.main`
   .video-content {
     grid-area: content;
   }
+  .fullscreen {
+    height: 100%;
+  }
 
   ${({ showNav, showRoster }) => {
     if (showNav && showRoster) {
@@ -86,7 +89,9 @@ export const StyledContent = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  .fullscreen {
+    height: 100%;
+  }
   .videos {
     flex: 1;
   }

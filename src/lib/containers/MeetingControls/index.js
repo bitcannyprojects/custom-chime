@@ -8,13 +8,15 @@ import {
   ControlBarButton,
   useUserActivityState,
   Dots,
+  Eye,
 } from "amazon-chime-sdk-component-library-react";
 
 import EndMeetingControl from "../EndMeetingControl";
-import { useNavigation, useAppState } from "../../providers/NavigationProvider";
+import { useNavigation } from "../../providers/NavigationProvider";
+import { useAppState } from "../../providers/AppStateProvider";
 import { StyledControls } from "./Styled.js";
 
-const MeetingControls = () => {
+const MeetingControls = ({ toggleFullScreen }) => {
   const { toggleNavbar, closeRoster, showRoster } = useNavigation();
   const { isUserActive } = useUserActivityState();
   const { userRole, session } = useAppState();
@@ -48,7 +50,16 @@ const MeetingControls = () => {
           !(userRole?.length === 1 && userRole.includes("attendee"))) && (
           <ContentShareControl />
         )}
-        <AudioOutputControl />
+        {/* <AudioOutputControl /> */}
+        {/* <span onClick={toggleFullScreen}>
+          <Eye width="2rem" />
+        </span> */}
+        <ControlBarButton
+          className="full-screen-toggle"
+          icon={<Eye />}
+          onClick={toggleFullScreen}
+          label="FS"
+        />
         <EndMeetingControl />
       </ControlBar>
     </StyledControls>

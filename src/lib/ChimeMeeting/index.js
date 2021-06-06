@@ -41,12 +41,8 @@ const MeetingView = ({
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
   const sessionId = match?.params.id;
-  const {
-    meetingId,
-    localUserName,
-    setAppMeetingInfo,
-    userRole,
-  } = useAppState();
+  const { meetingId, localUserName, setAppMeetingInfo, userRole } =
+    useAppState();
   const [activeTab, setActiveTab] = useState("chat");
   const [responses, setPollResponses] = useState({});
   const handle = useFullScreenHandle();
@@ -76,6 +72,14 @@ const MeetingView = ({
     onPollSubmit(pollId, reqData);
   };
 
+  const toggleFullScreen = () => {
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  };
+
   console.log("pollssss", polls, responses);
   const recorder = new Recorder();
   return (
@@ -86,7 +90,11 @@ const MeetingView = ({
             <audio id="for-speaker" style={{ display: "none" }} />
           </div>
 
-          <div className="col-lg-8 col-md-6">
+          <div
+            className={
+              session?.type !== "breakout" ? "col-lg-8 col-md-6" : "col-md-12"
+            }
+          >
             <StyledLayout
               className="metsec"
               showNav={showNavbar}
@@ -95,94 +103,44 @@ const MeetingView = ({
               <RealitimeSubscribeStateProvider>
                 <StyledContent>
                   <MeetingMetrics />
-                  <FullScreen handle={handle}>
+                  <FullScreen handle={handle} className="fullscreen">
                     <VideoTileGrid
                       className="videos"
                       noRemoteVideoView={<MeetingDetails />}
                     />
-                    <MeetingControls />
+                    <MeetingControls toggleFullScreen={toggleFullScreen} />
                   </FullScreen>
-                  <button onClick={handle.enter}>Enter fullscreen</button>
-                  {/* <button
-                    className="btn btn-primary"
-                    onClick={async () => {
-                      const stream = new MediaStream();
-                      const audioElem = document.getElementById("for-speaker");
-
-                      const audioStream = audioElem.captureStream();
-                      let localAudioStream =
-                        audioInputDeviceSetting?.audioInputForRecord;
-                      if (typeof localAudioStream === "string") {
-                        localAudioStream = await navigator.mediaDevices.getUserMedia(
-                          { audio: { deviceId: localAudioStream } }
-                        );
-                      }
-
-                      const audioContext = DefaultDeviceController.getAudioContext();
-                      const outputNode = audioContext.createMediaStreamDestination();
-                      const sourceNode1 = audioContext.createMediaStreamSource(
-                        audioStream
-                      );
-                      sourceNode1.connect(outputNode);
-                      if (localAudioStream) {
-                        const sourceNode2 = audioContext.createMediaStreamSource(
-                          localAudioStream
-                        );
-                        sourceNode2.connect(outputNode);
-                      }
-
-                      const videoStream = recorderCanvas
-                        .captureStream()
-
-                        [(outputNode.stream, videoStream)].forEach((s) => {
-                          s?.getTracks().forEach((t) => {
-                            console.log("added tracks:", t);
-                            stream.addTrack(t);
-                          });
-                        });
-                      recorder.startRecording(stream);
-                    }}
-                  >
-                    Record
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={async () => {
-                      recorder?.stopRecording();
-                      await recorder?.toMp4();
-                    }}
-                  >
-                    Stop Record
-                  </button> */}
+                  {/* <button onClick={handle.enter}>Enter fullscreen</button> */}
                 </StyledContent>
                 <NavigationControl />
               </RealitimeSubscribeStateProvider>
             </StyledLayout>
           </div>
-          <div className="col-lg-4 col-md-6">
-            <div className="session-util-tab p-2 d-flex align-items-center">
-              <div
-                className={classnames("session-tab-item ", {
-                  active: activeTab === "chat",
-                })}
-                onClick={() => setActiveTab("chat")}
-              >
-                <img src={ChatIcon} />
-                Chat
-                <button onClick={handle.enter}>Enter fullscreen</button>
-              </div>
-              {polls?.length > 0 && (
+          {session?.type !== "breakout" && (
+            <div className="col-lg-4 col-md-6">
+              <div className="session-util-tab p-2 d-flex align-items-center">
                 <div
                   className={classnames("session-tab-item ", {
-                    active: activeTab === "polls",
+                    active: activeTab === "chat",
                   })}
-                  onClick={() => setActiveTab("polls")}
+                  onClick={() => setActiveTab("chat")}
                 >
-                  <img src={PollIcon} />
-                  Polls
+                  <img src={ChatIcon} />
+                  Chat
+                  <button onClick={handle.enter}>Enter fullscreen</button>
                 </div>
-              )}
-              {/* {session?.type !== "breakout" && (
+                {polls?.length > 0 && (
+                  <div
+                    className={classnames("session-tab-item ", {
+                      active: activeTab === "polls",
+                    })}
+                    onClick={() => setActiveTab("polls")}
+                  >
+                    <img src={PollIcon} />
+                    Polls
+                  </div>
+                )}
+                {/* {session?.type !== "breakout" && (
                 <div
                   className={classnames("session-tab-item ", {
                     active: activeTab === "qna",
@@ -192,61 +150,103 @@ const MeetingView = ({
                   <img src={qstIcon} />Q & A
                 </div>
               )} */}
-            </div>
-            {activeTab === "chat" && session && (
-              <MeetingMessagePopUp
-                sessionId={sessionId}
-                sendMessage={sendMessage}
-                getSelectedMeetingMessages={getSelectedMeetingMessages}
-                text={text}
-                setText={setText}
-                messageReducer={messageReducer}
-                user={user}
-                event={event}
-              />
-            )}
-            {activeTab === "polls" && (
-              <div className="chime-poll-cont">
-                {polls.map((poll) => {
-                  return (
-                    <div className="single-chime-poll">
-                      <h2
-                        className="mb-2 mx-auto text-center"
-                        style={{ fontSize: "22px" }}
-                      >
-                        {poll.title}
-                      </h2>
-                      {poll?.questions?.map(
-                        (
-                          {
-                            _id: questionId,
-                            isSingleChoice,
-                            questionText,
-                            options,
-                          },
-                          index
-                        ) => (
-                          <div className="form-group mb-2">
-                            <label>
-                              {index + 1}. {questionText}
-                            </label>
-                            {options.map(({ _id: optionId, optionText }) => {
-                              if (isSingleChoice) {
+              </div>
+              {activeTab === "chat" && session && (
+                <MeetingMessagePopUp
+                  sessionId={sessionId}
+                  sendMessage={sendMessage}
+                  getSelectedMeetingMessages={getSelectedMeetingMessages}
+                  text={text}
+                  setText={setText}
+                  messageReducer={messageReducer}
+                  user={user}
+                  event={event}
+                />
+              )}
+              {activeTab === "polls" && (
+                <div className="chime-poll-cont">
+                  {polls.map((poll) => {
+                    return (
+                      <div className="single-chime-poll">
+                        <h2
+                          className="mb-2 mx-auto text-center"
+                          style={{ fontSize: "22px" }}
+                        >
+                          {poll.title}
+                        </h2>
+                        {poll?.questions?.map(
+                          (
+                            {
+                              _id: questionId,
+                              isSingleChoice,
+                              questionText,
+                              options,
+                            },
+                            index
+                          ) => (
+                            <div className="form-group mb-2">
+                              <label>
+                                {index + 1}. {questionText}
+                              </label>
+                              {options.map(({ _id: optionId, optionText }) => {
+                                if (isSingleChoice) {
+                                  return (
+                                    <div className="form-check">
+                                      <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        checked={responses[
+                                          poll._id + "-" + questionId
+                                        ]?.includes(optionId)}
+                                        onChange={() => {
+                                          const modQuesId =
+                                            poll._id + "-" + questionId;
+                                          setPollResponses({
+                                            ...responses,
+                                            [modQuesId]: [optionId],
+                                          });
+                                        }}
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="exampleRadios1"
+                                      >
+                                        {optionText}
+                                      </label>
+                                    </div>
+                                  );
+                                }
                                 return (
                                   <div className="form-check">
                                     <input
                                       className="form-check-input"
-                                      type="radio"
+                                      type="checkbox"
                                       checked={responses[
                                         poll._id + "-" + questionId
                                       ]?.includes(optionId)}
                                       onChange={() => {
                                         const modQuesId =
                                           poll._id + "-" + questionId;
-                                        setPollResponses({
-                                          ...responses,
-                                          [modQuesId]: [optionId],
-                                        });
+                                        const isIncluded =
+                                          responses[modQuesId]?.includes(
+                                            optionId
+                                          );
+                                        if (isIncluded) {
+                                          setPollResponses({
+                                            ...responses,
+                                            [modQuesId]: responses[
+                                              modQuesId
+                                            ].filter((id) => id !== optionId),
+                                          });
+                                        } else {
+                                          setPollResponses({
+                                            ...responses,
+                                            [modQuesId]: [
+                                              ...(responses[modQuesId] || []),
+                                              optionId,
+                                            ],
+                                          });
+                                        }
                                       }}
                                     />
                                     <label
@@ -257,97 +257,57 @@ const MeetingView = ({
                                     </label>
                                   </div>
                                 );
-                              }
-                              return (
-                                <div className="form-check">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={responses[
-                                      poll._id + "-" + questionId
-                                    ]?.includes(optionId)}
-                                    onChange={() => {
-                                      const modQuesId =
-                                        poll._id + "-" + questionId;
-                                      const isIncluded = responses[
-                                        modQuesId
-                                      ]?.includes(optionId);
-                                      if (isIncluded) {
-                                        setPollResponses({
-                                          ...responses,
-                                          [modQuesId]: responses[
-                                            modQuesId
-                                          ].filter((id) => id !== optionId),
-                                        });
-                                      } else {
-                                        setPollResponses({
-                                          ...responses,
-                                          [modQuesId]: [
-                                            ...(responses[modQuesId] || []),
-                                            optionId,
-                                          ],
-                                        });
-                                      }
-                                    }}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="exampleRadios1"
-                                  >
-                                    {optionText}
-                                  </label>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )
-                      )}
-                      {poll?.report?.map(
-                        (
-                          {
-                            _id: questionId,
-                            isSingleChoice,
-                            questionText,
-                            options,
-                          },
-                          index
-                        ) => (
-                          <div>
-                            <label className="d-block">
-                              {index + 1}. {questionText}
-                            </label>
-                            {options.map(
-                              ({ _id: optionId, option, percent }) => {
-                                return (
-                                  <label className="d-block w-100">
-                                    <span className="d-inline-block mb-1">
-                                      {option.optionText}
-                                    </span>
-                                    <ProgressBar
-                                      now={percent}
-                                      label={`${percent}%`}
-                                    />
-                                  </label>
-                                );
-                              }
-                            )}
-                          </div>
-                        )
-                      )}
-                      {!poll.report && (
-                        <button
-                          className="btn btn-primary mx-auto my-2"
-                          onClick={() => pollSubmit(poll._id)}
-                        >
-                          Submit
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                              })}
+                            </div>
+                          )
+                        )}
+                        {poll?.report?.map(
+                          (
+                            {
+                              _id: questionId,
+                              isSingleChoice,
+                              questionText,
+                              options,
+                            },
+                            index
+                          ) => (
+                            <div>
+                              <label className="d-block">
+                                {index + 1}. {questionText}
+                              </label>
+                              {options.map(
+                                ({ _id: optionId, option, percent }) => {
+                                  return (
+                                    <label className="d-block w-100">
+                                      <span className="d-inline-block mb-1">
+                                        {option.optionText}
+                                      </span>
+                                      <ProgressBar
+                                        now={percent}
+                                        label={`${percent}%`}
+                                      />
+                                    </label>
+                                  );
+                                }
+                              )}
+                            </div>
+                          )
+                        )}
+                        {!poll.report && (
+                          <button
+                            className="btn btn-primary mx-auto my-2"
+                            onClick={() => pollSubmit(poll._id)}
+                          >
+                            Submit
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </UserActivityProvider>

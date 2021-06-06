@@ -26,7 +26,6 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-// import { Recorder } from "./helper/Recorder";
 var AppStateContext = /*#__PURE__*/_react.default.createContext();
 
 function useAppState() {

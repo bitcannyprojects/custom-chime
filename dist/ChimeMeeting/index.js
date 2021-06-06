@@ -144,6 +144,14 @@ var MeetingView = function MeetingView(_ref) {
     onPollSubmit(pollId, reqData);
   };
 
+  var toggleFullScreen = function toggleFullScreen() {
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  };
+
   console.log("pollssss", polls, responses);
   var recorder = new _Recorder.Recorder();
   return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.UserActivityProvider, null, /*#__PURE__*/_react.default.createElement("div", {
@@ -156,19 +164,20 @@ var MeetingView = function MeetingView(_ref) {
       display: "none"
     }
   })), /*#__PURE__*/_react.default.createElement("div", {
-    className: "col-lg-8 col-md-6"
+    className: (session === null || session === void 0 ? void 0 : session.type) !== "breakout" ? "col-lg-8 col-md-6" : "col-md-12"
   }, /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, {
     className: "metsec",
     showNav: showNavbar,
     showRoster: showRoster
   }, /*#__PURE__*/_react.default.createElement(_RealtimeSubscribeProvider.RealitimeSubscribeStateProvider, null, /*#__PURE__*/_react.default.createElement(_Styled.StyledContent, null, /*#__PURE__*/_react.default.createElement(_MeetingMetrics.default, null), /*#__PURE__*/_react.default.createElement(_reactFullScreen.FullScreen, {
-    handle: handle
+    handle: handle,
+    className: "fullscreen"
   }, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoTileGrid, {
     className: "videos",
     noRemoteVideoView: /*#__PURE__*/_react.default.createElement(_MeetingDetails.default, null)
-  }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, null)), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: handle.enter
-  }, "Enter fullscreen")), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), /*#__PURE__*/_react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, {
+    toggleFullScreen: toggleFullScreen
+  }))), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
     className: "col-lg-4 col-md-6"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "session-util-tab p-2 d-flex align-items-center"
