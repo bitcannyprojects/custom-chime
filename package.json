@@ -1,6 +1,6 @@
 {
   "name": "custom-chime-app",
-  "version": "0.3.2",
+  "version": "0.3.9",
   "private": false,
   "scripts": {
     "start": "react-scripts start",

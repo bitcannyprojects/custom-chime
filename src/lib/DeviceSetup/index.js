@@ -48,7 +48,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
         <Heading tag="h1" level={3} css="align-self: flex-start">
           Device Settings
         </Heading>
-        <JoinMeetingDetails meetingID={meetingID} />
+        <JoinMeetingDetails meetingID={meetingID} session={session} />
         <DeviceSelection />
       </StyledLayout>
     </div>

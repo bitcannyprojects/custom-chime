@@ -47,14 +47,28 @@ const NavigationProvider = ({ children }) => {
   }, []);
 
   const toggleRoster = () => {
+    console.log("151--->>>", "toggleRoaster");
+    if (showRoster) {
+      closeChat();
+    }
     setShowRoster(!showRoster);
   };
 
   const toggleNavbar = () => {
+    console.log("151--->>>", "toggleNavbar");
     setShowNavbar(!showNavbar);
+    // if (showChat) {
+    //   closeChat();
+    // }
   };
   const toggleChat = () => {
-    console.log("toggle");
+    console.log("151--->>>", "toggleChat");
+    // if (showChat) {
+    //   toggleNavbar();
+    // }
+    if (!showChat) {
+      openRoster(true);
+    }
     setShowChat(!showChat);
   };
 
@@ -67,6 +81,7 @@ const NavigationProvider = ({ children }) => {
   };
 
   const closeNavbar = () => {
+    console.log("151--->>>", "closenavbar");
     setShowNavbar(false);
   };
 
@@ -75,6 +90,7 @@ const NavigationProvider = ({ children }) => {
   };
 
   const closeRoster = () => {
+    console.log("151--->>>", "closeRoster");
     setShowRoster(false);
   };
 
@@ -83,6 +99,7 @@ const NavigationProvider = ({ children }) => {
   };
 
   const closeChat = () => {
+    console.log("151--->>>", "closeChat");
     setShowChat(false);
   };
 

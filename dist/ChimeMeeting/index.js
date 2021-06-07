@@ -45,8 +45,6 @@ var _awesomeQuestionCircle = _interopRequireDefault(require("./awesome-question-
 
 var _RealtimeSubscribeProvider = require("../providers/RealtimeSubscribeProvider");
 
-var _Recorder = require("../utils/Recorder");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -79,6 +77,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// import { Recorder } from "../utils/Recorder";
 var MeetingView = function MeetingView(_ref) {
   var history = _ref.history,
       match = _ref.match,
@@ -152,8 +151,8 @@ var MeetingView = function MeetingView(_ref) {
     }
   };
 
-  console.log("pollssss", polls, responses);
-  var recorder = new _Recorder.Recorder();
+  console.log("pollssss", polls, responses); // const recorder = new Recorder();
+
   return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.UserActivityProvider, null, /*#__PURE__*/_react.default.createElement("div", {
     className: "vidcon-root"
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -164,7 +163,7 @@ var MeetingView = function MeetingView(_ref) {
       display: "none"
     }
   })), /*#__PURE__*/_react.default.createElement("div", {
-    className: (session === null || session === void 0 ? void 0 : session.type) !== "breakout" ? "col-lg-8 col-md-6" : "col-md-12"
+    className: (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && (polls === null || polls === void 0 ? void 0 : polls.length) > 0 ? "col-lg-8 col-md-6" : "col-md-12"
   }, /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, {
     className: "metsec",
     showNav: showNavbar,
@@ -177,22 +176,11 @@ var MeetingView = function MeetingView(_ref) {
     noRemoteVideoView: /*#__PURE__*/_react.default.createElement(_MeetingDetails.default, null)
   }), /*#__PURE__*/_react.default.createElement(_MeetingControls.default, {
     toggleFullScreen: toggleFullScreen
-  }))), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && /*#__PURE__*/_react.default.createElement("div", {
+  }))), /*#__PURE__*/_react.default.createElement(_NavigationControl.default, null)))), (session === null || session === void 0 ? void 0 : session.type) !== "breakout" && (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
     className: "col-lg-4 col-md-6"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "session-util-tab p-2 d-flex align-items-center"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)("session-tab-item ", {
-      active: activeTab === "chat"
-    }),
-    onClick: function onClick() {
-      return setActiveTab("chat");
-    }
-  }, /*#__PURE__*/_react.default.createElement("img", {
-    src: _materialChat.default
-  }), "Chat", /*#__PURE__*/_react.default.createElement("button", {
-    onClick: handle.enter
-  }, "Enter fullscreen")), (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
+  }, (polls === null || polls === void 0 ? void 0 : polls.length) > 0 && /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)("session-tab-item ", {
       active: activeTab === "polls"
     }),
@@ -201,16 +189,7 @@ var MeetingView = function MeetingView(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: _awesomePoll.default
-  }), "Polls")), activeTab === "chat" && session && /*#__PURE__*/_react.default.createElement(_MeetingMessagePopUp.default, {
-    sessionId: sessionId,
-    sendMessage: sendMessage,
-    getSelectedMeetingMessages: getSelectedMeetingMessages,
-    text: text,
-    setText: setText,
-    messageReducer: messageReducer,
-    user: user,
-    event: event
-  }), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
+  }), "Polls")), activeTab === "polls" && /*#__PURE__*/_react.default.createElement("div", {
     className: "chime-poll-cont"
   }, polls.map(function (poll) {
     var _poll$questions, _poll$report;

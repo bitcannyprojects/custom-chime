@@ -48,7 +48,7 @@ const ChatView = () => {
       <RosterHeader
         title="Chat"
         onClose={() => {
-          closeChat;
+          closeChat();
         }}
       ></RosterHeader>
       {/* <RosterGroup>{attendeeItems}</RosterGroup> */}

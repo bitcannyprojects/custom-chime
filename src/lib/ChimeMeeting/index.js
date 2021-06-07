@@ -21,7 +21,7 @@ import ChatIcon from "./material-chat.svg";
 import PollIcon from "./awesome-poll.svg";
 import qstIcon from "./awesome-question-circle.svg";
 import { RealitimeSubscribeStateProvider } from "../providers/RealtimeSubscribeProvider";
-import { Recorder } from "../utils/Recorder";
+// import { Recorder } from "../utils/Recorder";
 const MeetingView = ({
   history,
   match,
@@ -81,7 +81,7 @@ const MeetingView = ({
   };
 
   console.log("pollssss", polls, responses);
-  const recorder = new Recorder();
+  // const recorder = new Recorder();
   return (
     <UserActivityProvider>
       <div className="vidcon-root">
@@ -92,7 +92,9 @@ const MeetingView = ({
 
           <div
             className={
-              session?.type !== "breakout" ? "col-lg-8 col-md-6" : "col-md-12"
+              session?.type !== "breakout" && polls?.length > 0
+                ? "col-lg-8 col-md-6"
+                : "col-md-12"
             }
           >
             <StyledLayout
@@ -116,10 +118,10 @@ const MeetingView = ({
               </RealitimeSubscribeStateProvider>
             </StyledLayout>
           </div>
-          {session?.type !== "breakout" && (
+          {session?.type !== "breakout" && polls?.length > 0 && (
             <div className="col-lg-4 col-md-6">
               <div className="session-util-tab p-2 d-flex align-items-center">
-                <div
+                {/* <div
                   className={classnames("session-tab-item ", {
                     active: activeTab === "chat",
                   })}
@@ -128,7 +130,7 @@ const MeetingView = ({
                   <img src={ChatIcon} />
                   Chat
                   <button onClick={handle.enter}>Enter fullscreen</button>
-                </div>
+                </div> */}
                 {polls?.length > 0 && (
                   <div
                     className={classnames("session-tab-item ", {
@@ -151,7 +153,7 @@ const MeetingView = ({
                 </div>
               )} */}
               </div>
-              {activeTab === "chat" && session && (
+              {/* {activeTab === "chat" && session && (
                 <MeetingMessagePopUp
                   sessionId={sessionId}
                   sendMessage={sendMessage}
@@ -162,7 +164,7 @@ const MeetingView = ({
                   user={user}
                   event={event}
                 />
-              )}
+              )} */}
               {activeTab === "polls" && (
                 <div className="chime-poll-cont">
                   {polls.map((poll) => {

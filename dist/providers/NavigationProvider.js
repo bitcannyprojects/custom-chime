@@ -98,15 +98,31 @@ var NavigationProvider = function NavigationProvider(_ref) {
   }, []);
 
   var toggleRoster = function toggleRoster() {
+    console.log("151--->>>", "toggleRoaster");
+
+    if (showRoster) {
+      closeChat();
+    }
+
     setShowRoster(!showRoster);
   };
 
   var toggleNavbar = function toggleNavbar() {
-    setShowNavbar(!showNavbar);
+    console.log("151--->>>", "toggleNavbar");
+    setShowNavbar(!showNavbar); // if (showChat) {
+    //   closeChat();
+    // }
   };
 
   var toggleChat = function toggleChat() {
-    console.log("toggle");
+    console.log("151--->>>", "toggleChat"); // if (showChat) {
+    //   toggleNavbar();
+    // }
+
+    if (!showChat) {
+      openRoster(true);
+    }
+
     setShowChat(!showChat);
   };
 
@@ -121,6 +137,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var closeNavbar = function closeNavbar() {
+    console.log("151--->>>", "closenavbar");
     setShowNavbar(false);
   };
 
@@ -129,6 +146,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var closeRoster = function closeRoster() {
+    console.log("151--->>>", "closeRoster");
     setShowRoster(false);
   };
 
@@ -137,6 +155,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var closeChat = function closeChat() {
+    console.log("151--->>>", "closeChat");
     setShowChat(false);
   };
 

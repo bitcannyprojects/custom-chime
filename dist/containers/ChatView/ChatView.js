@@ -88,7 +88,7 @@ var ChatView = function ChatView() {
   }, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.RosterHeader, {
     title: "Chat",
     onClose: function onClose() {
-      closeChat;
+      closeChat();
     }
   }), attendeeItems, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Textarea //@ts-ignore
   , {

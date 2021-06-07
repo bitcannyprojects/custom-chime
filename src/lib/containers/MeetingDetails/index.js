@@ -11,7 +11,7 @@ import { useAppState } from "../../providers/AppStateProvider";
 import { StyledList } from "./Styled";
 
 const MeetingDetails = () => {
-  const { meetingId, toggleTheme, theme } = useAppState();
+  const { meetingId, toggleTheme, theme, session } = useAppState();
   const manager = useMeetingManager();
 
   return (
@@ -22,8 +22,8 @@ const MeetingDetails = () => {
         </Heading>
         <StyledList>
           <div>
-            <dt>Meeting ID</dt>
-            <dd>{meetingId}</dd>
+            <dt>Meeting Topic</dt>
+            <dd>{session?.topic}</dd>
           </div>
           {/* <div>
             <dt>Hosted region</dt>
