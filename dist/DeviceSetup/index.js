@@ -128,8 +128,7 @@ var DeviceSetup = function DeviceSetup(_ref) {
     level: 3,
     css: "align-self: flex-start"
   }, "Device Settings"), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
-    meetingID: meetingID,
-    session: session
+    meetingID: meetingID
   }), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null)));
 };
 

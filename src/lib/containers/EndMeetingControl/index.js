@@ -27,8 +27,8 @@ const EndMeetingControl = () => {
     try {
       console.log("leaving...");
       await meetingManager.leave();
-      // history.push("/");
       window.close();
+      history.push("/");
     } catch (error) {
       console.log(error);
     }
