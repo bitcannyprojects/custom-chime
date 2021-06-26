@@ -127,7 +127,7 @@ const MeetingRoster = () => {
     const { chimeAttendeeId, name } = attendee || {};
     if (
       session?.type === "breakout" ||
-      !(userRole?.length === 1 && userRole.includes("attendee"))
+      (userRole?.length === 1 && userRole.includes("attendee"))
     ) {
       return (
         <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />

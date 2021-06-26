@@ -65,6 +65,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -92,6 +96,7 @@ var MeetingView = function MeetingView(_ref) {
       user = _ref.user,
       event = _ref.event;
   console.log("messageReducer2", messageReducer);
+  var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)();
 
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
       showNavbar = _useNavigation.showNavbar,
@@ -129,6 +134,23 @@ var MeetingView = function MeetingView(_ref) {
     // }
 
   }, [meetingId]);
+  (0, _react.useEffect)(function () {
+    return /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return meetingManager.leave();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+  }, []);
 
   var pollSubmit = function pollSubmit(pollId) {
     var filteredPolResponses = Object.keys(responses).filter(function (elem) {
@@ -201,18 +223,18 @@ var MeetingView = function MeetingView(_ref) {
       style: {
         fontSize: "22px"
       }
-    }, poll.title), poll === null || poll === void 0 ? void 0 : (_poll$questions = poll.questions) === null || _poll$questions === void 0 ? void 0 : _poll$questions.map(function (_ref2, index) {
-      var questionId = _ref2._id,
-          isSingleChoice = _ref2.isSingleChoice,
-          questionText = _ref2.questionText,
-          options = _ref2.options;
+    }, poll.title), poll === null || poll === void 0 ? void 0 : (_poll$questions = poll.questions) === null || _poll$questions === void 0 ? void 0 : _poll$questions.map(function (_ref3, index) {
+      var questionId = _ref3._id,
+          isSingleChoice = _ref3.isSingleChoice,
+          questionText = _ref3.questionText,
+          options = _ref3.options;
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "form-group mb-2"
-      }, /*#__PURE__*/_react.default.createElement("label", null, index + 1, ". ", questionText), options.map(function (_ref3) {
+      }, /*#__PURE__*/_react.default.createElement("label", null, index + 1, ". ", questionText), options.map(function (_ref4) {
         var _responses2;
 
-        var optionId = _ref3._id,
-            optionText = _ref3.optionText;
+        var optionId = _ref4._id,
+            optionText = _ref4.optionText;
 
         if (isSingleChoice) {
           var _responses;
@@ -258,17 +280,17 @@ var MeetingView = function MeetingView(_ref) {
           htmlFor: "exampleRadios1"
         }, optionText));
       }));
-    }), poll === null || poll === void 0 ? void 0 : (_poll$report = poll.report) === null || _poll$report === void 0 ? void 0 : _poll$report.map(function (_ref4, index) {
-      var questionId = _ref4._id,
-          isSingleChoice = _ref4.isSingleChoice,
-          questionText = _ref4.questionText,
-          options = _ref4.options;
+    }), poll === null || poll === void 0 ? void 0 : (_poll$report = poll.report) === null || _poll$report === void 0 ? void 0 : _poll$report.map(function (_ref5, index) {
+      var questionId = _ref5._id,
+          isSingleChoice = _ref5.isSingleChoice,
+          questionText = _ref5.questionText,
+          options = _ref5.options;
       return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
         className: "d-block"
-      }, index + 1, ". ", questionText), options.map(function (_ref5) {
-        var optionId = _ref5._id,
-            option = _ref5.option,
-            percent = _ref5.percent;
+      }, index + 1, ". ", questionText), options.map(function (_ref6) {
+        var optionId = _ref6._id,
+            option = _ref6.option,
+            percent = _ref6.percent;
         return /*#__PURE__*/_react.default.createElement("label", {
           className: "d-block w-100"
         }, /*#__PURE__*/_react.default.createElement("span", {

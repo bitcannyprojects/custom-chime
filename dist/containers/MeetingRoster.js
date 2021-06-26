@@ -203,7 +203,7 @@ var MeetingRoster = function MeetingRoster() {
         chimeAttendeeId = _ref3.chimeAttendeeId,
         name = _ref3.name;
 
-    if ((session === null || session === void 0 ? void 0 : session.type) === "breakout" || !((userRole === null || userRole === void 0 ? void 0 : userRole.length) === 1 && userRole.includes("attendee"))) {
+    if ((session === null || session === void 0 ? void 0 : session.type) === "breakout" || (userRole === null || userRole === void 0 ? void 0 : userRole.length) === 1 && userRole.includes("attendee")) {
       return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.RosterAttendee, {
         key: chimeAttendeeId,
         attendeeId: chimeAttendeeId

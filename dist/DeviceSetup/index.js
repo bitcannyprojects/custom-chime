@@ -55,7 +55,15 @@ var DeviceSetup = function DeviceSetup(_ref) {
   var _useState = (0, _react.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       loading = _useState2[0],
-      setLoading = _useState2[1]; // const [session, setSession] = useState({});
+      setLoading = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      error = _useState4[0],
+      setError = _useState4[1];
+
+  var _useRosterState = (0, _amazonChimeSdkComponentLibraryReact.useRosterState)(),
+      roster = _useRosterState.roster; // const [session, setSession] = useState({});
 
 
   var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)(); // const user = useSelector((state) => state.userReducer.user);
@@ -72,17 +80,17 @@ var DeviceSetup = function DeviceSetup(_ref) {
 
   var getBreakoutRoomData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
-      var _resData$meeting, _resData$meeting$Meet, _resData$meeting2, _resData$meeting2$Mee, _resData$userSession, _resData$userSession2;
+      var _resData$meeting, _resData$meeting$Meet, _resData$meeting2, _resData$meeting2$Mee, _resData$userSession, _resData$userSession2, resData, joinData, _error$response, _error$response$data;
 
-      var resData, joinData;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return getData(id);
 
-            case 2:
+            case 3:
               resData = _context.sent;
               resData = resData.data;
               console.log({
@@ -93,26 +101,44 @@ var DeviceSetup = function DeviceSetup(_ref) {
                 attendeeInfo: resData.attendee
               };
               setSession(resData.session);
-              _context.next = 9;
+              _context.next = 10;
               return meetingManager.join(joinData);
 
-            case 9:
+            case 10:
               meetingManager.getAttendee = getAttendee((_resData$meeting = resData.meeting) === null || _resData$meeting === void 0 ? void 0 : (_resData$meeting$Meet = _resData$meeting.Meeting) === null || _resData$meeting$Meet === void 0 ? void 0 : _resData$meeting$Meet.MeetingId);
+              console.log(30, {
+                roster: roster
+              });
               setAppMeetingInfo({
                 meetingId: (_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId,
                 name: (user === null || user === void 0 ? void 0 : user.first_name) + " " + ((user === null || user === void 0 ? void 0 : user.last_name) || ""),
                 role: (_resData$userSession = resData.userSession) === null || _resData$userSession === void 0 ? void 0 : _resData$userSession.role,
                 chimeAttendeeId: (_resData$userSession2 = resData.userSession) === null || _resData$userSession2 === void 0 ? void 0 : _resData$userSession2.chimeAttendeeId,
                 session: resData.session
-              });
-              setLoading(false);
+              }); // if (resData.session?.duration) {
+              //   setTimeout(() => {
+              //     await meetingManager.leave();
+              //     // props.history.push("/");
+              //     window.location.href = "/";
+              //   }, resData?.session?.duration * 60000);
+              // }
 
-            case 12:
+              setLoading(false);
+              _context.next = 20;
+              break;
+
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](0);
+              setLoading(false);
+              setError(_context.t0 === null || _context.t0 === void 0 ? void 0 : (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : (_error$response$data = _error$response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.message);
+
+            case 20:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 16]]);
     }));
 
     return function getBreakoutRoomData(_x) {
@@ -121,6 +147,9 @@ var DeviceSetup = function DeviceSetup(_ref) {
   }();
 
   if (loading) return /*#__PURE__*/_react.default.createElement("div", null, "Loading");
+  if (error) return /*#__PURE__*/_react.default.createElement("div", {
+    className: "alert alert-danger"
+  }, error);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "meeting-root"
   }, /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Heading, {

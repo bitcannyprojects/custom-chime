@@ -3,6 +3,7 @@ import {
   VideoTileGrid,
   UserActivityProvider,
   useMeetingStatus,
+  useMeetingManager,
 } from "amazon-chime-sdk-component-library-react";
 import { ProgressBar } from "react-bootstrap";
 import { StyledLayout, StyledContent } from "./Styled";
@@ -38,6 +39,7 @@ const MeetingView = ({
   event,
 }) => {
   console.log("messageReducer2", messageReducer);
+  const meetingManager = useMeetingManager();
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
   const sessionId = match?.params.id;
@@ -59,6 +61,17 @@ const MeetingView = ({
     //   }
     // }
   }, [meetingId]);
+
+  useEffect(() => {
+    return async () => {
+      // const op = window.confirm("Are you sure, you want to leave meeting?");
+      // if (op) {
+      await meetingManager.leave();
+      // window.close();
+      // window.location.href = "/";
+      // }
+    };
+  }, []);
 
   const pollSubmit = (pollId) => {
     const filteredPolResponses = Object.keys(responses).filter(
