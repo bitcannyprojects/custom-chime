@@ -68,7 +68,7 @@ var EndMeetingControl = function EndMeetingControl() {
 
             case 4:
               // window.close();
-              window.location.href = "/";
+              window.location.href = "/lounge";
               _context.next = 10;
               break;
 
