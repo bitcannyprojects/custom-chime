@@ -21,8 +21,8 @@ const MeetingJoinDetails = ({ meetingID }) => {
   const [error, setError] = useState("");
   const { meetingId, localUserName } = useAppState();
 
-  console.log("appState", meetingId, localUserName);
-  console.log({ history });
+  // console.log("appState", meetingId, localUserName);
+  // console.log({ history });
   const handleJoinMeeting = async () => {
     setIsLoading(true);
     try {

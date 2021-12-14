@@ -56,12 +56,9 @@ var MeetingJoinDetails = function MeetingJoinDetails(_ref) {
 
   var _useAppState = (0, _AppStateProvider.useAppState)(),
       meetingId = _useAppState.meetingId,
-      localUserName = _useAppState.localUserName;
+      localUserName = _useAppState.localUserName; // console.log("appState", meetingId, localUserName);
+  // console.log({ history });
 
-  console.log("appState", meetingId, localUserName);
-  console.log({
-    history: history
-  });
 
   var handleJoinMeeting = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {

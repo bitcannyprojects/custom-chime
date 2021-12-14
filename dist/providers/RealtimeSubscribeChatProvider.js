@@ -79,6 +79,7 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
       senderId: chimeAttendeeId
     };
     audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSendDataMessage("CHAT", JSON.stringify(mess));
+    console.log(355, mess);
     setChatData([].concat(_toConsumableArray(chatData), [mess]));
   };
 
@@ -87,6 +88,8 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
 
     var data = JSON.parse(mess.text()); // data.senderId = senderId
 
+    data.new = true;
+    console.log(444, data);
     setChatData([].concat(_toConsumableArray(chatData), [data]));
   };
 

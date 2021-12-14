@@ -9,19 +9,23 @@ import {
   Chat,
   Information,
 } from "amazon-chime-sdk-component-library-react";
-
+import { useRealitimeSubscribeChatState } from "../../providers/RealtimeSubscribeChatProvider";
 import { useNavigation } from "../../providers/NavigationProvider";
 import { useAppState } from "../../providers/AppStateProvider";
 
 const Navigation = () => {
-  const {
-    toggleRoster,
-    toggleMetrics,
-    closeNavbar,
-    toggleChat,
-    showChat,
-  } = useNavigation();
-  const { theme, toggleTheme } = useAppState();
+  const { toggleRoster, toggleMetrics, closeNavbar, toggleChat, showChat } =
+    useNavigation();
+  const { chatData } = useRealitimeSubscribeChatState();
+  const { theme, toggleTheme, chimeAttendeeId } = useAppState();
+
+  const lastChatData = chatData[chatData.length - 1];
+  let newChat = false;
+  if (lastChatData) {
+    lastChatData.senderId !== chimeAttendeeId
+      ? (newChat = true)
+      : (newChat = false);
+  }
 
   return (
     <Navbar className="nav" flexDirection="column" container>
@@ -31,7 +35,24 @@ const Navigation = () => {
         onClick={toggleRoster}
         label="Attendees"
       />
-      <NavbarItem icon={<Chat />} onClick={toggleChat} label={"Chat"} />
+      <NavbarItem
+        icon={
+          <>
+            {newChat ? (
+              <img
+                src="https://cdn1.iconfinder.com/data/icons/user-interface-glyph-set/512/user-interface-chat-notification-message-glyph-incoming-512.png"
+                width={25}
+                height={25}
+                alt="chat"
+              />
+            ) : (
+              <Chat />
+            )}
+          </>
+        }
+        onClick={toggleChat}
+        label={"Chat"}
+      />
       <NavbarItem
         icon={<Eye />}
         onClick={toggleTheme}

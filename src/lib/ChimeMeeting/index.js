@@ -38,7 +38,7 @@ const MeetingView = ({
   user,
   event,
 }) => {
-  console.log("messageReducer2", messageReducer);
+  // console.log("messageReducer2", messageReducer);
   const meetingManager = useMeetingManager();
   const { showNavbar, showRoster } = useNavigation();
   const meetingStatus = useMeetingStatus();
@@ -93,7 +93,7 @@ const MeetingView = ({
     }
   };
 
-  console.log("pollssss", polls, responses);
+  // console.log("pollssss", polls, responses);
   // const recorder = new Recorder();
   return (
     <UserActivityProvider>

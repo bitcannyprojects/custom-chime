@@ -32,6 +32,7 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
       senderId: chimeAttendeeId,
     };
     audioVideo?.realtimeSendDataMessage("CHAT", JSON.stringify(mess));
+    console.log(355, mess);
     setChatData([...chatData, mess]);
   };
 
@@ -40,6 +41,8 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
     // const senderId = mess.senderAttendeeId
     const data = JSON.parse(mess.text());
     // data.senderId = senderId
+    data.new = true;
+    console.log(444, data);
     setChatData([...chatData, data]);
   };
 

@@ -95,7 +95,7 @@ var MeetingView = function MeetingView(_ref) {
       messageReducer = _ref.messageReducer,
       user = _ref.user,
       event = _ref.event;
-  console.log("messageReducer2", messageReducer);
+  // console.log("messageReducer2", messageReducer);
   var meetingManager = (0, _amazonChimeSdkComponentLibraryReact.useMeetingManager)();
 
   var _useNavigation = (0, _NavigationProvider.useNavigation)(),
@@ -171,9 +171,9 @@ var MeetingView = function MeetingView(_ref) {
     } else {
       handle.enter();
     }
-  };
+  }; // console.log("pollssss", polls, responses);
+  // const recorder = new Recorder();
 
-  console.log("pollssss", polls, responses); // const recorder = new Recorder();
 
   return /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.UserActivityProvider, null, /*#__PURE__*/_react.default.createElement("div", {
     className: "vidcon-root"
