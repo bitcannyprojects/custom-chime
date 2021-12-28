@@ -64,6 +64,7 @@ const ChatView = () => {
         style={{ resize: "vertical" }}
       />
       <PrimaryButton
+        className="chatsend"
         label="send"
         onClick={(e) => {
           setChatMessage("");

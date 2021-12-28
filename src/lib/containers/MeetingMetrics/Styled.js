@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const StyledMetrics = styled.div`
   position: absolute;
-  top: 0.5rem;
+  top: auto;
   right: 0.5rem;
   min-width: 7.5rem;
   z-index: 5;
+  bottom: 1rem;
 
   .metric {
     white-space: nowrap;

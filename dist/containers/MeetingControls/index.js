@@ -56,7 +56,7 @@ var MeetingControls = function MeetingControls(_ref) {
     label: "Menu"
   }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.AudioInputControl, null), ((session === null || session === void 0 ? void 0 : session.type) === "breakout" || !((userRole === null || userRole === void 0 ? void 0 : userRole.length) === 1 && userRole.includes("attendee"))) && /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.VideoInputControl, null), ((session === null || session === void 0 ? void 0 : session.type) === "breakout" || !((userRole === null || userRole === void 0 ? void 0 : userRole.length) === 1 && userRole.includes("attendee"))) && /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ContentShareControl, null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.ControlBarButton, {
     className: "full-screen-toggle",
-    icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Eye, null),
+    icon: /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Dock, null),
     onClick: toggleFullScreen,
     label: "FS"
   }), /*#__PURE__*/_react.default.createElement(_EndMeetingControl.default, null)));

@@ -103,6 +103,7 @@ var ChatView = function ChatView() {
       resize: "vertical"
     }
   }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PrimaryButton, {
+    className: "chatsend",
     label: "send",
     onClick: function onClick(e) {
       setChatMessage("");

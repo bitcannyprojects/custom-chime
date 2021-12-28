@@ -8,7 +8,7 @@ import {
   ControlBarButton,
   useUserActivityState,
   Dots,
-  Eye,
+  Dock,
 } from "amazon-chime-sdk-component-library-react";
 
 import EndMeetingControl from "../EndMeetingControl";
@@ -56,7 +56,7 @@ const MeetingControls = ({ toggleFullScreen }) => {
         </span> */}
         <ControlBarButton
           className="full-screen-toggle"
-          icon={<Eye />}
+          icon={<Dock />}
           onClick={toggleFullScreen}
           label="FS"
         />

@@ -38,7 +38,7 @@
     }
   }
   .metsec {
-    height: 90vh;
+    height: 95vh;
     @media (max-width: 767px) {
       height: auto;
     }
@@ -61,6 +61,34 @@
     }
     .ch-popover-menu {
       list-style-type: none !important;
+    }
+    .ch-textarea {
+      max-width: 90%;
+      margin: 0 auto 20px;
+      display: block;
+      border-radius: 0;
+      box-shadow: none;
+      border: 0;
+    }
+    .chatsend {
+      background: #2575fc;
+      color: #fff;
+      border-radius: 7px;
+      padding: 7px 26px;
+      border: 2px solid #2575fc;
+      font-weight: 400;
+      text-align: center;
+      text-decoration: none;
+      margin: 0 0 0 14px;
+      &:hover {
+        background: #1a5bc8;
+        border: 2px solid #1a5bc8;
+        color: #fff;
+      }
+    }
+    .imOfav {
+      bottom: auto;
+      right: 0;
     }
   }
   .chime-poll-cont {
