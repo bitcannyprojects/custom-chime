@@ -105,6 +105,7 @@ var ChatView = function ChatView() {
   }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PrimaryButton, {
     className: "chatsend",
     label: "send",
+    disabled: !chatMessage,
     onClick: function onClick(e) {
       setChatMessage("");
       sendChatData(chatMessage);

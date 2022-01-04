@@ -66,6 +66,7 @@ const ChatView = () => {
       <PrimaryButton
         className="chatsend"
         label="send"
+        disabled={!chatMessage}
         onClick={(e) => {
           setChatMessage("");
           sendChatData(chatMessage);

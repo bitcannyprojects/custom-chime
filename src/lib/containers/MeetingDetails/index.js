@@ -18,7 +18,7 @@ const MeetingDetails = () => {
     <Flex container layout="fill-space-centered">
       <Flex mb="2rem" mr={{ md: "2rem" }} px="1rem">
         <Heading level={4} tag="h1" mb={2}>
-          Meeting information
+          Meeting info
         </Heading>
         <StyledList>
           <div>

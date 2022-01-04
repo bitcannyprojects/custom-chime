@@ -36,7 +36,7 @@ var MeetingDetails = function MeetingDetails() {
     level: 4,
     tag: "h1",
     mb: 2
-  }, "Meeting information"), /*#__PURE__*/_react.default.createElement(_Styled.StyledList, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("dt", null, "Meeting Topic"), /*#__PURE__*/_react.default.createElement("dd", null, session === null || session === void 0 ? void 0 : session.topic))), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PrimaryButton, {
+  }, "Meeting info"), /*#__PURE__*/_react.default.createElement(_Styled.StyledList, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("dt", null, "Meeting Topic"), /*#__PURE__*/_react.default.createElement("dd", null, session === null || session === void 0 ? void 0 : session.topic))), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PrimaryButton, {
     mt: 4,
     label: theme === "light" ? "Dark mode" : "Light mode",
     onClick: toggleTheme
