@@ -15,6 +15,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _RealtimeSubscribeChatProvider = require("../../providers/RealtimeSubscribeChatProvider");
 
+var _RealtimeSubscribeTypingProvider = require("../../providers/RealtimeSubscribeTypingProvider");
+
 var _AppStateProvider = require("../../providers/AppStateProvider");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -48,6 +50,11 @@ var ChatView = function ChatView() {
   var _useRealitimeSubscrib = (0, _RealtimeSubscribeChatProvider.useRealitimeSubscribeChatState)(),
       chatData = _useRealitimeSubscrib.chatData,
       sendChatData = _useRealitimeSubscrib.sendChatData;
+
+  var _useRealitimeSubscrib2 = (0, _RealtimeSubscribeTypingProvider.useRealitimeSubscribeTypingState)(),
+      isTyping = _useRealitimeSubscrib2.isTyping,
+      typingData = _useRealitimeSubscrib2.typingData,
+      sendTyping = _useRealitimeSubscrib2.sendTyping;
 
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -90,10 +97,11 @@ var ChatView = function ChatView() {
     onClose: function onClose() {
       closeChat();
     }
-  }), attendeeItems, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Textarea //@ts-ignore
+  }), attendeeItems, /*#__PURE__*/_react.default.createElement("br", null), (isTyping || (typingData === null || typingData === void 0 ? void 0 : typingData.senderId) !== chimeAttendeeId) && /*#__PURE__*/_react.default.createElement("div", null, "...Someone is typing"), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Textarea //@ts-ignore
   , {
     onChange: function onChange(e) {
-      return setChatMessage(e.target.value);
+      setChatMessage(e.target.value);
+      sendTyping();
     },
     value: chatMessage,
     placeholder: "input your message",

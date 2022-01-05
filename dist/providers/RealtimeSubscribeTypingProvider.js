@@ -5,13 +5,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RealitimeSubscribeChatStateProvider = exports.useRealitimeSubscribeChatState = void 0;
+exports.RealitimeSubscribeTypingStateProvider = exports.useRealitimeSubscribeTypingState = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
-
-var _amazonChimeSdkJs = require("amazon-chime-sdk-js");
-
-var _uuid = require("uuid");
 
 var _AppStateProvider = require("./AppStateProvider");
 
@@ -20,14 +16,6 @@ var _amazonChimeSdkComponentLibraryReact = require("amazon-chime-sdk-component-l
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -41,10 +29,10 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var RealitimeSubscribeChatStateContext = /*#__PURE__*/_react.default.createContext();
+var RealitimeSubscribeTypingStateContext = /*#__PURE__*/_react.default.createContext();
 
-var useRealitimeSubscribeChatState = function useRealitimeSubscribeChatState() {
-  var state = (0, _react.useContext)(RealitimeSubscribeChatStateContext);
+var useRealitimeSubscribeTypingState = function useRealitimeSubscribeTypingState() {
+  var state = (0, _react.useContext)(RealitimeSubscribeTypingStateContext);
 
   if (!state) {
     throw new Error("Error using RealitimeSubscribe in context!");
@@ -53,9 +41,9 @@ var useRealitimeSubscribeChatState = function useRealitimeSubscribeChatState() {
   return state;
 };
 
-exports.useRealitimeSubscribeChatState = useRealitimeSubscribeChatState;
+exports.useRealitimeSubscribeTypingState = useRealitimeSubscribeTypingState;
 
-var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStateProvider(_ref) {
+var RealitimeSubscribeTypingStateProvider = function RealitimeSubscribeTypingStateProvider(_ref) {
   var children = _ref.children;
   var audioVideo = (0, _amazonChimeSdkComponentLibraryReact.useAudioVideo)();
 
@@ -63,75 +51,48 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
       localUserName = _useAppState.localUserName,
       chimeAttendeeId = _useAppState.chimeAttendeeId;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
-      chatData = _useState2[0],
-      setChatData = _useState2[1]; // const [isTyping, setTyping] = useState(false);
-  // const [typingData, setTypingData] = useState(null);
+      isTyping = _useState2[0],
+      setTyping = _useState2[1];
 
+  var _useState3 = (0, _react.useState)(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      typingData = _useState4[0],
+      setTypingData = _useState4[1];
 
-  var sendChatData = function sendChatData(text) {
-    var mess = {
-      uuid: (0, _uuid.v4)(),
-      action: "sendmessage",
-      cmd: "TEXT",
-      data: text,
-      createdDate: new Date().getTime(),
-      senderName: localUserName,
-      senderId: chimeAttendeeId
+  var sendTyping = function sendTyping() {
+    var typeMess = {
+      senderId: chimeAttendeeId,
+      type: "TYPING"
     };
-    audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSendDataMessage("CHAT", JSON.stringify(mess));
-    console.log(355, mess);
-    setChatData([].concat(_toConsumableArray(chatData), [mess]));
+    audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSendDataMessage("TYPING", JSON.stringify(typeMess));
+    setTypingData(typeMess);
+    console.log("sendTyping: ", typeMess);
   };
 
-  var receiveChatData = function receiveChatData(mess) {
-    console.log(mess); // const senderId = mess.senderAttendeeId
+  var receiveTyping = function receiveTyping(data) {
+    var msg = JSON.parse(data);
 
-    var data = JSON.parse(mess.text()); // data.senderId = senderId
+    if (msg.senderId != chimeAttendeeId) {
+      setTyping(true);
+    } else setTyping(false);
 
-    data.new = true;
-    console.log(444, data);
-    setChatData([].concat(_toConsumableArray(chatData), [data]));
-  }; // const sendTyping= ()=>{
-  //   const typeMess={senderId:chimeAttendeeId, type:"TYPING"};
-  //   audioVideo?.realtimeSendDataMessage("TYPING",JSON.stringify(typeMess));
-  //   setTypingData(typeMess);
-  //   console.log("sendTyping: ",typeMess);
-  // }
-  // const receiveTyping=(data)=>{
-  //   const msg = JSON.parse(data);
-  //   if(msg.senderId!=chimeAttendeeId){
-  //     setTyping(true);
-  //   }
-  //   else
-  //     setTyping(false);
-  //   console.log("receiveTyping: ",msg);
-  // }
-
+    console.log("receiveTyping: ", msg);
+  };
 
   (0, _react.useEffect)(function () {
-    console.log("chat! open");
-    audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSubscribeToReceiveDataMessage("CHAT", receiveChatData);
-    return function () {
-      console.log("chat! end");
-      audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeUnsubscribeFromReceiveDataMessage("CHAT");
-    };
-  }); // useEffect(() => {
-  //   console.log("chat! open");
-  //   audioVideo?.realtimeSubscribeToReceiveDataMessage("TYPING", receiveChatData);
-  // });
-
+    console.log("Typing! open");
+    audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSubscribeToReceiveDataMessage("CHAT", receiveTyping);
+  });
   var providerValue = {
-    chatData: chatData,
-    sendChatData: sendChatData // isTyping,
-    // typingData,
-    // sendTyping,
-
+    isTyping: isTyping,
+    typingData: typingData,
+    sendTyping: sendTyping
   };
-  return /*#__PURE__*/_react.default.createElement(RealitimeSubscribeChatStateContext.Provider, {
+  return /*#__PURE__*/_react.default.createElement(RealitimeSubscribeTypingStateContext.Provider, {
     value: providerValue
   }, children);
 };
 
-exports.RealitimeSubscribeChatStateProvider = RealitimeSubscribeChatStateProvider;
+exports.RealitimeSubscribeTypingStateProvider = RealitimeSubscribeTypingStateProvider;

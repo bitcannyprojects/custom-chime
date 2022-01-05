@@ -1,8 +1,9 @@
 import { ReactNode, useContext } from "react";
 import React from "react";
 import { RealitimeSubscribeChatStateProvider } from "./RealtimeSubscribeChatProvider";
+import {RealitimeSubscribeTypingStateProvider} from "./RealtimeSubscribeTypingProvider"
 
-export const RealitimeSubscribeStateContext = React.createContext(null);
+export const RealitimeSubscribeStateContext = React.createContext();
 
 export const useRealitimeSubscribeState = () => {
   const state = useContext(RealitimeSubscribeStateContext);
@@ -19,6 +20,9 @@ export const RealitimeSubscribeStateProvider = ({ children }) => {
       <RealitimeSubscribeChatStateProvider>
         {children}
       </RealitimeSubscribeChatStateProvider>
+       {/* <RealitimeSubscribeTypingStateProvider>
+        {children}
+      </RealitimeSubscribeTypingStateProvider>  */}
     </RealitimeSubscribeStateContext.Provider>
   );
 };

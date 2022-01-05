@@ -20,6 +20,8 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
   const audioVideo = useAudioVideo();
   const { localUserName, chimeAttendeeId } = useAppState();
   const [chatData, setChatData] = useState([]);
+  // const [isTyping, setTyping] = useState(false);
+  // const [typingData, setTypingData] = useState(null);
 
   const sendChatData = (text) => {
     const mess = {
@@ -46,6 +48,23 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
     setChatData([...chatData, data]);
   };
 
+  // const sendTyping= ()=>{
+  //   const typeMess={senderId:chimeAttendeeId, type:"TYPING"};
+  //   audioVideo?.realtimeSendDataMessage("TYPING",JSON.stringify(typeMess));
+  //   setTypingData(typeMess);
+  //   console.log("sendTyping: ",typeMess);
+  // }
+
+  // const receiveTyping=(data)=>{
+  //   const msg = JSON.parse(data);
+  //   if(msg.senderId!=chimeAttendeeId){
+  //     setTyping(true);
+  //   }
+  //   else
+  //     setTyping(false);
+  //   console.log("receiveTyping: ",msg);
+  // }
+
   useEffect(() => {
     console.log("chat! open");
     audioVideo?.realtimeSubscribeToReceiveDataMessage("CHAT", receiveChatData);
@@ -55,9 +74,17 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
     };
   });
 
+  // useEffect(() => {
+  //   console.log("chat! open");
+  //   audioVideo?.realtimeSubscribeToReceiveDataMessage("TYPING", receiveChatData);
+  // });
+
   const providerValue = {
     chatData,
     sendChatData,
+    // isTyping,
+    // typingData,
+    // sendTyping,
   };
   return (
     <RealitimeSubscribeChatStateContext.Provider value={providerValue}>

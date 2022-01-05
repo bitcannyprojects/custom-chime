@@ -38,7 +38,7 @@ const Navigation = () => {
       <NavbarItem
         icon={
           <>
-            {newChat ? (
+            {(newChat&& !showChat) ? (
               <img
                 src="https://cdn1.iconfinder.com/data/icons/user-interface-glyph-set/512/user-interface-chat-notification-message-glyph-incoming-512.png"
                 width={25}
