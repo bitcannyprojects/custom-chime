@@ -70,7 +70,7 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
         setTyping(true);
         setTimeout(() => {
           setTyping(false);
-        }, 1000);
+        }, 3000);
       } else setTyping(false);
     } catch (error) {
       console.log(577, error);

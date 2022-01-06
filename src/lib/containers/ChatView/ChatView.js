@@ -70,6 +70,17 @@ const ChatView = () => {
           setChatMessage(e.target.value);
           sendTyping();
         }}
+        onKeyPress={(e) => {
+          if (
+            e.key === "Enter" &&
+            e.shiftKey === false &&
+            chatMessage?.trim().length !== 0
+          ) {
+            e.preventDefault();
+            setChatMessage("");
+            sendChatData(chatMessage);
+          }
+        }}
         value={chatMessage}
         placeholder="input your message"
         type="text"
@@ -79,7 +90,7 @@ const ChatView = () => {
       <PrimaryButton
         className="chatsend"
         label="send"
-        disabled={!chatMessage}
+        disabled={chatMessage?.trim().length === 0}
         onClick={(e) => {
           setChatMessage("");
           sendChatData(chatMessage);

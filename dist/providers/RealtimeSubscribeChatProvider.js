@@ -124,7 +124,7 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
         setTyping(true);
         setTimeout(function () {
           setTyping(false);
-        }, 1000);
+        }, 3000);
       } else setTyping(false);
     } catch (error) {
       console.log(577, error);

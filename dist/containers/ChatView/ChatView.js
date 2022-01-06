@@ -108,6 +108,13 @@ var ChatView = function ChatView() {
       setChatMessage(e.target.value);
       sendTyping();
     },
+    onKeyPress: function onKeyPress(e) {
+      if (e.key === "Enter" && e.shiftKey === false && (chatMessage === null || chatMessage === void 0 ? void 0 : chatMessage.trim().length) !== 0) {
+        e.preventDefault();
+        setChatMessage("");
+        sendChatData(chatMessage);
+      }
+    },
     value: chatMessage,
     placeholder: "input your message",
     type: "text",
@@ -118,7 +125,7 @@ var ChatView = function ChatView() {
   }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.PrimaryButton, {
     className: "chatsend",
     label: "send",
-    disabled: !chatMessage,
+    disabled: (chatMessage === null || chatMessage === void 0 ? void 0 : chatMessage.trim().length) === 0,
     onClick: function onClick(e) {
       setChatMessage("");
       sendChatData(chatMessage);
