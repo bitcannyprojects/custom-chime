@@ -44,7 +44,7 @@ export function AppStateProvider({ children }) {
     chimeAttendeeId,
     session,
   }) => {
-    console.log({ chimeAttendeeId });
+    // console.log({ chimeAttendeeId });
     if (region) setRegion(region);
     if (meetingId) setMeeting(meetingId);
     if (name) setLocalName(name);

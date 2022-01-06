@@ -9,7 +9,6 @@ import {
 import { useNavigation } from "../../providers/NavigationProvider";
 import React, { useState } from "react";
 import { useRealitimeSubscribeChatState } from "../../providers/RealtimeSubscribeChatProvider";
-import {useRealitimeSubscribeTypingState} from "../../providers/RealtimeSubscribeTypingProvider";
 import { useAppState } from "../../providers/AppStateProvider";
 
 const bubbleStyles = `
@@ -19,8 +18,8 @@ const bubbleStyles = `
 const ChatView = () => {
   const { localUserName, chimeAttendeeId } = useAppState();
   const { closeChat } = useNavigation();
-  const { chatData, sendChatData} = useRealitimeSubscribeChatState();
-  const { isTyping, typingData, sendTyping } = useRealitimeSubscribeTypingState();
+  const { chatData, sendChatData, isTyping, sendTyping } =
+    useRealitimeSubscribeChatState();
   const [chatMessage, setChatMessage] = useState("");
 
   const attendeeItems = [];
@@ -56,12 +55,21 @@ const ChatView = () => {
       {/* <RosterGroup>{attendeeItems}</RosterGroup> */}
       {attendeeItems}
       <br />
-     { (isTyping ||typingData?.senderId!==chimeAttendeeId) && <div>...Someone is typing</div>}
+      {isTyping && (
+        <div class="chat-bubble">
+          <div class="typing">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      )}
       <Textarea
         //@ts-ignore
         onChange={(e) => {
           setChatMessage(e.target.value);
-          sendTyping();}}
+          sendTyping();
+        }}
         value={chatMessage}
         placeholder="input your message"
         type="text"

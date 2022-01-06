@@ -20,8 +20,7 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
   const audioVideo = useAudioVideo();
   const { localUserName, chimeAttendeeId } = useAppState();
   const [chatData, setChatData] = useState([]);
-  // const [isTyping, setTyping] = useState(false);
-  // const [typingData, setTypingData] = useState(null);
+  const [isTyping, setTyping] = useState(false);
 
   const sendChatData = (text) => {
     const mess = {
@@ -34,44 +33,69 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
       senderId: chimeAttendeeId,
     };
     audioVideo?.realtimeSendDataMessage("CHAT", JSON.stringify(mess));
-    console.log(355, mess);
+    // console.log(355, mess);
     setChatData([...chatData, mess]);
   };
 
   const receiveChatData = (mess) => {
-    console.log(mess);
-    // const senderId = mess.senderAttendeeId
-    const data = JSON.parse(mess.text());
-    // data.senderId = senderId
-    data.new = true;
-    console.log(444, data);
-    setChatData([...chatData, data]);
+    try {
+      // console.log(mess);
+      // const senderId = mess.senderAttendeeId
+      const data = JSON.parse(mess.text());
+      // data.senderId = senderId
+      data.new = true;
+      // console.log(444, data);
+      setChatData([...chatData, data]);
+    } catch (error) {
+      console.log(577, error);
+    }
   };
 
-  // const sendTyping= ()=>{
-  //   const typeMess={senderId:chimeAttendeeId, type:"TYPING"};
-  //   audioVideo?.realtimeSendDataMessage("TYPING",JSON.stringify(typeMess));
-  //   setTypingData(typeMess);
-  //   console.log("sendTyping: ",typeMess);
-  // }
+  const sendTyping = () => {
+    try {
+      const typeMess = { senderId: chimeAttendeeId, type: "TYPING" };
+      audioVideo?.realtimeSendDataMessage("TYPING", JSON.stringify(typeMess));
+      // setTypingData(typeMess);
+      // console.log("sendTyping: ", typeMess);
+    } catch (error) {
+      console.log(577, error);
+    }
+  };
 
-  // const receiveTyping=(data)=>{
-  //   const msg = JSON.parse(data);
-  //   if(msg.senderId!=chimeAttendeeId){
-  //     setTyping(true);
-  //   }
-  //   else
-  //     setTyping(false);
-  //   console.log("receiveTyping: ",msg);
-  // }
+  const receiveTyping = (data) => {
+    try {
+      // console.log("receiveTyping: ", data);
+      const msg = JSON.parse(data.text());
+      if (msg.senderId != chimeAttendeeId) {
+        setTyping(true);
+        setTimeout(() => {
+          setTyping(false);
+        }, 1000);
+      } else setTyping(false);
+    } catch (error) {
+      console.log(577, error);
+    }
+  };
 
   useEffect(() => {
-    console.log("chat! open");
-    audioVideo?.realtimeSubscribeToReceiveDataMessage("CHAT", receiveChatData);
-    return () => {
-      console.log("chat! end");
-      audioVideo?.realtimeUnsubscribeFromReceiveDataMessage("CHAT");
-    };
+    try {
+      // console.log("chat! open");
+      audioVideo?.realtimeSubscribeToReceiveDataMessage(
+        "CHAT",
+        receiveChatData
+      );
+      audioVideo?.realtimeSubscribeToReceiveDataMessage(
+        "TYPING",
+        receiveTyping
+      );
+      return () => {
+        // console.log("chat! end");
+        audioVideo?.realtimeUnsubscribeFromReceiveDataMessage("CHAT");
+        audioVideo?.realtimeUnsubscribeFromReceiveDataMessage("TYPING");
+      };
+    } catch (error) {
+      console.log(577, error);
+    }
   });
 
   // useEffect(() => {
@@ -82,9 +106,8 @@ export const RealitimeSubscribeChatStateProvider = ({ children }) => {
   const providerValue = {
     chatData,
     sendChatData,
-    // isTyping,
-    // typingData,
-    // sendTyping,
+    isTyping,
+    sendTyping,
   };
   return (
     <RealitimeSubscribeChatStateContext.Provider value={providerValue}>

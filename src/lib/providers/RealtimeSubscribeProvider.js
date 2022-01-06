@@ -1,7 +1,7 @@
 import { ReactNode, useContext } from "react";
 import React from "react";
 import { RealitimeSubscribeChatStateProvider } from "./RealtimeSubscribeChatProvider";
-import {RealitimeSubscribeTypingStateProvider} from "./RealtimeSubscribeTypingProvider"
+// import {RealitimeSubscribeTypingStateProvider} from "./RealtimeSubscribeTypingProvider"
 
 export const RealitimeSubscribeStateContext = React.createContext();
 
@@ -20,7 +20,7 @@ export const RealitimeSubscribeStateProvider = ({ children }) => {
       <RealitimeSubscribeChatStateProvider>
         {children}
       </RealitimeSubscribeChatStateProvider>
-       {/* <RealitimeSubscribeTypingStateProvider>
+      {/* <RealitimeSubscribeTypingStateProvider>
         {children}
       </RealitimeSubscribeTypingStateProvider>  */}
     </RealitimeSubscribeStateContext.Provider>

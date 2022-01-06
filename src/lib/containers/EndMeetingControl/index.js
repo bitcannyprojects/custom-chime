@@ -25,7 +25,7 @@ const EndMeetingControl = () => {
 
   const leaveMeeting = async () => {
     try {
-      console.log("leaving...");
+      // console.log("leaving...");
       await meetingManager.leave();
       // window.close();
       window.location.href = "/lounge";
