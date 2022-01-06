@@ -62,27 +62,26 @@ var EndMeetingControl = function EndMeetingControl() {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              console.log("leaving...");
-              _context.next = 4;
+              _context.next = 3;
               return meetingManager.leave();
 
-            case 4:
+            case 3:
               // window.close();
               window.location.href = "/lounge";
-              _context.next = 10;
+              _context.next = 9;
               break;
 
-            case 7:
-              _context.prev = 7;
+            case 6:
+              _context.prev = 6;
               _context.t0 = _context["catch"](0);
               console.log(_context.t0);
 
-            case 10:
+            case 9:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 7]]);
+      }, _callee, null, [[0, 6]]);
     }));
 
     return function leaveMeeting() {

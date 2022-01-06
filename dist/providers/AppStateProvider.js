@@ -98,9 +98,7 @@ function AppStateProvider(_ref) {
         userRole = _ref2.userRole,
         chimeAttendeeId = _ref2.chimeAttendeeId,
         session = _ref2.session;
-    console.log({
-      chimeAttendeeId: chimeAttendeeId
-    });
+    // console.log({ chimeAttendeeId });
     if (region) setRegion(region);
     if (meetingId) setMeeting(meetingId);
     if (name) setLocalName(name);

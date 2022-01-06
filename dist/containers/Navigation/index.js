@@ -53,7 +53,7 @@ var Navigation = function Navigation() {
     label: "Attendees"
   }), /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.NavbarItem, {
     icon: /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, newChat && !showChat ? /*#__PURE__*/_react.default.createElement("img", {
-      src: "https://cdn1.iconfinder.com/data/icons/user-interface-glyph-set/512/user-interface-chat-notification-message-glyph-incoming-512.png",
+      src: "https://vattendonline.s3.ap-south-1.amazonaws.com/new_message+(2).svg",
       width: 25,
       height: 25,
       alt: "chat"

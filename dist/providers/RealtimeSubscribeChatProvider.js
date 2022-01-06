@@ -83,19 +83,19 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
       senderName: localUserName,
       senderId: chimeAttendeeId
     };
-    audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSendDataMessage("CHAT", JSON.stringify(mess));
-    console.log(355, mess);
+    audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSendDataMessage("CHAT", JSON.stringify(mess)); // console.log(355, mess);
+
     setChatData([].concat(_toConsumableArray(chatData), [mess]));
   };
 
   var receiveChatData = function receiveChatData(mess) {
     try {
-      console.log(mess); // const senderId = mess.senderAttendeeId
-
+      // console.log(mess);
+      // const senderId = mess.senderAttendeeId
       var data = JSON.parse(mess.text()); // data.senderId = senderId
 
-      data.new = true;
-      console.log(444, data);
+      data.new = true; // console.log(444, data);
+
       setChatData([].concat(_toConsumableArray(chatData), [data]));
     } catch (error) {
       console.log(577, error);
@@ -117,7 +117,7 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
 
   var receiveTyping = function receiveTyping(data) {
     try {
-      console.log("receiveTyping: ", data);
+      // console.log("receiveTyping: ", data);
       var msg = JSON.parse(data.text());
 
       if (msg.senderId != chimeAttendeeId) {
@@ -133,11 +133,11 @@ var RealitimeSubscribeChatStateProvider = function RealitimeSubscribeChatStatePr
 
   (0, _react.useEffect)(function () {
     try {
-      console.log("chat! open");
+      // console.log("chat! open");
       audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSubscribeToReceiveDataMessage("CHAT", receiveChatData);
       audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeSubscribeToReceiveDataMessage("TYPING", receiveTyping);
       return function () {
-        console.log("chat! end");
+        // console.log("chat! end");
         audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeUnsubscribeFromReceiveDataMessage("CHAT");
         audioVideo === null || audioVideo === void 0 ? void 0 : audioVideo.realtimeUnsubscribeFromReceiveDataMessage("TYPING");
       };

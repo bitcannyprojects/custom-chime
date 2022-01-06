@@ -98,8 +98,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   }, []);
 
   var toggleRoster = function toggleRoster() {
-    console.log("151--->>>", "toggleRoaster");
-
+    // console.log("151--->>>", "toggleRoaster");
     if (showRoster) {
       closeChat();
     }
@@ -108,17 +107,17 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var toggleNavbar = function toggleNavbar() {
-    console.log("151--->>>", "toggleNavbar");
+    // console.log("151--->>>", "toggleNavbar");
     setShowNavbar(!showNavbar); // if (showChat) {
     //   closeChat();
     // }
   };
 
   var toggleChat = function toggleChat() {
-    console.log("151--->>>", "toggleChat"); // if (showChat) {
+    // console.log("151--->>>", "toggleChat");
+    // if (showChat) {
     //   toggleNavbar();
     // }
-
     if (!showChat) {
       openRoster(true);
     }
@@ -137,7 +136,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var closeNavbar = function closeNavbar() {
-    console.log("151--->>>", "closenavbar");
+    // console.log("151--->>>", "closenavbar");
     setShowNavbar(false);
   };
 
@@ -146,7 +145,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var closeRoster = function closeRoster() {
-    console.log("151--->>>", "closeRoster");
+    // console.log("151--->>>", "closeRoster");
     setShowRoster(false);
   };
 
@@ -155,7 +154,7 @@ var NavigationProvider = function NavigationProvider(_ref) {
   };
 
   var closeChat = function closeChat() {
-    console.log("151--->>>", "closeChat");
+    // console.log("151--->>>", "closeChat");
     setShowChat(false);
   };
 
