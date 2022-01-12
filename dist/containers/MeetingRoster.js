@@ -215,10 +215,8 @@ var MeetingRoster = function MeetingRoster() {
       // <RosterCell key={chimeAttendeeId} name={name} />
       _react.default.createElement(_amazonChimeSdkComponentLibraryReact.RosterAttendee, {
         key: chimeAttendeeId,
-        attendeeId: chimeAttendeeId,
-        menu: /*#__PURE__*/_react.default.createElement(Menu, {
-          chimeAttendeeId: chimeAttendeeId
-        })
+        attendeeId: chimeAttendeeId // menu={<Menu chimeAttendeeId={chimeAttendeeId} />}
+
       })
     );
   });

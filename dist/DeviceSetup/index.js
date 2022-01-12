@@ -71,7 +71,9 @@ var DeviceSetup = function DeviceSetup(_ref) {
   var _useAppState = (0, _AppStateProvider.useAppState)(),
       meetingId = _useAppState.meetingId,
       localUserName = _useAppState.localUserName,
-      setAppMeetingInfo = _useAppState.setAppMeetingInfo;
+      setAppMeetingInfo = _useAppState.setAppMeetingInfo,
+      userRole = _useAppState.userRole,
+      session = _useAppState.session;
 
   var meetingID = match === null || match === void 0 ? void 0 : match.params.id;
   (0, _react.useEffect)(function () {
@@ -93,52 +95,40 @@ var DeviceSetup = function DeviceSetup(_ref) {
             case 3:
               resData = _context.sent;
               resData = resData.data;
-              console.log({
-                resData: resData
-              });
               joinData = {
                 meetingInfo: resData.meeting,
                 attendeeInfo: resData.attendee
               };
               setSession(resData.session);
-              _context.next = 10;
+              _context.next = 9;
               return meetingManager.join(joinData);
 
-            case 10:
-              meetingManager.getAttendee = getAttendee((_resData$meeting = resData.meeting) === null || _resData$meeting === void 0 ? void 0 : (_resData$meeting$Meet = _resData$meeting.Meeting) === null || _resData$meeting$Meet === void 0 ? void 0 : _resData$meeting$Meet.MeetingId);
-              console.log(30, {
-                roster: roster
-              });
+            case 9:
+              meetingManager.getAttendee = getAttendee((_resData$meeting = resData.meeting) === null || _resData$meeting === void 0 ? void 0 : (_resData$meeting$Meet = _resData$meeting.Meeting) === null || _resData$meeting$Meet === void 0 ? void 0 : _resData$meeting$Meet.MeetingId); // console.log(30, { roster });
+
               setAppMeetingInfo({
                 meetingId: (_resData$meeting2 = resData.meeting) === null || _resData$meeting2 === void 0 ? void 0 : (_resData$meeting2$Mee = _resData$meeting2.Meeting) === null || _resData$meeting2$Mee === void 0 ? void 0 : _resData$meeting2$Mee.MeetingId,
                 name: (user === null || user === void 0 ? void 0 : user.first_name) + " " + ((user === null || user === void 0 ? void 0 : user.last_name) || ""),
                 role: (_resData$userSession = resData.userSession) === null || _resData$userSession === void 0 ? void 0 : _resData$userSession.role,
                 chimeAttendeeId: (_resData$userSession2 = resData.userSession) === null || _resData$userSession2 === void 0 ? void 0 : _resData$userSession2.chimeAttendeeId,
                 session: resData.session
-              }); // if (resData.session?.duration) {
-              //   setTimeout(() => {
-              //     await meetingManager.leave();
-              //     // props.history.push("/");
-              //     window.location.href = "/";
-              //   }, resData?.session?.duration * 60000);
-              // }
-
+              });
               setLoading(false);
-              _context.next = 20;
+              _context.next = 18;
               break;
 
-            case 16:
-              _context.prev = 16;
+            case 14:
+              _context.prev = 14;
               _context.t0 = _context["catch"](0);
               setLoading(false);
               setError(_context.t0 === null || _context.t0 === void 0 ? void 0 : (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : (_error$response$data = _error$response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.message);
 
-            case 20:
+            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 16]]);
+      }, _callee, null, [[0, 14]]);
     }));
 
     return function getBreakoutRoomData(_x) {
@@ -146,10 +136,25 @@ var DeviceSetup = function DeviceSetup(_ref) {
     };
   }();
 
-  if (loading) return /*#__PURE__*/_react.default.createElement("div", null, "Loading");
+  if (loading) return /*#__PURE__*/_react.default.createElement("div", {
+    className: "preloader",
+    style: {
+      backgroundImage: "url(/images/spinner.gif)"
+    }
+  });
   if (error) return /*#__PURE__*/_react.default.createElement("div", {
     className: "alert alert-danger"
   }, error);
+  var show = true;
+
+  if ((session === null || session === void 0 ? void 0 : session.type) === "chime_session") {
+    if (userRole === "speaker" || userRole === "moderator") {
+      show = true;
+    } else {
+      show = false;
+    }
+  }
+
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "meeting-root"
   }, /*#__PURE__*/_react.default.createElement(_Styled.StyledLayout, null, /*#__PURE__*/_react.default.createElement(_amazonChimeSdkComponentLibraryReact.Heading, {
@@ -158,7 +163,9 @@ var DeviceSetup = function DeviceSetup(_ref) {
     css: "align-self: flex-start"
   }, "Device Settings"), /*#__PURE__*/_react.default.createElement(_MeetingJoinDetails.default, {
     meetingID: meetingID
-  }), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, null)));
+  }), /*#__PURE__*/_react.default.createElement(_DeviceSelection.default, {
+    show: show
+  })));
 };
 
 var _default = DeviceSetup;

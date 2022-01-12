@@ -138,7 +138,7 @@ const MeetingRoster = () => {
       <RosterAttendee
         key={chimeAttendeeId}
         attendeeId={chimeAttendeeId}
-        menu={<Menu chimeAttendeeId={chimeAttendeeId} />}
+        // menu={<Menu chimeAttendeeId={chimeAttendeeId} />}
       />
     );
   });

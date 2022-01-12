@@ -91,19 +91,20 @@ function AppStateProvider(_ref) {
     }
   };
 
-  var setAppMeetingInfo = function setAppMeetingInfo(_ref2) {
-    var meetingId = _ref2.meetingId,
-        name = _ref2.name,
-        region = _ref2.region,
-        userRole = _ref2.userRole,
-        chimeAttendeeId = _ref2.chimeAttendeeId,
-        session = _ref2.session;
+  var setAppMeetingInfo = function setAppMeetingInfo(data) {
+    var meetingId = data.meetingId,
+        name = data.name,
+        region = data.region,
+        role = data.role,
+        chimeAttendeeId = data.chimeAttendeeId,
+        session = data.session; // console.log(411, data);
     // console.log({ chimeAttendeeId });
+
     if (region) setRegion(region);
     if (meetingId) setMeeting(meetingId);
     if (name) setLocalName(name);
     if (chimeAttendeeId) setChimeAttendeeId(chimeAttendeeId);
-    if (userRole) setUserRole(userRole);
+    if (role) setUserRole(role);
     if (session) setSession(session);
   };
 

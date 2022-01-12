@@ -41,13 +41,13 @@ const MeetingControls = ({ toggleFullScreen }) => {
           onClick={handleToggle}
           label="Menu"
         />
-        <AudioInputControl />
-        {(session?.type === "breakout" ||
-          !(userRole?.length === 1 && userRole.includes("attendee"))) && (
+        {(session?.type === "breakout" || userRole !== "attendee") && (
+          <AudioInputControl />
+        )}
+        {(session?.type === "breakout" || userRole !== "attendee") && (
           <VideoInputControl />
         )}
-        {(session?.type === "breakout" ||
-          !(userRole?.length === 1 && userRole.includes("attendee"))) && (
+        {(session?.type === "breakout" || userRole !== "attendee") && (
           <ContentShareControl />
         )}
         {/* <AudioOutputControl /> */}

@@ -18,7 +18,8 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
   // const [session, setSession] = useState({});
   const meetingManager = useMeetingManager();
   // const user = useSelector((state) => state.userReducer.user);
-  const { meetingId, localUserName, setAppMeetingInfo } = useAppState();
+  const { meetingId, localUserName, setAppMeetingInfo, userRole, session } =
+    useAppState();
   const meetingID = match?.params.id;
   useEffect(() => {
     getBreakoutRoomData(meetingID);
@@ -28,7 +29,6 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
     try {
       let resData = await getData(id);
       resData = resData.data;
-      console.log({ resData });
 
       const joinData = {
         meetingInfo: resData.meeting,
@@ -40,7 +40,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
         resData.meeting?.Meeting?.MeetingId
       );
 
-      console.log(30, { roster });
+      // console.log(30, { roster });
       setAppMeetingInfo({
         meetingId: resData.meeting?.Meeting?.MeetingId,
         name: user?.first_name + " " + (user?.last_name || ""),
@@ -48,13 +48,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
         chimeAttendeeId: resData.userSession?.chimeAttendeeId,
         session: resData.session,
       });
-      // if (resData.session?.duration) {
-      //   setTimeout(() => {
-      //     await meetingManager.leave();
-      //     // props.history.push("/");
-      //     window.location.href = "/";
-      //   }, resData?.session?.duration * 60000);
-      // }
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -62,8 +56,27 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
       setError(error?.response?.data?.message);
     }
   };
-  if (loading) return <div>Loading</div>;
+  if (loading)
+    return (
+      <div
+        className="preloader"
+        style={{
+          backgroundImage: "url(/images/spinner.gif)",
+        }}
+      >
+        {/* <img src="/images/spinner.gif" /> */}
+      </div>
+    );
   if (error) return <div className="alert alert-danger">{error}</div>;
+  let show = true;
+  if (session?.type === "chime_session") {
+    if (userRole === "speaker" || userRole === "moderator") {
+      show = true;
+    } else {
+      show = false;
+    }
+  }
+
   return (
     <div className="meeting-root">
       <StyledLayout>
@@ -71,7 +84,7 @@ const DeviceSetup = ({ match, getData, getAttendee, setSession, user }) => {
           Device Settings
         </Heading>
         <JoinMeetingDetails meetingID={meetingID} />
-        <DeviceSelection />
+        <DeviceSelection show={show} />
       </StyledLayout>
     </div>
   );

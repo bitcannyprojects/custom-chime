@@ -36,20 +36,15 @@ export function AppStateProvider({ children }) {
     }
   };
 
-  const setAppMeetingInfo = ({
-    meetingId,
-    name,
-    region,
-    userRole,
-    chimeAttendeeId,
-    session,
-  }) => {
+  const setAppMeetingInfo = (data) => {
+    const { meetingId, name, region, role, chimeAttendeeId, session } = data;
+    // console.log(411, data);
     // console.log({ chimeAttendeeId });
     if (region) setRegion(region);
     if (meetingId) setMeeting(meetingId);
     if (name) setLocalName(name);
     if (chimeAttendeeId) setChimeAttendeeId(chimeAttendeeId);
-    if (userRole) setUserRole(userRole);
+    if (role) setUserRole(role);
     if (session) setSession(session);
   };
 

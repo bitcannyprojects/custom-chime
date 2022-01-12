@@ -102,6 +102,10 @@ var MeetingView = function MeetingView(_ref) {
       showNavbar = _useNavigation.showNavbar,
       showRoster = _useNavigation.showRoster;
 
+  var _useToggleLocalMute = (0, _amazonChimeSdkComponentLibraryReact.useToggleLocalMute)(),
+      muted1 = _useToggleLocalMute.muted,
+      toggleMute = _useToggleLocalMute.toggleMute;
+
   var meetingStatus = (0, _amazonChimeSdkComponentLibraryReact.useMeetingStatus)();
   var sessionId = match === null || match === void 0 ? void 0 : match.params.id;
 
@@ -123,8 +127,13 @@ var MeetingView = function MeetingView(_ref) {
 
   var handle = (0, _reactFullScreen.useFullScreenHandle)();
   (0, _react.useEffect)(function () {
+    // console.log(555, muted1);
     if (!Boolean(meetingId)) {
       history.push("".concat(history.location.pathname, "/devices"));
+    } else {
+      if (!muted1) {
+        toggleMute();
+      }
     } //  else {
     //   if (window.socket) {
     //     window.socket.onmessage = (event) => {
@@ -133,7 +142,7 @@ var MeetingView = function MeetingView(_ref) {
     //   }
     // }
 
-  }, [meetingId]);
+  }, [meetingId, muted1, toggleMute]);
   (0, _react.useEffect)(function () {
     return /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       return regeneratorRuntime.wrap(function _callee$(_context) {

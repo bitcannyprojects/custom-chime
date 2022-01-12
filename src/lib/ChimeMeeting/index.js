@@ -4,6 +4,7 @@ import {
   UserActivityProvider,
   useMeetingStatus,
   useMeetingManager,
+  useToggleLocalMute,
 } from "amazon-chime-sdk-component-library-react";
 import { ProgressBar } from "react-bootstrap";
 import { StyledLayout, StyledContent } from "./Styled";
@@ -41,6 +42,7 @@ const MeetingView = ({
   // console.log("messageReducer2", messageReducer);
   const meetingManager = useMeetingManager();
   const { showNavbar, showRoster } = useNavigation();
+  const { muted: muted1, toggleMute } = useToggleLocalMute();
   const meetingStatus = useMeetingStatus();
   const sessionId = match?.params.id;
   const { meetingId, localUserName, setAppMeetingInfo, userRole } =
@@ -50,8 +52,13 @@ const MeetingView = ({
   const handle = useFullScreenHandle();
 
   useEffect(() => {
+    // console.log(555, muted1);
     if (!Boolean(meetingId)) {
       history.push(`${history.location.pathname}/devices`);
+    } else {
+      if (!muted1) {
+        toggleMute();
+      }
     }
     //  else {
     //   if (window.socket) {
@@ -60,7 +67,7 @@ const MeetingView = ({
     //     };
     //   }
     // }
-  }, [meetingId]);
+  }, [meetingId, muted1, toggleMute]);
 
   useEffect(() => {
     return async () => {
